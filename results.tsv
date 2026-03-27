@@ -1,0 +1,9 @@
+Filenames	Species	Assembly	Genes_total	Genes_ptss	Genes_multiple_ptss	Transcripts_5utr	Transcripts_leaderless
+mjannaschii	Methanocaldococcus jannaschii: DSM 2661	GCF_000091665.1	1907	776	318	1241	68
+hsalinarum	Halobacterium salinarum NRC-1	GCF_000006805.1	2759	1182	79	380	910
+pfuriosus	Pyrococcus furiosus DSM 3638	GCF_008245085.1	2119	1140	485	1836	318
+hvolcanii	Haloferax volcanii DS2	GCF_000025685.1	4078	2574	854	2187	1945
+tonnurineus	Thermococcus onnurineus NA1	GCF_000018365.1	2057	222	17	220	34
+tkodakarensis	Thermococcus kodakarensis KOD1	GCF_000009965.1	2359	689	55	612	159
+sacidocaldarius	Sulfolobus acidocaldarius DSM 639	GCF_000012285.1	2370	1217	199	663	834
+hmediterranei	Haloferax mediterranei ATCC 33500	GCF_000306765.2	3948	960	321	1526	62

@@ -1,0 +1,1259 @@
+nohup: ignoring input
+Running TSSAR for mjannaschii...
+call: bash /home/jfigueiredo/files/frtc//mjannaschii/tssarinput/TSS_tudo.sh
+
+19:52:33 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4238017-tssar-input-NC_000909.1.sam --libM ./SRR4240639-tssar-input-NC_000909.1.sam --fasta ./NC_000909.1.fasta --g_size 1664970 --verbose --noclean --nocluster --tmpdir .
+19:52:33 ..... Start Reading mapped read files.
+19:59:26 ..... ./SRR4238017-tssar-input-NC_000909.1.sam read-in complete
+20:05:42 ..... ./SRR4240639-tssar-input-NC_000909.1.sam read-in complete
+20:05:43 ..... summarizing reads
+20:05:43 ..... writing coverage files
+20:05:45 ..... generating R-script (./R.script_0yZA.R)
+20:05:45 ..... run R-script (might take a while)
+20:18:17 ..... done with R-script
+20:18:17 ..... processing R output
+20:18:26 ..... writing output BED file
+20:18:29 ..... beginning clustering of consecutive TSS positions
+20:18:34  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+10027 individual TSS were annotated (p-Value cut off 0.0001). 10027 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:18:38 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4238017-tssar-input-NC_001732.1.sam --libM ./SRR4240639-tssar-input-NC_001732.1.sam --fasta ./NC_001732.1.fasta --g_size 58407 --verbose --noclean --nocluster --tmpdir .
+20:18:38 ..... Start Reading mapped read files.
+20:18:40 ..... ./SRR4238017-tssar-input-NC_001732.1.sam read-in complete
+20:18:40 ..... ./SRR4240639-tssar-input-NC_001732.1.sam read-in complete
+20:18:40 ..... summarizing reads
+20:18:40 ..... writing coverage files
+20:18:40 ..... generating R-script (./R.script_NI5X.R)
+20:18:40 ..... run R-script (might take a while)
+20:19:03 ..... done with R-script
+20:19:03 ..... processing R output
+20:19:03 ..... writing output BED file
+20:19:03 ..... beginning clustering of consecutive TSS positions
+20:19:03  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+70 individual TSS were annotated (p-Value cut off 0.0001). 70 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:19:04 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4238017-tssar-input-NC_001733.1.sam --libM ./SRR4240639-tssar-input-NC_001733.1.sam --fasta ./NC_001733.1.fasta --g_size 16550 --verbose --noclean --nocluster --tmpdir .
+20:19:04 ..... Start Reading mapped read files.
+20:19:05 ..... ./SRR4238017-tssar-input-NC_001733.1.sam read-in complete
+20:19:05 ..... ./SRR4240639-tssar-input-NC_001733.1.sam read-in complete
+20:19:05 ..... summarizing reads
+20:19:05 ..... writing coverage files
+20:19:05 ..... generating R-script (./R.script_TKrN.R)
+20:19:05 ..... run R-script (might take a while)
+20:19:13 ..... done with R-script
+20:19:13 ..... processing R output
+20:19:13 ..... writing output BED file
+20:19:13 ..... beginning clustering of consecutive TSS positions
+20:19:13  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+46 individual TSS were annotated (p-Value cut off 0.0001). 46 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:19:43 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4240641-tssar-input-NC_000909.1.sam --libM ./SRR4238018-tssar-input-NC_000909.1.sam --fasta ./NC_000909.1.fasta --g_size 1664970 --verbose --noclean --nocluster --tmpdir .
+20:19:43 ..... Start Reading mapped read files.
+20:25:30 ..... ./SRR4240641-tssar-input-NC_000909.1.sam read-in complete
+20:31:46 ..... ./SRR4238018-tssar-input-NC_000909.1.sam read-in complete
+20:31:47 ..... summarizing reads
+20:31:47 ..... writing coverage files
+20:31:49 ..... generating R-script (./R.script_BMUl.R)
+20:31:49 ..... run R-script (might take a while)
+20:42:19 ..... done with R-script
+20:42:19 ..... processing R output
+20:42:28 ..... writing output BED file
+20:42:30 ..... beginning clustering of consecutive TSS positions
+20:42:34  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+2033 individual TSS were annotated (p-Value cut off 0.0001). 2033 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:42:38 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4240641-tssar-input-NC_001732.1.sam --libM ./SRR4238018-tssar-input-NC_001732.1.sam --fasta ./NC_001732.1.fasta --g_size 58407 --verbose --noclean --nocluster --tmpdir .
+20:42:38 ..... Start Reading mapped read files.
+20:42:39 ..... ./SRR4240641-tssar-input-NC_001732.1.sam read-in complete
+20:42:39 ..... ./SRR4238018-tssar-input-NC_001732.1.sam read-in complete
+20:42:39 ..... summarizing reads
+20:42:39 ..... writing coverage files
+20:42:39 ..... generating R-script (./R.script_5ciY.R)
+20:42:39 ..... run R-script (might take a while)
+20:42:58 ..... done with R-script
+20:42:58 ..... processing R output
+20:42:59 ..... writing output BED file
+20:42:59 ..... beginning clustering of consecutive TSS positions
+20:42:59  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+16 individual TSS were annotated (p-Value cut off 0.0001). 16 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:42:59 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4240641-tssar-input-NC_001733.1.sam --libM ./SRR4238018-tssar-input-NC_001733.1.sam --fasta ./NC_001733.1.fasta --g_size 16550 --verbose --noclean --nocluster --tmpdir .
+20:42:59 ..... Start Reading mapped read files.
+20:43:00 ..... ./SRR4240641-tssar-input-NC_001733.1.sam read-in complete
+20:43:00 ..... ./SRR4238018-tssar-input-NC_001733.1.sam read-in complete
+20:43:00 ..... summarizing reads
+20:43:00 ..... writing coverage files
+20:43:00 ..... generating R-script (./R.script_3ucN.R)
+20:43:00 ..... run R-script (might take a while)
+20:43:07 ..... done with R-script
+20:43:07 ..... processing R output
+20:43:07 ..... writing output BED file
+20:43:07 ..... beginning clustering of consecutive TSS positions
+20:43:07  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+17 individual TSS were annotated (p-Value cut off 0.0001). 17 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+Running TSSAR for hsalinarum...
+call: bash /home/jfigueiredo/files/frtc//hsalinarum/tssarinput/TSS_tudo.sh
+
+20:43:20 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953855-tssar-input-NC_001869.1.sam --libM ./SRR6953869-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+20:43:20 ..... Start Reading mapped read files.
+20:43:21 ..... ./SRR6953855-tssar-input-NC_001869.1.sam read-in complete
+20:43:22 ..... ./SRR6953869-tssar-input-NC_001869.1.sam read-in complete
+20:43:22 ..... summarizing reads
+20:43:22 ..... writing coverage files
+20:43:22 ..... generating R-script (./R.script_8ws3.R)
+20:43:22 ..... run R-script (might take a while)
+20:44:31 ..... done with R-script
+20:44:31 ..... processing R output
+20:44:32 ..... writing output BED file
+20:44:32 ..... beginning clustering of consecutive TSS positions
+20:44:33  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+107 individual TSS were annotated (p-Value cut off 0.0001). 107 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:44:35 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953855-tssar-input-NC_002607.1.sam --libM ./SRR6953869-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+20:44:35 ..... Start Reading mapped read files.
+20:45:05 ..... ./SRR6953855-tssar-input-NC_002607.1.sam read-in complete
+20:45:12 ..... ./SRR6953869-tssar-input-NC_002607.1.sam read-in complete
+20:45:12 ..... summarizing reads
+20:45:12 ..... writing coverage files
+20:45:14 ..... generating R-script (./R.script_69kc.R)
+20:45:14 ..... run R-script (might take a while)
+20:56:02 ..... done with R-script
+20:56:02 ..... processing R output
+20:56:13 ..... writing output BED file
+20:56:15 ..... beginning clustering of consecutive TSS positions
+20:56:20  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+956 individual TSS were annotated (p-Value cut off 0.0001). 956 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:56:25 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953855-tssar-input-NC_002608.1.sam --libM ./SRR6953869-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+20:56:25 ..... Start Reading mapped read files.
+20:56:27 ..... ./SRR6953855-tssar-input-NC_002608.1.sam read-in complete
+20:56:28 ..... ./SRR6953869-tssar-input-NC_002608.1.sam read-in complete
+20:56:28 ..... summarizing reads
+20:56:28 ..... writing coverage files
+20:56:28 ..... generating R-script (./R.script_iBux.R)
+20:56:28 ..... run R-script (might take a while)
+20:58:42 ..... done with R-script
+20:58:42 ..... processing R output
+20:58:44 ..... writing output BED file
+20:58:44 ..... beginning clustering of consecutive TSS positions
+20:58:45  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+193 individual TSS were annotated (p-Value cut off 0.0001). 193 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+20:58:46 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953856-tssar-input-NC_001869.1.sam --libM ./SRR6953870-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+20:58:46 ..... Start Reading mapped read files.
+20:58:46 ..... ./SRR6953856-tssar-input-NC_001869.1.sam read-in complete
+20:58:47 ..... ./SRR6953870-tssar-input-NC_001869.1.sam read-in complete
+20:58:47 ..... summarizing reads
+20:58:47 ..... writing coverage files
+20:58:47 ..... generating R-script (./R.script_Ild5.R)
+20:58:47 ..... run R-script (might take a while)
+21:00:04 ..... done with R-script
+21:00:04 ..... processing R output
+21:00:06 ..... writing output BED file
+21:00:06 ..... beginning clustering of consecutive TSS positions
+21:00:06  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+53 individual TSS were annotated (p-Value cut off 0.0001). 53 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:00:08 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953856-tssar-input-NC_002607.1.sam --libM ./SRR6953870-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+21:00:08 ..... Start Reading mapped read files.
+21:00:14 ..... ./SRR6953856-tssar-input-NC_002607.1.sam read-in complete
+21:00:23 ..... ./SRR6953870-tssar-input-NC_002607.1.sam read-in complete
+21:00:23 ..... summarizing reads
+21:00:23 ..... writing coverage files
+21:00:25 ..... generating R-script (./R.script_zNLi.R)
+21:00:25 ..... run R-script (might take a while)
+21:12:47 ..... done with R-script
+21:12:47 ..... processing R output
+21:12:58 ..... writing output BED file
+21:13:00 ..... beginning clustering of consecutive TSS positions
+21:13:05  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+626 individual TSS were annotated (p-Value cut off 0.0001). 626 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:13:09 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953856-tssar-input-NC_002608.1.sam --libM ./SRR6953870-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+21:13:09 ..... Start Reading mapped read files.
+21:13:10 ..... ./SRR6953856-tssar-input-NC_002608.1.sam read-in complete
+21:13:11 ..... ./SRR6953870-tssar-input-NC_002608.1.sam read-in complete
+21:13:11 ..... summarizing reads
+21:13:11 ..... writing coverage files
+21:13:11 ..... generating R-script (./R.script_SNQs.R)
+21:13:11 ..... run R-script (might take a while)
+21:15:24 ..... done with R-script
+21:15:24 ..... processing R output
+21:15:26 ..... writing output BED file
+21:15:27 ..... beginning clustering of consecutive TSS positions
+21:15:28  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+68 individual TSS were annotated (p-Value cut off 0.0001). 68 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:15:29 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953857-tssar-input-NC_001869.1.sam --libM ./SRR6953871-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+21:15:29 ..... Start Reading mapped read files.
+21:15:29 ..... ./SRR6953857-tssar-input-NC_001869.1.sam read-in complete
+21:15:29 ..... ./SRR6953871-tssar-input-NC_001869.1.sam read-in complete
+21:15:29 ..... summarizing reads
+21:15:29 ..... writing coverage files
+21:15:29 ..... generating R-script (./R.script_jWM2.R)
+21:15:29 ..... run R-script (might take a while)
+21:16:32 ..... done with R-script
+21:16:32 ..... processing R output
+21:16:33 ..... writing output BED file
+21:16:33 ..... beginning clustering of consecutive TSS positions
+21:16:33  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+34 individual TSS were annotated (p-Value cut off 0.0001). 34 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:16:34 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953857-tssar-input-NC_002607.1.sam --libM ./SRR6953871-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+21:16:34 ..... Start Reading mapped read files.
+21:16:36 ..... ./SRR6953857-tssar-input-NC_002607.1.sam read-in complete
+21:16:37 ..... ./SRR6953871-tssar-input-NC_002607.1.sam read-in complete
+21:16:37 ..... summarizing reads
+21:16:37 ..... writing coverage files
+21:16:39 ..... generating R-script (./R.script_J5EB.R)
+21:16:39 ..... run R-script (might take a while)
+21:24:29 ..... done with R-script
+21:24:29 ..... processing R output
+21:24:40 ..... writing output BED file
+21:24:42 ..... beginning clustering of consecutive TSS positions
+21:24:47  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+248 individual TSS were annotated (p-Value cut off 0.0001). 248 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:24:51 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953857-tssar-input-NC_002608.1.sam --libM ./SRR6953871-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+21:24:51 ..... Start Reading mapped read files.
+21:24:51 ..... ./SRR6953857-tssar-input-NC_002608.1.sam read-in complete
+21:24:52 ..... ./SRR6953871-tssar-input-NC_002608.1.sam read-in complete
+21:24:52 ..... summarizing reads
+21:24:52 ..... writing coverage files
+21:24:52 ..... generating R-script (./R.script_JEDf.R)
+21:24:52 ..... run R-script (might take a while)
+21:26:38 ..... done with R-script
+21:26:38 ..... processing R output
+21:26:40 ..... writing output BED file
+21:26:41 ..... beginning clustering of consecutive TSS positions
+21:26:42  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+45 individual TSS were annotated (p-Value cut off 0.0001). 45 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:26:43 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953858-tssar-input-NC_001869.1.sam --libM ./SRR6953872-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+21:26:43 ..... Start Reading mapped read files.
+21:26:43 ..... ./SRR6953858-tssar-input-NC_001869.1.sam read-in complete
+21:26:43 ..... ./SRR6953872-tssar-input-NC_001869.1.sam read-in complete
+21:26:43 ..... summarizing reads
+21:26:43 ..... writing coverage files
+21:26:43 ..... generating R-script (./R.script_CEad.R)
+21:26:43 ..... run R-script (might take a while)
+21:27:59 ..... done with R-script
+21:27:59 ..... processing R output
+21:28:00 ..... writing output BED file
+21:28:00 ..... beginning clustering of consecutive TSS positions
+21:28:01  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+45 individual TSS were annotated (p-Value cut off 0.0001). 45 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:28:01 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953858-tssar-input-NC_002607.1.sam --libM ./SRR6953872-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+21:28:01 ..... Start Reading mapped read files.
+21:28:05 ..... ./SRR6953858-tssar-input-NC_002607.1.sam read-in complete
+21:28:09 ..... ./SRR6953872-tssar-input-NC_002607.1.sam read-in complete
+21:28:09 ..... summarizing reads
+21:28:09 ..... writing coverage files
+21:28:11 ..... generating R-script (./R.script_rQNq.R)
+21:28:11 ..... run R-script (might take a while)
+21:39:13 ..... done with R-script
+21:39:13 ..... processing R output
+21:39:24 ..... writing output BED file
+21:39:26 ..... beginning clustering of consecutive TSS positions
+21:39:31  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+495 individual TSS were annotated (p-Value cut off 0.0001). 495 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:39:35 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953858-tssar-input-NC_002608.1.sam --libM ./SRR6953872-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+21:39:35 ..... Start Reading mapped read files.
+21:39:36 ..... ./SRR6953858-tssar-input-NC_002608.1.sam read-in complete
+21:39:36 ..... ./SRR6953872-tssar-input-NC_002608.1.sam read-in complete
+21:39:36 ..... summarizing reads
+21:39:36 ..... writing coverage files
+21:39:37 ..... generating R-script (./R.script_2f9J.R)
+21:39:37 ..... run R-script (might take a while)
+21:41:50 ..... done with R-script
+21:41:50 ..... processing R output
+21:41:52 ..... writing output BED file
+21:41:52 ..... beginning clustering of consecutive TSS positions
+21:41:53  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+71 individual TSS were annotated (p-Value cut off 0.0001). 71 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:41:54 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953859-tssar-input-NC_001869.1.sam --libM ./SRR6953865-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+21:41:54 ..... Start Reading mapped read files.
+21:41:55 ..... ./SRR6953859-tssar-input-NC_001869.1.sam read-in complete
+21:41:56 ..... ./SRR6953865-tssar-input-NC_001869.1.sam read-in complete
+21:41:56 ..... summarizing reads
+21:41:56 ..... writing coverage files
+21:41:56 ..... generating R-script (./R.script_mA6v.R)
+21:41:56 ..... run R-script (might take a while)
+21:43:23 ..... done with R-script
+21:43:23 ..... processing R output
+21:43:24 ..... writing output BED file
+21:43:24 ..... beginning clustering of consecutive TSS positions
+21:43:24  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+30 individual TSS were annotated (p-Value cut off 0.0001). 30 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:43:26 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953859-tssar-input-NC_002607.1.sam --libM ./SRR6953865-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+21:43:26 ..... Start Reading mapped read files.
+21:43:36 ..... ./SRR6953859-tssar-input-NC_002607.1.sam read-in complete
+21:43:48 ..... ./SRR6953865-tssar-input-NC_002607.1.sam read-in complete
+21:43:48 ..... summarizing reads
+21:43:48 ..... writing coverage files
+21:43:50 ..... generating R-script (./R.script_XLua.R)
+21:43:50 ..... run R-script (might take a while)
+21:57:56 ..... done with R-script
+21:57:56 ..... processing R output
+21:58:07 ..... writing output BED file
+21:58:09 ..... beginning clustering of consecutive TSS positions
+21:58:14  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+322 individual TSS were annotated (p-Value cut off 0.0001). 322 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+21:58:18 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953859-tssar-input-NC_002608.1.sam --libM ./SRR6953865-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+21:58:18 ..... Start Reading mapped read files.
+21:58:19 ..... ./SRR6953859-tssar-input-NC_002608.1.sam read-in complete
+21:58:21 ..... ./SRR6953865-tssar-input-NC_002608.1.sam read-in complete
+21:58:21 ..... summarizing reads
+21:58:21 ..... writing coverage files
+21:58:21 ..... generating R-script (./R.script_gpGe.R)
+21:58:21 ..... run R-script (might take a while)
+22:00:50 ..... done with R-script
+22:00:50 ..... processing R output
+22:00:52 ..... writing output BED file
+22:00:52 ..... beginning clustering of consecutive TSS positions
+22:00:53  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+52 individual TSS were annotated (p-Value cut off 0.0001). 52 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:00:54 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953860-tssar-input-NC_001869.1.sam --libM ./SRR6953866-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+22:00:54 ..... Start Reading mapped read files.
+22:00:55 ..... ./SRR6953860-tssar-input-NC_001869.1.sam read-in complete
+22:00:56 ..... ./SRR6953866-tssar-input-NC_001869.1.sam read-in complete
+22:00:56 ..... summarizing reads
+22:00:56 ..... writing coverage files
+22:00:56 ..... generating R-script (./R.script_DYh2.R)
+22:00:56 ..... run R-script (might take a while)
+22:02:21 ..... done with R-script
+22:02:21 ..... processing R output
+22:02:22 ..... writing output BED file
+22:02:22 ..... beginning clustering of consecutive TSS positions
+22:02:23  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+151 individual TSS were annotated (p-Value cut off 0.0001). 151 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:02:25 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953860-tssar-input-NC_002607.1.sam --libM ./SRR6953866-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+22:02:25 ..... Start Reading mapped read files.
+22:02:36 ..... ./SRR6953860-tssar-input-NC_002607.1.sam read-in complete
+22:02:45 ..... ./SRR6953866-tssar-input-NC_002607.1.sam read-in complete
+22:02:45 ..... summarizing reads
+22:02:45 ..... writing coverage files
+22:02:48 ..... generating R-script (./R.script_gtBb.R)
+22:02:48 ..... run R-script (might take a while)
+22:15:52 ..... done with R-script
+22:15:52 ..... processing R output
+22:16:03 ..... writing output BED file
+22:16:05 ..... beginning clustering of consecutive TSS positions
+22:16:10  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+1246 individual TSS were annotated (p-Value cut off 0.0001). 1246 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:16:14 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953860-tssar-input-NC_002608.1.sam --libM ./SRR6953866-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+22:16:14 ..... Start Reading mapped read files.
+22:16:15 ..... ./SRR6953860-tssar-input-NC_002608.1.sam read-in complete
+22:16:16 ..... ./SRR6953866-tssar-input-NC_002608.1.sam read-in complete
+22:16:16 ..... summarizing reads
+22:16:16 ..... writing coverage files
+22:16:17 ..... generating R-script (./R.script_KA1y.R)
+22:16:17 ..... run R-script (might take a while)
+22:18:40 ..... done with R-script
+22:18:40 ..... processing R output
+22:18:42 ..... writing output BED file
+22:18:42 ..... beginning clustering of consecutive TSS positions
+22:18:43  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+205 individual TSS were annotated (p-Value cut off 0.0001). 205 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:18:44 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953861-tssar-input-NC_001869.1.sam --libM ./SRR6953867-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+22:18:44 ..... Start Reading mapped read files.
+22:18:46 ..... ./SRR6953861-tssar-input-NC_001869.1.sam read-in complete
+22:18:47 ..... ./SRR6953867-tssar-input-NC_001869.1.sam read-in complete
+22:18:47 ..... summarizing reads
+22:18:47 ..... writing coverage files
+22:18:48 ..... generating R-script (./R.script_o4Ps.R)
+22:18:48 ..... run R-script (might take a while)
+22:20:13 ..... done with R-script
+22:20:13 ..... processing R output
+22:20:14 ..... writing output BED file
+22:20:15 ..... beginning clustering of consecutive TSS positions
+22:20:15  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+98 individual TSS were annotated (p-Value cut off 0.0001). 98 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:20:17 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953861-tssar-input-NC_002607.1.sam --libM ./SRR6953867-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+22:20:17 ..... Start Reading mapped read files.
+22:20:28 ..... ./SRR6953861-tssar-input-NC_002607.1.sam read-in complete
+22:20:42 ..... ./SRR6953867-tssar-input-NC_002607.1.sam read-in complete
+22:20:42 ..... summarizing reads
+22:20:42 ..... writing coverage files
+22:20:45 ..... generating R-script (./R.script_SBNw.R)
+22:20:45 ..... run R-script (might take a while)
+22:33:07 ..... done with R-script
+22:33:07 ..... processing R output
+22:33:18 ..... writing output BED file
+22:33:20 ..... beginning clustering of consecutive TSS positions
+22:33:25  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+938 individual TSS were annotated (p-Value cut off 0.0001). 938 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:33:29 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953861-tssar-input-NC_002608.1.sam --libM ./SRR6953867-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+22:33:29 ..... Start Reading mapped read files.
+22:33:31 ..... ./SRR6953861-tssar-input-NC_002608.1.sam read-in complete
+22:33:33 ..... ./SRR6953867-tssar-input-NC_002608.1.sam read-in complete
+22:33:33 ..... summarizing reads
+22:33:33 ..... writing coverage files
+22:33:33 ..... generating R-script (./R.script_43Ph.R)
+22:33:33 ..... run R-script (might take a while)
+22:35:57 ..... done with R-script
+22:35:57 ..... processing R output
+22:36:00 ..... writing output BED file
+22:36:00 ..... beginning clustering of consecutive TSS positions
+22:36:01  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+161 individual TSS were annotated (p-Value cut off 0.0001). 161 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:36:02 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953862-tssar-input-NC_001869.1.sam --libM ./SRR6953868-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+22:36:02 ..... Start Reading mapped read files.
+22:36:02 ..... ./SRR6953862-tssar-input-NC_001869.1.sam read-in complete
+22:36:04 ..... ./SRR6953868-tssar-input-NC_001869.1.sam read-in complete
+22:36:04 ..... summarizing reads
+22:36:04 ..... writing coverage files
+22:36:04 ..... generating R-script (./R.script_aC8c.R)
+22:36:04 ..... run R-script (might take a while)
+22:37:19 ..... done with R-script
+22:37:19 ..... processing R output
+22:37:20 ..... writing output BED file
+22:37:21 ..... beginning clustering of consecutive TSS positions
+22:37:21  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+53 individual TSS were annotated (p-Value cut off 0.0001). 53 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:37:22 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953862-tssar-input-NC_002607.1.sam --libM ./SRR6953868-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+22:37:22 ..... Start Reading mapped read files.
+22:37:25 ..... ./SRR6953862-tssar-input-NC_002607.1.sam read-in complete
+22:37:36 ..... ./SRR6953868-tssar-input-NC_002607.1.sam read-in complete
+22:37:36 ..... summarizing reads
+22:37:36 ..... writing coverage files
+22:37:38 ..... generating R-script (./R.script_3VSX.R)
+22:37:38 ..... run R-script (might take a while)
+22:47:57 ..... done with R-script
+22:47:57 ..... processing R output
+22:48:07 ..... writing output BED file
+22:48:09 ..... beginning clustering of consecutive TSS positions
+22:48:14  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+229 individual TSS were annotated (p-Value cut off 0.0001). 229 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:48:19 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953862-tssar-input-NC_002608.1.sam --libM ./SRR6953868-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+22:48:19 ..... Start Reading mapped read files.
+22:48:20 ..... ./SRR6953862-tssar-input-NC_002608.1.sam read-in complete
+22:48:21 ..... ./SRR6953868-tssar-input-NC_002608.1.sam read-in complete
+22:48:21 ..... summarizing reads
+22:48:21 ..... writing coverage files
+22:48:22 ..... generating R-script (./R.script_IAuq.R)
+22:48:22 ..... run R-script (might take a while)
+22:50:33 ..... done with R-script
+22:50:33 ..... processing R output
+22:50:36 ..... writing output BED file
+22:50:36 ..... beginning clustering of consecutive TSS positions
+22:50:37  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+88 individual TSS were annotated (p-Value cut off 0.0001). 88 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:50:38 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953863-tssar-input-NC_001869.1.sam --libM ./SRR6953873-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+22:50:38 ..... Start Reading mapped read files.
+22:50:38 ..... ./SRR6953863-tssar-input-NC_001869.1.sam read-in complete
+22:50:38 ..... ./SRR6953873-tssar-input-NC_001869.1.sam read-in complete
+22:50:38 ..... summarizing reads
+22:50:38 ..... writing coverage files
+22:50:39 ..... generating R-script (./R.script_9Eek.R)
+22:50:39 ..... run R-script (might take a while)
+22:51:40 ..... done with R-script
+22:51:40 ..... processing R output
+22:51:41 ..... writing output BED file
+22:51:41 ..... beginning clustering of consecutive TSS positions
+22:51:42  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+38 individual TSS were annotated (p-Value cut off 0.0001). 38 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:51:43 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953863-tssar-input-NC_002607.1.sam --libM ./SRR6953873-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+22:51:43 ..... Start Reading mapped read files.
+22:51:44 ..... ./SRR6953863-tssar-input-NC_002607.1.sam read-in complete
+22:51:45 ..... ./SRR6953873-tssar-input-NC_002607.1.sam read-in complete
+22:51:45 ..... summarizing reads
+22:51:45 ..... writing coverage files
+22:51:47 ..... generating R-script (./R.script_TdCE.R)
+22:51:47 ..... run R-script (might take a while)
+22:59:14 ..... done with R-script
+22:59:14 ..... processing R output
+22:59:26 ..... writing output BED file
+22:59:28 ..... beginning clustering of consecutive TSS positions
+22:59:33  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+278 individual TSS were annotated (p-Value cut off 0.0001). 278 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+22:59:37 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953863-tssar-input-NC_002608.1.sam --libM ./SRR6953873-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+22:59:37 ..... Start Reading mapped read files.
+22:59:38 ..... ./SRR6953863-tssar-input-NC_002608.1.sam read-in complete
+22:59:38 ..... ./SRR6953873-tssar-input-NC_002608.1.sam read-in complete
+22:59:38 ..... summarizing reads
+22:59:38 ..... writing coverage files
+22:59:39 ..... generating R-script (./R.script_PnGQ.R)
+22:59:39 ..... run R-script (might take a while)
+23:01:22 ..... done with R-script
+23:01:22 ..... processing R output
+23:01:24 ..... writing output BED file
+23:01:25 ..... beginning clustering of consecutive TSS positions
+23:01:26  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+63 individual TSS were annotated (p-Value cut off 0.0001). 63 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+23:01:26 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953864-tssar-input-NC_001869.1.sam --libM ./SRR6953874-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+23:01:26 ..... Start Reading mapped read files.
+23:01:27 ..... ./SRR6953864-tssar-input-NC_001869.1.sam read-in complete
+23:01:27 ..... ./SRR6953874-tssar-input-NC_001869.1.sam read-in complete
+23:01:27 ..... summarizing reads
+23:01:27 ..... writing coverage files
+23:01:27 ..... generating R-script (./R.script_yIex.R)
+23:01:27 ..... run R-script (might take a while)
+23:02:25 ..... done with R-script
+23:02:25 ..... processing R output
+23:02:26 ..... writing output BED file
+23:02:26 ..... beginning clustering of consecutive TSS positions
+23:02:26  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+44 individual TSS were annotated (p-Value cut off 0.0001). 44 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+23:02:27 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953864-tssar-input-NC_002607.1.sam --libM ./SRR6953874-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+23:02:27 ..... Start Reading mapped read files.
+23:02:28 ..... ./SRR6953864-tssar-input-NC_002607.1.sam read-in complete
+23:02:29 ..... ./SRR6953874-tssar-input-NC_002607.1.sam read-in complete
+23:02:29 ..... summarizing reads
+23:02:29 ..... writing coverage files
+23:02:32 ..... generating R-script (./R.script_Bw7d.R)
+23:02:32 ..... run R-script (might take a while)
+23:09:51 ..... done with R-script
+23:09:51 ..... processing R output
+23:10:02 ..... writing output BED file
+23:10:04 ..... beginning clustering of consecutive TSS positions
+23:10:09  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+249 individual TSS were annotated (p-Value cut off 0.0001). 249 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+23:10:14 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR6953864-tssar-input-NC_002608.1.sam --libM ./SRR6953874-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+23:10:14 ..... Start Reading mapped read files.
+23:10:14 ..... ./SRR6953864-tssar-input-NC_002608.1.sam read-in complete
+23:10:15 ..... ./SRR6953874-tssar-input-NC_002608.1.sam read-in complete
+23:10:15 ..... summarizing reads
+23:10:15 ..... writing coverage files
+23:10:15 ..... generating R-script (./R.script_Ubfh.R)
+23:10:15 ..... run R-script (might take a while)
+23:11:54 ..... done with R-script
+23:11:54 ..... processing R output
+23:11:56 ..... writing output BED file
+23:11:56 ..... beginning clustering of consecutive TSS positions
+23:11:57  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+65 individual TSS were annotated (p-Value cut off 0.0001). 65 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_001869.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_001869.1.bam" for reading: No such file or directory
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_001869.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_001869.1.bam" for reading: No such file or directory
+
+23:11:58 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./-tssar-input-NC_001869.1.sam --libM ./-tssar-input-NC_001869.1.sam --fasta ./NC_001869.1.fasta --g_size 191346 --verbose --noclean --nocluster --tmpdir .
+23:11:58 ..... Start Reading mapped read files.
+can t open <./-tssar-input-NC_001869.1.sam> now but why
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_002607.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_002607.1.bam" for reading: No such file or directory
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_002607.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_002607.1.bam" for reading: No such file or directory
+
+23:11:58 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./-tssar-input-NC_002607.1.sam --libM ./-tssar-input-NC_002607.1.sam --fasta ./NC_002607.1.fasta --g_size 2014239 --verbose --noclean --nocluster --tmpdir .
+23:11:58 ..... Start Reading mapped read files.
+can t open <./-tssar-input-NC_002607.1.sam> now but why
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_002608.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_002608.1.bam" for reading: No such file or directory
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_002608.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_002608.1.bam" for reading: No such file or directory
+
+23:11:58 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./-tssar-input-NC_002608.1.sam --libM ./-tssar-input-NC_002608.1.sam --fasta ./NC_002608.1.fasta --g_size 365425 --verbose --noclean --nocluster --tmpdir .
+23:11:58 ..... Start Reading mapped read files.
+can t open <./-tssar-input-NC_002608.1.sam> now but why
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+Running TSSAR for pfuriosus...
+call: bash /home/jfigueiredo/files/frtc//pfuriosus/tssarinput/TSS_tudo.sh
+
+23:12:49 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR8767847-tssar-input-NZ_CP023154.1.sam --libM ./SRR8756969-tssar-input-NZ_CP023154.1.sam --fasta ./NZ_CP023154.1.fasta --g_size 1889914 --verbose --noclean --nocluster --tmpdir .
+23:12:49 ..... Start Reading mapped read files.
+23:21:46 ..... ./SRR8767847-tssar-input-NZ_CP023154.1.sam read-in complete
+23:29:52 ..... ./SRR8756969-tssar-input-NZ_CP023154.1.sam read-in complete
+23:29:53 ..... summarizing reads
+23:29:53 ..... writing coverage files
+23:29:56 ..... generating R-script (./R.script_jRwU.R)
+23:29:56 ..... run R-script (might take a while)
+23:47:23 ..... done with R-script
+23:47:23 ..... processing R output
+23:47:34 ..... writing output BED file
+23:47:37 ..... beginning clustering of consecutive TSS positions
+23:47:42  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+45990 individual TSS were annotated (p-Value cut off 0.0001). 45990 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+Running TSSAR for hvolcanii...
+call: bash /home/jfigueiredo/files/frtc//hvolcanii/tssarinput/TSS_tudo.sh
+
+23:48:10 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623114-tssar-input-NC_013964.1.sam --libM ./SRR3623113-tssar-input-NC_013964.1.sam --fasta ./NC_013964.1.fasta --g_size 437906 --verbose --noclean --nocluster --tmpdir .
+23:48:10 ..... Start Reading mapped read files.
+23:48:12 ..... ./SRR3623114-tssar-input-NC_013964.1.sam read-in complete
+23:48:12 ..... ./SRR3623113-tssar-input-NC_013964.1.sam read-in complete
+23:48:12 ..... summarizing reads
+23:48:12 ..... writing coverage files
+23:48:13 ..... generating R-script (./R.script_pDf2.R)
+23:48:13 ..... run R-script (might take a while)
+23:50:43 ..... done with R-script
+23:50:43 ..... processing R output
+23:50:45 ..... writing output BED file
+23:50:46 ..... beginning clustering of consecutive TSS positions
+23:50:47  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+144 individual TSS were annotated (p-Value cut off 0.0001). 144 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+23:50:48 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623114-tssar-input-NC_013965.1.sam --libM ./SRR3623113-tssar-input-NC_013965.1.sam --fasta ./NC_013965.1.fasta --g_size 6359 --verbose --noclean --nocluster --tmpdir .
+Please choose a windows size (--winSize <INT>) greater than 10 and less than a tenth of the genome size
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+
+23:50:48 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623114-tssar-input-NC_013966.1.sam --libM ./SRR3623113-tssar-input-NC_013966.1.sam --fasta ./NC_013966.1.fasta --g_size 635786 --verbose --noclean --nocluster --tmpdir .
+23:50:48 ..... Start Reading mapped read files.
+23:50:55 ..... ./SRR3623114-tssar-input-NC_013966.1.sam read-in complete
+23:51:00 ..... ./SRR3623113-tssar-input-NC_013966.1.sam read-in complete
+23:51:00 ..... summarizing reads
+23:51:00 ..... writing coverage files
+23:51:00 ..... generating R-script (./R.script_J94I.R)
+23:51:00 ..... run R-script (might take a while)
+23:55:26 ..... done with R-script
+23:55:26 ..... processing R output
+23:55:30 ..... writing output BED file
+23:55:31 ..... beginning clustering of consecutive TSS positions
+23:55:32  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+494 individual TSS were annotated (p-Value cut off 0.0001). 494 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+23:55:40 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623114-tssar-input-NC_013967.1.sam --libM ./SRR3623113-tssar-input-NC_013967.1.sam --fasta ./NC_013967.1.fasta --g_size 2847757 --verbose --noclean --nocluster --tmpdir .
+23:55:40 ..... Start Reading mapped read files.
+23:56:32 ..... ./SRR3623114-tssar-input-NC_013967.1.sam read-in complete
+23:58:02 ..... ./SRR3623113-tssar-input-NC_013967.1.sam read-in complete
+23:58:02 ..... summarizing reads
+23:58:02 ..... writing coverage files
+23:58:05 ..... generating R-script (./R.script_SFTi.R)
+23:58:05 ..... run R-script (might take a while)
+00:19:24 ..... done with R-script
+00:19:24 ..... processing R output
+00:19:41 ..... writing output BED file
+00:19:44 ..... beginning clustering of consecutive TSS positions
+00:19:51  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+4970 individual TSS were annotated (p-Value cut off 0.0001). 4970 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:19:58 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623114-tssar-input-NC_013968.1.sam --libM ./SRR3623113-tssar-input-NC_013968.1.sam --fasta ./NC_013968.1.fasta --g_size 85092 --verbose --noclean --nocluster --tmpdir .
+00:19:58 ..... Start Reading mapped read files.
+00:20:00 ..... ./SRR3623114-tssar-input-NC_013968.1.sam read-in complete
+00:20:01 ..... ./SRR3623113-tssar-input-NC_013968.1.sam read-in complete
+00:20:01 ..... summarizing reads
+00:20:01 ..... writing coverage files
+00:20:01 ..... generating R-script (./R.script_1bLf.R)
+00:20:01 ..... run R-script (might take a while)
+00:20:42 ..... done with R-script
+00:20:42 ..... processing R output
+00:20:42 ..... writing output BED file
+00:20:43 ..... beginning clustering of consecutive TSS positions
+00:20:43  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+132 individual TSS were annotated (p-Value cut off 0.0001). 132 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:20:43 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623116-tssar-input-NC_013964.1.sam --libM ./SRR3623115-tssar-input-NC_013964.1.sam --fasta ./NC_013964.1.fasta --g_size 437906 --verbose --noclean --nocluster --tmpdir .
+00:20:43 ..... Start Reading mapped read files.
+00:20:45 ..... ./SRR3623116-tssar-input-NC_013964.1.sam read-in complete
+00:20:46 ..... ./SRR3623115-tssar-input-NC_013964.1.sam read-in complete
+00:20:46 ..... summarizing reads
+00:20:46 ..... writing coverage files
+00:20:47 ..... generating R-script (./R.script_sbY7.R)
+00:20:47 ..... run R-script (might take a while)
+00:23:33 ..... done with R-script
+00:23:33 ..... processing R output
+00:23:36 ..... writing output BED file
+00:23:37 ..... beginning clustering of consecutive TSS positions
+00:23:38  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+213 individual TSS were annotated (p-Value cut off 0.0001). 213 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:23:39 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623116-tssar-input-NC_013965.1.sam --libM ./SRR3623115-tssar-input-NC_013965.1.sam --fasta ./NC_013965.1.fasta --g_size 6359 --verbose --noclean --nocluster --tmpdir .
+Please choose a windows size (--winSize <INT>) greater than 10 and less than a tenth of the genome size
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+
+00:23:40 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623116-tssar-input-NC_013966.1.sam --libM ./SRR3623115-tssar-input-NC_013966.1.sam --fasta ./NC_013966.1.fasta --g_size 635786 --verbose --noclean --nocluster --tmpdir .
+00:23:40 ..... Start Reading mapped read files.
+00:23:50 ..... ./SRR3623116-tssar-input-NC_013966.1.sam read-in complete
+00:23:56 ..... ./SRR3623115-tssar-input-NC_013966.1.sam read-in complete
+00:23:56 ..... summarizing reads
+00:23:56 ..... writing coverage files
+00:23:57 ..... generating R-script (./R.script_8k8M.R)
+00:23:57 ..... run R-script (might take a while)
+00:28:26 ..... done with R-script
+00:28:26 ..... processing R output
+00:28:30 ..... writing output BED file
+00:28:30 ..... beginning clustering of consecutive TSS positions
+00:28:32  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+740 individual TSS were annotated (p-Value cut off 0.0001). 740 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:28:41 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623116-tssar-input-NC_013967.1.sam --libM ./SRR3623115-tssar-input-NC_013967.1.sam --fasta ./NC_013967.1.fasta --g_size 2847757 --verbose --noclean --nocluster --tmpdir .
+00:28:41 ..... Start Reading mapped read files.
+00:29:53 ..... ./SRR3623116-tssar-input-NC_013967.1.sam read-in complete
+00:31:26 ..... ./SRR3623115-tssar-input-NC_013967.1.sam read-in complete
+00:31:27 ..... summarizing reads
+00:31:27 ..... writing coverage files
+00:31:30 ..... generating R-script (./R.script_kmSE.R)
+00:31:30 ..... run R-script (might take a while)
+00:52:04 ..... done with R-script
+00:52:04 ..... processing R output
+00:52:20 ..... writing output BED file
+00:52:23 ..... beginning clustering of consecutive TSS positions
+00:52:30  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+6881 individual TSS were annotated (p-Value cut off 0.0001). 6881 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:52:37 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623116-tssar-input-NC_013968.1.sam --libM ./SRR3623115-tssar-input-NC_013968.1.sam --fasta ./NC_013968.1.fasta --g_size 85092 --verbose --noclean --nocluster --tmpdir .
+00:52:37 ..... Start Reading mapped read files.
+00:52:39 ..... ./SRR3623116-tssar-input-NC_013968.1.sam read-in complete
+00:52:41 ..... ./SRR3623115-tssar-input-NC_013968.1.sam read-in complete
+00:52:41 ..... summarizing reads
+00:52:41 ..... writing coverage files
+00:52:41 ..... generating R-script (./R.script_SLjq.R)
+00:52:41 ..... run R-script (might take a while)
+00:53:21 ..... done with R-script
+00:53:21 ..... processing R output
+00:53:21 ..... writing output BED file
+00:53:21 ..... beginning clustering of consecutive TSS positions
+00:53:22  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+198 individual TSS were annotated (p-Value cut off 0.0001). 198 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:53:24 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623118-tssar-input-NC_013964.1.sam --libM ./SRR3623117-tssar-input-NC_013964.1.sam --fasta ./NC_013964.1.fasta --g_size 437906 --verbose --noclean --nocluster --tmpdir .
+00:53:24 ..... Start Reading mapped read files.
+00:54:06 ..... ./SRR3623118-tssar-input-NC_013964.1.sam read-in complete
+00:54:23 ..... ./SRR3623117-tssar-input-NC_013964.1.sam read-in complete
+00:54:23 ..... summarizing reads
+00:54:23 ..... writing coverage files
+00:54:24 ..... generating R-script (./R.script_n64F.R)
+00:54:24 ..... run R-script (might take a while)
+00:57:39 ..... done with R-script
+00:57:39 ..... processing R output
+00:57:42 ..... writing output BED file
+00:57:42 ..... beginning clustering of consecutive TSS positions
+00:57:43  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+1197 individual TSS were annotated (p-Value cut off 0.0001). 1197 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+00:57:45 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623118-tssar-input-NC_013965.1.sam --libM ./SRR3623117-tssar-input-NC_013965.1.sam --fasta ./NC_013965.1.fasta --g_size 6359 --verbose --noclean --nocluster --tmpdir .
+Please choose a windows size (--winSize <INT>) greater than 10 and less than a tenth of the genome size
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+
+00:57:56 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623118-tssar-input-NC_013966.1.sam --libM ./SRR3623117-tssar-input-NC_013966.1.sam --fasta ./NC_013966.1.fasta --g_size 635786 --verbose --noclean --nocluster --tmpdir .
+00:57:56 ..... Start Reading mapped read files.
+01:00:11 ..... ./SRR3623118-tssar-input-NC_013966.1.sam read-in complete
+01:01:24 ..... ./SRR3623117-tssar-input-NC_013966.1.sam read-in complete
+01:01:24 ..... summarizing reads
+01:01:24 ..... writing coverage files
+01:01:25 ..... generating R-script (./R.script_z96X.R)
+01:01:25 ..... run R-script (might take a while)
+01:06:46 ..... done with R-script
+01:06:46 ..... processing R output
+01:06:49 ..... writing output BED file
+01:06:50 ..... beginning clustering of consecutive TSS positions
+01:06:52  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+3963 individual TSS were annotated (p-Value cut off 0.0001). 3963 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+01:08:41 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623118-tssar-input-NC_013967.1.sam --libM ./SRR3623117-tssar-input-NC_013967.1.sam --fasta ./NC_013967.1.fasta --g_size 2847757 --verbose --noclean --nocluster --tmpdir .
+01:08:41 ..... Start Reading mapped read files.
+01:31:20 ..... ./SRR3623118-tssar-input-NC_013967.1.sam read-in complete
+01:44:47 ..... ./SRR3623117-tssar-input-NC_013967.1.sam read-in complete
+01:44:50 ..... summarizing reads
+01:44:50 ..... writing coverage files
+01:44:54 ..... generating R-script (./R.script_6Obr.R)
+01:44:54 ..... run R-script (might take a while)
+02:08:22 ..... done with R-script
+02:08:22 ..... processing R output
+02:08:38 ..... writing output BED file
+02:08:48 ..... beginning clustering of consecutive TSS positions
+02:08:56  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+25067 individual TSS were annotated (p-Value cut off 0.0001). 25067 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+02:09:08 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR3623118-tssar-input-NC_013968.1.sam --libM ./SRR3623117-tssar-input-NC_013968.1.sam --fasta ./NC_013968.1.fasta --g_size 85092 --verbose --noclean --nocluster --tmpdir .
+02:09:08 ..... Start Reading mapped read files.
+02:09:37 ..... ./SRR3623118-tssar-input-NC_013968.1.sam read-in complete
+02:09:49 ..... ./SRR3623117-tssar-input-NC_013968.1.sam read-in complete
+02:09:49 ..... summarizing reads
+02:09:49 ..... writing coverage files
+02:09:49 ..... generating R-script (./R.script_QM2O.R)
+02:09:49 ..... run R-script (might take a while)
+02:10:35 ..... done with R-script
+02:10:35 ..... processing R output
+02:10:36 ..... writing output BED file
+02:10:36 ..... beginning clustering of consecutive TSS positions
+02:10:37  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+568 individual TSS were annotated (p-Value cut off 0.0001). 568 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+Running TSSAR for tonnurineus...
+call: bash /home/jfigueiredo/files/frtc//tonnurineus/tssarinput/TSS_tudo.sh
+
+02:10:51 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4042633-tssar-input-NC_011529.1.sam --libM ./SRR4042635-tssar-input-NC_011529.1.sam --fasta ./NC_011529.1.fasta --g_size 1847607 --verbose --noclean --nocluster --tmpdir .
+02:10:51 ..... Start Reading mapped read files.
+02:11:15 ..... ./SRR4042633-tssar-input-NC_011529.1.sam read-in complete
+02:12:37 ..... ./SRR4042635-tssar-input-NC_011529.1.sam read-in complete
+02:12:37 ..... summarizing reads
+02:12:37 ..... writing coverage files
+02:12:39 ..... generating R-script (./R.script_SZCo.R)
+02:12:39 ..... run R-script (might take a while)
+02:23:33 ..... done with R-script
+02:23:33 ..... processing R output
+02:23:44 ..... writing output BED file
+02:23:46 ..... beginning clustering of consecutive TSS positions
+02:23:51  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+1825 individual TSS were annotated (p-Value cut off 0.0001). 1825 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+02:23:57 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR4042634-tssar-input-NC_011529.1.sam --libM ./SRR4042636-tssar-input-NC_011529.1.sam --fasta ./NC_011529.1.fasta --g_size 1847607 --verbose --noclean --nocluster --tmpdir .
+02:23:57 ..... Start Reading mapped read files.
+02:24:04 ..... ./SRR4042634-tssar-input-NC_011529.1.sam read-in complete
+02:24:25 ..... ./SRR4042636-tssar-input-NC_011529.1.sam read-in complete
+02:24:25 ..... summarizing reads
+02:24:25 ..... writing coverage files
+02:24:26 ..... generating R-script (./R.script_NO1d.R)
+02:24:26 ..... run R-script (might take a while)
+02:32:15 ..... done with R-script
+02:32:15 ..... processing R output
+02:32:26 ..... writing output BED file
+02:32:28 ..... beginning clustering of consecutive TSS positions
+02:32:33  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+421 individual TSS were annotated (p-Value cut off 0.0001). 421 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+Running TSSAR for tkodakarensis...
+call: bash /home/jfigueiredo/files/frtc//tkodakarensis/tssarinput/TSS_tudo.sh
+
+02:32:56 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./SRR1205929-tssar-input-NC_006624.1.sam --libM ./SRR1205928-tssar-input-NC_006624.1.sam --fasta ./NC_006624.1.fasta --g_size 2088737 --verbose --noclean --nocluster --tmpdir .
+02:32:56 ..... Start Reading mapped read files.
+02:34:17 ..... ./SRR1205929-tssar-input-NC_006624.1.sam read-in complete
+02:36:05 ..... ./SRR1205928-tssar-input-NC_006624.1.sam read-in complete
+02:36:06 ..... summarizing reads
+02:36:06 ..... writing coverage files
+02:36:08 ..... generating R-script (./R.script_8Rim.R)
+02:36:08 ..... run R-script (might take a while)
+02:51:06 ..... done with R-script
+02:51:06 ..... processing R output
+02:51:17 ..... writing output BED file
+02:51:20 ..... beginning clustering of consecutive TSS positions
+02:51:25  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+4298 individual TSS were annotated (p-Value cut off 0.0001). 4298 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_006624.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_006624.1.bam" for reading: No such file or directory
+[E::hts_open_format] Failed to open file "./-tssar-input-NC_006624.1.bam" : No such file or directory
+samtools view: failed to open "./-tssar-input-NC_006624.1.bam" for reading: No such file or directory
+
+02:51:34 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./-tssar-input-NC_006624.1.sam --libM ./-tssar-input-NC_006624.1.sam --fasta ./NC_006624.1.fasta --g_size 2088737 --verbose --noclean --nocluster --tmpdir .
+02:51:34 ..... Start Reading mapped read files.
+can t open <./-tssar-input-NC_006624.1.sam> now but why
+mv: cannot stat 'TSS_unclustered.bed': No such file or directory
+Running TSSAR for sacidocaldarius...
+call: bash /home/jfigueiredo/files/frtc//sacidocaldarius/tssarinput/TSS_tudo.sh
+
+02:51:49 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./ERR7341245-tssar-input-NC_007181.1.sam --libM ./ERR7341247-tssar-input-NC_007181.1.sam --fasta ./NC_007181.1.fasta --g_size 2225959 --verbose --noclean --nocluster --tmpdir .
+02:51:49 ..... Start Reading mapped read files.
+02:53:45 ..... ./ERR7341245-tssar-input-NC_007181.1.sam read-in complete
+02:54:55 ..... ./ERR7341247-tssar-input-NC_007181.1.sam read-in complete
+02:54:55 ..... summarizing reads
+02:54:55 ..... writing coverage files
+02:54:57 ..... generating R-script (./R.script_DOx4.R)
+02:54:57 ..... run R-script (might take a while)
+03:10:18 ..... done with R-script
+03:10:18 ..... processing R output
+03:10:29 ..... writing output BED file
+03:10:32 ..... beginning clustering of consecutive TSS positions
+03:10:38  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+5873 individual TSS were annotated (p-Value cut off 0.0001). 5873 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+
+03:10:52 TSSAR v0.9.6 has started with the following call:
+               ./TSSAR_12345GaV2_gff --libP ./ERR7341246-tssar-input-NC_007181.1.sam --libM ./ERR7341248-tssar-input-NC_007181.1.sam --fasta ./NC_007181.1.fasta --g_size 2225959 --verbose --noclean --nocluster --tmpdir .
+03:10:52 ..... Start Reading mapped read files.
+03:12:40 ..... ./ERR7341246-tssar-input-NC_007181.1.sam read-in complete
+03:14:14 ..... ./ERR7341248-tssar-input-NC_007181.1.sam read-in complete
+03:14:14 ..... summarizing reads
+03:14:14 ..... writing coverage files
+03:14:16 ..... generating R-script (./R.script_FSlg.R)
+03:14:16 ..... run R-script (might take a while)
+03:30:07 ..... done with R-script
+03:30:07 ..... processing R output
+03:30:19 ..... writing output BED file
+03:30:21 ..... beginning clustering of consecutive TSS positions
+03:30:27  ==>  TSSAR completed
+
+
+  XXXXXXXXXXXXX
+  XX Report: XX
+  XXXXXXXXXXXXX
+5791 individual TSS were annotated (p-Value cut off 0.0001). 5791 remained after consecutive TSS were merged together
+In total 0 region(s) (with a total length of 0 nt [0 % of the genome]) could not be modeled with our zero-truncated Negative Binomial regression (see Dump.bed for details; manual inspection is advised)
+TSSAR was already run for hmediterranei. Skipping.
