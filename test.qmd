@@ -1,0 +1,87 @@
+---
+title: "Development Indicators by Continent"
+author: "Gapminder Analytics Group"
+format: dashboard
+---
+
+```{ojs}
+//| output: false
+dados = await FileAttachment("./data/dados.tsv").tsv({ typed: true })
+
+igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(m => m.default)
+
+```
+
+```{r}
+
+list.files("./results/altss/", pattern="\\.tsv")
+
+```
+
+## {.toolbar}
+    
+```{ojs}
+viewof species = Inputs.select(dados, {label: "Species", format: x => x.Filenames, value: dados[0]})
+```
+
+## Row {height=60%}
+
+### Column {width="35%"}
+
+```{ojs}
+fn = species["Filenames"]
+sp = species["Species"]
+
+results = await FileAttachment(`./results/altss/hsalinarum-alTSS.tsv`).tsv({ typed: true })
+
+viewof linha_selecionada = Inputs.table(results, { 
+  multiple: false, 
+  columns: ["Chromossome", "Position", "Strand", "TSSCount"],
+  header: {
+    "Chromossome": "NC",
+    "Position": "Pos",
+    "Strand": "Strand",
+    "TSSCount": "n(TSS)"
+  },
+  width: {
+    "Chromossome": 100,
+    "Position": 100,
+    "Strand": 50,
+    "TSSCount": 100
+  }
+})
+```
+
+## Row {height=70%}
+
+```{=html}
+<div id="igv-container" style="height: 100%; width: 100%; padding: 5px;"></div>
+```
+
+```{ojs}
+//| output: false
+igvbrowser = {
+  const container = document.querySelector("#igv-container");
+  const options = {
+    reference: {
+      id: `${fn}`,
+      name: `${sp}`,
+      fastaURL: `http://localhost:8080/data/genomes/${fn}.fna`,
+      indexURL: `http://localhost:8080/data/genomes/${fn}.fna.fai`
+    },
+    tracks: [
+      {
+        name: "Anotação",
+        type: "annotation",
+        format: "gff3", 
+        url: `http://localhost:8080/data/genomes/${fn}.gff`,
+        searchable: true
+      }
+    ]
+  };
+  
+  igv.removeAllBrowsers();
+  
+  return igv.createBrowser(container, options);
+}
+```

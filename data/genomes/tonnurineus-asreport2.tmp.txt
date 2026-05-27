@@ -1,0 +1,1 @@
+CP000855.1	assembled-molecule	na	Chromosome	CP000855.1	=	NC_011529.1	Primary Assembly	1847607	na

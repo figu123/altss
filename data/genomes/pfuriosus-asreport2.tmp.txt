@@ -1,0 +1,1 @@
+CP023154.1	assembled-molecule	na	Chromosome	CP023154.1	=	NZ_CP023154.1	Primary Assembly	1889914	na

@@ -1,0 +1,4 @@
+CP001868.2	assembled-molecule	na	Chromosome	CP001868.2	=	NC_017941.2	Primary Assembly	2948884	na
+pHM100	assembled-molecule	pHM100	Plasmid	CP001869.1	=	NC_017942.1	Primary Assembly	129210	na
+pHM300	assembled-molecule	pHM300	Plasmid	CP001870.1	=	NC_017943.1	Primary Assembly	321908	na
+pHM500	assembled-molecule	pHM500	Plasmid	CP001871.1	=	NC_017944.1	Primary Assembly	504705	na

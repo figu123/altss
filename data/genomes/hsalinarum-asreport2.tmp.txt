@@ -1,0 +1,3 @@
+AE004437.1	assembled-molecule	na	Chromosome	AE004437.1	=	NC_002607.1	Primary Assembly	2014239	na
+pNRC100	assembled-molecule	pNRC100	Plasmid	AF016485.1	=	NC_001869.1	Primary Assembly	191346	na
+pNRC200	assembled-molecule	pNRC200	Plasmid	AE004438.1	=	NC_002608.1	Primary Assembly	365425	na
