@@ -1,8 +1,6 @@
 library(readxl)
 
-setwd("~/Desktop/quarto/test/results/altss/")
-
-files <- list.files(".", pattern="\\.xlsx$", full.names=TRUE)
+files <- list.files("./altss", pattern="\\.xlsx$", full.names=TRUE)
 
 lapply(files, function(f){
   df <- read_excel(f)

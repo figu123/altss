@@ -1,5 +1,5 @@
 ---
-title: "Development Indicators by Continent"
+title: "Alternative Start Sites"
 author: "Gapminder Analytics Group"
 format: dashboard
 ---
@@ -7,14 +7,27 @@ format: dashboard
 ```{ojs}
 //| output: false
 dados = await FileAttachment("./data/dados.tsv").tsv({ typed: true })
+// results = await FileAttachment(`./results/altss/hsalinarum-alTSS.tsv`).tsv({ typed: true })
 
 igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(m => m.default)
-
 ```
 
 ```{r}
+#| output: false
 
-list.files("./results/altss/", pattern="\\.tsv")
+dados <- read.table(file = "./data/dados.tsv", sep = '\t', header = TRUE)
+
+results <- list()
+samples <- list()
+for (i in 1:nrow(dados)) {
+  results[[dados[i,]$Filenames]] <- read.table(paste0("./altss/", dados[i,]$Filenames, "-alTSS.tsv"), sep = '\t', header = TRUE)
+  samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
+}
+
+# ojs_define(dados = dados)
+ojs_define(results = results)
+ojs_define(samples = samples)
+
 
 ```
 
@@ -31,23 +44,32 @@ viewof species = Inputs.select(dados, {label: "Species", format: x => x.Filename
 ```{ojs}
 fn = species["Filenames"]
 sp = species["Species"]
+altsstsv = results[fn]
+trans = transpose(altsstsv)
+console.log("Loaded", trans)
 
-results = await FileAttachment(`./results/altss/hsalinarum-alTSS.tsv`).tsv({ typed: true })
-
-viewof linha_selecionada = Inputs.table(results, { 
+viewof selectedline = Inputs.table(trans, { 
   multiple: false, 
-  columns: ["Chromossome", "Position", "Strand", "TSSCount"],
+  columns: ["Chromossome", "Position", "Strand", "OriginalFile", "Protein", "Product", "TSSCount", "total_ortho"],
   header: {
     "Chromossome": "NC",
     "Position": "Pos",
     "Strand": "Strand",
-    "TSSCount": "n(TSS)"
+    "Protein": "Protein",
+    "OriginalFile": "Library",
+    "Product": "Function",
+    "TSSCount": "n(TSS)",
+    "total_ortho": "total_ortho"
   },
   width: {
     "Chromossome": 100,
     "Position": 100,
+    "Protein": 50,
     "Strand": 50,
-    "TSSCount": 100
+    "OriginalFile": 30,
+    "Product": 80, 
+    "TSSCount": 30,
+    "total_ortho": 30
   }
 })
 ```
@@ -60,6 +82,74 @@ viewof linha_selecionada = Inputs.table(results, {
 
 ```{ojs}
 //| output: false
+
+mytracks = [{
+    name: "Anotação",
+    type: "annotation",
+    format: "gff3", 
+    url: `http://localhost:8080/data/genomes/${fn}.gff`,
+    searchable: true
+},
+{
+    name: "TSSAR-alTSSs",
+    type: "annotation",
+    format: "gtf", 
+    url: `http://localhost:8080/altss/${fn}-alTSS.gtf`,
+    searchable: true
+}]
+
+
+// https://igv.org/doc/igvjs/#tracks
+transpose(samples[fn]).forEach(samp => { 
+  /* 
+  //
+  // BAM files are really heavy, but if you want to use them, uncomment this section;
+  // Adjust if your study used paired/unpaired libraries as needed.
+  //
+  mytracks.push({
+    "name": `${samp["Output"]} TEX+`,
+    "type": "alignment",
+    "format": "BAM",
+    "url": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibP"]}-paired.bam`,
+    "indexURL": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibP"]}-paired.bam.bai`,
+  });
+  mytracks.push({
+    "name": `${samp["Output"]} TEX-`,
+    "type": "alignment",
+    "format": "BAM",
+    "url": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibM"]}-paired.bam`,
+    "indexURL": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibM"]}-paired.bam.bai`,
+  });
+  */
+  
+  mytracks.push({
+    "name": `${samp["Output"]} TEX+ FWD`,
+    "type": "wig",
+    "format": "bedGraph",
+    "url": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
+  });
+  mytracks.push({
+    "name": `${samp["Output"]} TEX- FWD`,
+    "type": "wig",
+    "format": "bedGraph",
+    "url": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
+  });
+  mytracks.push({
+    "name": `${samp["Output"]} TEX+ REV`,
+    "type": "wig",
+    "format": "bedGraph",
+    "url": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
+  });
+  mytracks.push({
+    "name": `${samp["Output"]} TEX- REV`,
+    "type": "wig",
+    "format": "bedGraph",
+    "url": `http://localhost:8080/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
+  });
+})
+
+
+
 igvbrowser = {
   const container = document.querySelector("#igv-container");
   const options = {
@@ -69,19 +159,101 @@ igvbrowser = {
       fastaURL: `http://localhost:8080/data/genomes/${fn}.fna`,
       indexURL: `http://localhost:8080/data/genomes/${fn}.fna.fai`
     },
-    tracks: [
-      {
-        name: "Anotação",
-        type: "annotation",
-        format: "gff3", 
-        url: `http://localhost:8080/data/genomes/${fn}.gff`,
-        searchable: true
-      }
-    ]
+    tracks: mytracks
   };
   
   igv.removeAllBrowsers();
   
   return igv.createBrowser(container, options);
 }
+```
+
+```{ojs}
+//| output: false
+
+updateigvposition = {
+  if (selectedline && igvbrowser) {
+    
+    // console.log(selectedline[["Chromossome"]], selectedline[["Position"]])
+    
+    const start = parseInt(selectedline[["Position"]]) - 600
+    const end = parseInt(selectedline[["Position"]]) + 600
+    const locus = `${selectedline[["Chromossome"]]}:${start}-${end}`;
+
+    
+    await igvbrowser.search(locus)
+    
+    /*
+    await igvbrowser.search({
+      "chromosome": selectedline[["Chromossome"]],
+      "start": parseInt(selectedline[["Position"]]) - 40,
+      "end": parseInt(selectedline[["Position"]]) + 40
+    })
+    const excludon_atual = amostra_selecionada;
+
+    const amostra = excludon_atual.run;
+    const chr = excludon_atual.seqname;
+
+    const margem = 300;
+    const start_num = parseInt(excludon_atual.merged_start);
+    const end_num = parseInt(excludon_atual.merged_end);
+
+    const inicio = Math.max(1, start_num - margem);
+    const fim = end_num + margem;
+
+    const locus = `${chr}:${inicio}-${fim}`;
+
+    await meu_igv.search(locus);
+
+    let tracksParaRemover = meu_igv.trackViews.filter(tv => {
+        let nomeDaTrack = tv.track.name || "";
+        return nomeDaTrack.includes("Forward (+)") ||
+               nomeDaTrack.includes("Reverse (-)") ||
+               nomeDaTrack.includes("Excludon");
+    });
+
+    for (let tv of tracksParaRemover) {
+        meu_igv.removeTrack(tv.track);
+    }
+
+    await meu_igv.loadTrack({
+        name: "Forward (+)",
+        url: "http://localhost:8080/results/hvol/cov/" + amostra + "_plus.bedgraph",
+        type: "wig",
+        color: "rgb(102,102,102)",
+        autoscaleGroup: "1",
+        height: 70,
+        order: 1
+    });
+
+    await meu_igv.loadTrack({
+        name: "ExcludonFinder Results",
+        url: "http://localhost:8080/results/hvol/excludon-finder/viz/" + amostra + ".gff",
+        type: "annotation",
+        format: "gff3",
+        displayMode: "expanded",
+        color: "rgb(0,0,0)",
+        altColor: "rgb(0,102,51)",
+        fontSize: "10",
+        autoHeight: true,
+        maxHeight: 10000,
+        groupByStrand: "false",
+        order: 2
+    });
+
+    await meu_igv.loadTrack({
+        name: "Reverse (-)",
+        url: "http://localhost:8080/results/hvol/cov/" + amostra + "_minus.bedgraph",
+        type: "wig",
+        color: "rgb(0,102,51)",
+        autoscaleGroup: "1",
+        height: 70,
+        order: 3
+    });
+    
+  */
+  }
+}
+
+
 ```
