@@ -1,0 +1,4 @@
+/* fixes ag grid not allowing me to copy stuff from its cells */
+.ag-cell {
+  user-select: text;
+}

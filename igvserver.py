@@ -19,7 +19,7 @@ class CORSAndRangeHandler(RangeRequestHandler):
 
 
 if __name__ == "__main__":
-    porta = 8080
+    porta = 5497
     print(f"Servidor IGV rodando na porta {porta}!")
     httpd = socketserver.TCPServer(("", porta), CORSAndRangeHandler)
     httpd.serve_forever()

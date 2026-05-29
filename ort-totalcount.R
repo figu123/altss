@@ -5,7 +5,7 @@ library(writexl)
 library(tidyverse)
 
 for (i in 1:nrow(dados)) {
-  df <- read_excel(paste0("./altss/", dados[i,]$Filenames, "-alTSS.xlsx"))
+  df <- read_excel(paste0("./altss/", dados[i,]$Filenames, "-pTSS.xlsx"))
   df$total_ortho <- 0
   
   for (k in 1:nrow(dados)) {
@@ -16,5 +16,5 @@ for (i in 1:nrow(dados)) {
     }
   }
   
-  write_xlsx(df, paste0("./altss/", dados[i,]$Filenames, "-alTSS.xlsx"))
+  write_xlsx(df, paste0("./altss/", dados[i,]$Filenames, "-pTSS.xlsx"))
 }

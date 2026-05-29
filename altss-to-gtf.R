@@ -4,7 +4,7 @@ library(readxl)
 dados <- read.table("./dados.tsv", sep = "\t", header = TRUE)
 
 for (i in 1:nrow(dados)) {
-  df <- read_excel(paste0("./altss/", dados[i,]$Filenames, "-alTSS.xlsx"))
+  df <- read_excel(paste0("./altss/", dados[i,]$Filenames, "-pTSS.xlsx"))
 
   df$gtfinfo <- ""
   for (j in 1:nrow(df)) {
@@ -30,6 +30,6 @@ for (i in 1:nrow(dados)) {
     V8 = ".",
     V9 = df$gtfinfo)
 
-  outfile_name <- paste0("./altss/", dados[i,]$Filenames, "-alTSS")
+  outfile_name <- paste0("./altss/", dados[i,]$Filenames, "-pTSS")
   write_tsv(hsv2, paste0(outfile_name, ".gtf"), col_names = FALSE, escape = "none")
 }
