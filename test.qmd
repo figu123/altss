@@ -58,34 +58,6 @@ sp = species["Species"]
 altsstsv = results[fn]
 trans = transpose(altsstsv)
 
-/*
-viewof selectedline = Inputs.table(trans, { 
-  multiple: false, 
-  columns: ["Chromossome", "Position", "Strand", "OriginalFile", "Protein", "Product", "TSSCount", "total_ortho"],
-  header: {
-    "Chromossome": "NC",
-    "Position": "Pos",
-    "Strand": "Strand",
-    "Protein": "Protein",
-    "OriginalFile": "Library",
-    "Product": "Function",
-    "TSSCount": "n(TSS)",
-    "total_ortho": "total_ortho"
-  },
-  width: {
-    "Chromossome": 100,
-    "Position": 100,
-    "Protein": 50,
-    "Strand": 50,
-    "OriginalFile": 30,
-    "Product": 80, 
-    "TSSCount": 30,
-    "total_ortho": 30
-  }
-})
-*/
-
-
 toUniprot = function(params) {
     const link = `<a href="https://www.uniprot.org/uniprotkb?query=${params.value}" target="_blank">${params.value}</a>`;
     
@@ -94,9 +66,8 @@ toUniprot = function(params) {
     
 mygrid = {
     document.querySelector("#myGrid").innerHTML = ""
-    // Grid Options: Contains all of the Data Grid configurations
-    // Grid Options: Contains all of the Data Grid configurations
     
+    // Grid Options: Contains all of the Data Grid configurations
     const gridOptions = {
       // Data to be displayed
       rowData: trans,
@@ -111,6 +82,7 @@ mygrid = {
         { field: "Product", width: 420, headerName: 'Function' },
         { field: "TSSCount", width: 140, headerName: 'n(TSS)' },
         { field: "total_ortho", width: 140, headerName: 'n(ortho)'  },
+        { field: "memenumsites", width: 140, headerName: 'n(motifs)' },
         { field: "SubClass", width: 90, headerName: 'Subclass'  }
       ],
       // Configurations applied to all columns
@@ -119,8 +91,7 @@ mygrid = {
       //   editable: true,
       },
       // Grid Options & Callbacks
-      pagination: true,
-      cellSelection: true,
+      // pagination: true,
       rowSelection: { mode: "singleRow", checkboxes: false, enableClickSelection: true, copySelectedRows: true },
       onSelectionChanged: (event) => {
         // console.log("Row Selection Event!", event);
@@ -132,9 +103,8 @@ mygrid = {
         const locus = `${lineselected[["Chromossome"]]}:${start}-${end}`;
     
         if (typeof igvbrowser != "undefined") {
-          igvbrowser.search(locus)
+           igvbrowser.search(locus)
         }
-        
         // console.log(igvbrowser)
       },
       onCellValueChanged: (event) => {
@@ -142,8 +112,6 @@ mygrid = {
       },
     };
 
-    
-    // Your Javascript code to create the Data Grid
     const myGridElement = document.querySelector('#myGrid');
     agGrid.createGrid(myGridElement, gridOptions);
 }
@@ -159,20 +127,155 @@ mygrid = {
 ```{ojs}
 //| output: false
 
-mytracks = [{
-    name: "Anotação",
-    type: "annotation",
-    format: "gff3", 
-    url: `${igvserver}/data/genomes/${fn}.gff`,
-    searchable: true
-},
-{
-    name: "TSSAR-pTSSs",
-    type: "annotation",
-    format: "gtf", 
-    url: `${igvserver}/altss/${fn}-pTSS.gtf`,
-    searchable: true
-}]
+// defining mytracks
+mytracks = (async () => {
+  let candidates = [
+    {
+      name: "Anotação",
+      type: "annotation",
+      format: "gff3", 
+      url: `${igvserver}/data/genomes/${fn}.gff`,
+      searchable: true
+    },
+    {
+      name: "TSSAR-pTSSs",
+      type: "annotation",
+      format: "gtf", 
+      url: `${igvserver}/altss/${fn}-pTSS.gtf`,
+      searchable: true
+    },
+    {
+      name: "MEME Motif",
+      type: "annotation",
+      format: "gtf", 
+      url: `${igvserver}/altss/${fn}-meme-pTSS.gtf`,
+      searchable: true
+    },
+  ]
+  
+  // attempts to add samples into mytracks
+  // https://igv.org/doc/igvjs/#tracks
+  transpose(samples[fn]).forEach(samp => { 
+    /* 
+    //
+    // BAM files are really heavy, but if you want to use them, uncomment this section;
+    // Adjust if your study used paired/unpaired libraries as needed.
+    //
+    // paired
+    candidates.push({
+      "name": `${samp["Output"]} TEX+`,
+      "type": "alignment",
+      "format": "BAM",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired.bam`,
+      "indexURL": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired.bam.bai`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX-`,
+      "type": "alignment",
+      "format": "BAM",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired.bam`,
+      "indexURL": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired.bam.bai`,
+    });
+    
+    // unpaired
+    candidates.push({
+      "name": `${samp["Output"]} TEX+`,
+      "type": "alignment",
+      "format": "BAM",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-unpaired.bam`,
+      "indexURL": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-unpaired.bam.bai`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX-`,
+      "type": "alignment",
+      "format": "BAM",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-unpaired.bam`,
+      "indexURL": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-unpaired.bam.bai`,
+    });
+    */
+    
+    candidates.push({
+      "name": `${samp["Output"]} TEX+ FWD Unpaired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX- FWD Unpaired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX+ REV Unpaired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX- REV Unpaired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
+    });
+  
+    candidates.push({
+      "name": `${samp["Output"]} TEX+ FWD Paired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX- FWD Paired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX+ REV Paired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
+    });
+    candidates.push({
+      "name": `${samp["Output"]} TEX- REV Paired`,
+      "type": "wig",
+      "format": "bedGraph",
+      "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
+    });
+  })
+  
+  // tests if file exists, if it does, append to "results".
+  async function urlExists(url) {
+    try {
+      let res = await fetch(url, { method: 'HEAD' })
+      if (res.status === 405 || res.status === 501) {
+        res = await fetch(url, { method: 'GET', cache: 'no-store' })
+      }
+      return res.ok
+    } catch (e) {
+      return false
+    }
+  }
+
+  const results = await Promise.all(candidates.map(async t => {
+    if (!t.url) return null
+    const ok = await urlExists(t.url)
+    if (ok) return t
+    // console.warn('URL missing:', t.url)
+    return null
+  }))
+
+  return results.filter(Boolean)
+})()
+
+console.log("Mytrack set to", mytracks)
+
+
+```
+
+```{ojs}
+//| output: false
 
 igvbrowser = {
   const container = document.querySelector("#igv-container");
@@ -187,89 +290,9 @@ igvbrowser = {
   };
   
   igv.removeAllBrowsers();
-  
+
   return igv.createBrowser(container, options);
 }
-```
-
-```{ojs}
-//| output: false
-
-// attempts to add samples into mytracks
-// https://igv.org/doc/igvjs/#tracks
-transpose(samples[fn]).forEach(samp => { 
-  /* 
-  //
-  // BAM files are really heavy, but if you want to use them, uncomment this section;
-  // Adjust if your study used paired/unpaired libraries as needed.
-  //
-  mytracks.push({
-    "name": `${samp["Output"]} TEX+`,
-    "type": "alignment",
-    "format": "BAM",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired.bam`,
-    "indexURL": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired.bam.bai`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX-`,
-    "type": "alignment",
-    "format": "BAM",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired.bam`,
-    "indexURL": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired.bam.bai`,
-  });
-  */
-  
-  mytracks.push({
-    "name": `${samp["Output"]} TEX+ FWD Unpaired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX- FWD Unpaired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX+ REV Unpaired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX- REV Unpaired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
-  });
-  /*
-  mytracks.push({
-    "name": `${samp["Output"]} TEX+ FWD Paired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX- FWD Paired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX+ REV Paired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
-  });
-  mytracks.push({
-    "name": `${samp["Output"]} TEX- REV Paired`,
-    "type": "wig",
-    "format": "bedGraph",
-    "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
-  });
-  */
-})
 ```
 
 ```{ojs}
