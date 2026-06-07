@@ -14,12 +14,12 @@
           "meme", "./memeinput/tonnurineus-alTSS.fasta", "-dna", "-oc",
           "./memeoutput/tonnurineus-alTSS", "-brief", "100000", "-time",
           "18000", "-mod", "zoops", "-nmotifs", "4", "-minw", "5", "-maxw",
-          "10", "-minsites", "40", "-objfun", "classic", "-revcomp",
-          "-markov_order", "0", "-mpi"
+          "10", "-minsites", "40", "-objfun", "classic", "-markov_order", "0",
+          "-mpi"
         ],
         "options": {
           "mod": "zoops",
-          "revcomp": true,
+          "revcomp": false,
           "nmotifs": 4,
           "objfun": "E-value of product of p-values",
           "spfun": "E-value of product of p-values",
@@ -123,7 +123,7 @@
         "background": {
           "source": "--sequences--",
           "order": 0,
-          "freqs": [0.291, 0.209, 0.209, 0.291]
+          "freqs": [0.299, 0.215, 0.204, 0.282]
         },
         "sequence_db": {
           "primary_source": "./memeinput/tonnurineus-alTSS.fasta",
@@ -132,7 +132,7 @@
           "control_source": "--none--",
           "control_count": 0,
           "control_positions": 0,
-          "freqs": [0.289, 0.211, 0.211, 0.289],
+          "freqs": [0.294, 0.217, 0.205, 0.284],
           "sequences": [
             {
               "name": "NC_011529.1|+|529729|16|P",
@@ -268,1125 +268,1044 @@
         "motifs": [
           {
             "db": 0,
-            "id": "CCCCTCTTCT",
+            "id": "GDGAAARST",
             "alt": "MEME-1",
-            "len": 10,
-            "nsites": 25,
-            "evalue": "1.3e-013",
-            "ic": 12.7,
-            "re": 13.0,
-            "llr": 225,
-            "bt": 7.51073,
-            "time": 0.174666,
+            "len": 9,
+            "nsites": 30,
+            "evalue": "2.5e-014",
+            "ic": 10.6,
+            "re": 10.5,
+            "llr": 219,
+            "bt": 6.69075,
+            "time": 0.101513,
             "psm": [
-              [-1129, 142, 20, -54], [-1129, 193, -1129, -54], 
-              [-28, 131, 20, -1129], [-1129, 213, -139, -1129], 
-              [-1129, -1129, 61, 123], [-1129, 170, -1129, 14], 
-              [-1129, -1129, -1129, 178], [-186, -1129, -1129, 166], 
-              [-1129, 186, -1129, -28], [-286, -1129, -1129, 172]
+              [-316, -268, 219, -1155], [15, -169, 56, 9], 
+              [-316, -110, 191, -149], [159, -110, -1155, -1155], 
+              [174, -1155, -1155, -1155], [164, -1155, -261, -308], 
+              [53, -37, 97, -1155], [-316, 101, 139, -1155], 
+              [-1155, -110, -1155, 167]
             ],
             "pwm": [
-              [0.000000, 0.560000, 0.240000, 0.200000], 
-              [0.000000, 0.800000, 0.000000, 0.200000], 
-              [0.240000, 0.520000, 0.240000, 0.000000], 
-              [0.000000, 0.920000, 0.080000, 0.000000], 
-              [0.000000, 0.000000, 0.320000, 0.680000], 
-              [0.000000, 0.680000, 0.000000, 0.320000], 
-              [0.000000, 0.000000, 0.000000, 1.000000], 
-              [0.080000, 0.000000, 0.000000, 0.920000], 
-              [0.000000, 0.760000, 0.000000, 0.240000], 
-              [0.040000, 0.000000, 0.000000, 0.960000]
+              [0.033333, 0.033333, 0.933333, 0.000000], 
+              [0.333333, 0.066667, 0.300000, 0.300000], 
+              [0.033333, 0.100000, 0.766667, 0.100000], 
+              [0.900000, 0.100000, 0.000000, 0.000000], 
+              [1.000000, 0.000000, 0.000000, 0.000000], 
+              [0.933333, 0.000000, 0.033333, 0.033333], 
+              [0.433333, 0.166667, 0.400000, 0.000000], 
+              [0.033333, 0.433333, 0.533333, 0.000000], 
+              [0.000000, 0.100000, 0.000000, 0.900000]
             ],
             "sites": [
               {
-                "seq": 27,
-                "pos": 54,
+                "seq": 19,
+                "pos": 84,
                 "rc": false,
-                "pvalue": 5.98e-07,
-                "lflank": "AGGCCCCAAC",
-                "match": "CCCCTCTTCT",
-                "rflank": "TTTTAATCGT"
+                "pvalue": 1.70e-05,
+                "lflank": "ATGCAGAAAA",
+                "match": "GGGAAAAGT",
+                "rflank": "AGAGCCATGC"
               }, {
-                "seq": 26,
-                "pos": 34,
-                "rc": false,
-                "pvalue": 5.98e-07,
-                "lflank": "AGGCCCCAAC",
-                "match": "CCCCTCTTCT",
-                "rflank": "TTTTAATCGT"
-              }, {
-                "seq": 25,
-                "pos": 83,
-                "rc": false,
-                "pvalue": 5.98e-07,
-                "lflank": "AGGCCCCAAC",
-                "match": "CCCCTCTTCT",
-                "rflank": "TTTTAATCGT"
-              }, {
-                "seq": 23,
-                "pos": 17,
-                "rc": false,
-                "pvalue": 5.98e-07,
-                "lflank": "AGGCCCCAAC",
-                "match": "CCCCTCTTCT",
-                "rflank": "TTTTAATCGT"
-              }, {
-                "seq": 22,
-                "pos": 12,
-                "rc": false,
-                "pvalue": 5.98e-07,
-                "lflank": "AGGCCCCAAC",
-                "match": "CCCCTCTTCT",
-                "rflank": "TTTTAATCGT"
-              }, {
-                "seq": 11,
-                "pos": 91,
-                "rc": false,
-                "pvalue": 5.98e-07,
-                "lflank": "AGGCCCCAAC",
-                "match": "CCCCTCTTCT",
-                "rflank": "TTTTAATCGT"
-              }, {
-                "seq": 21,
-                "pos": 71,
-                "rc": false,
-                "pvalue": 2.41e-05,
-                "lflank": "CCTTAACTTC",
-                "match": "TCGCGCTTCT",
-                "rflank": "GTGCACTTCA"
-              }, {
-                "seq": 20,
+                "seq": 15,
                 "pos": 64,
                 "rc": false,
-                "pvalue": 2.41e-05,
-                "lflank": "CCTTAACTTC",
-                "match": "TCGCGCTTCT",
-                "rflank": "GTGCACTTCA"
-              }, {
-                "seq": 19,
-                "pos": 78,
-                "rc": true,
-                "pvalue": 2.41e-05,
-                "lflank": "GCTCTACTTT",
-                "match": "TCCCTTTTCT",
-                "rflank": "GCATTTAAAT"
-              }, {
-                "seq": 2,
-                "pos": 30,
-                "rc": true,
-                "pvalue": 2.41e-05,
-                "lflank": "GCTCTACTTT",
-                "match": "TCCCTTTTCT",
-                "rflank": "GCATTTAAAT"
-              }, {
-                "seq": 1,
-                "pos": 24,
-                "rc": true,
-                "pvalue": 2.41e-05,
-                "lflank": "GCTCTACTTT",
-                "match": "TCCCTTTTCT",
-                "rflank": "GCATTTAAAT"
-              }, {
-                "seq": 17,
-                "pos": 19,
-                "rc": true,
-                "pvalue": 2.87e-05,
-                "lflank": "GAACGTTTCT",
-                "match": "CCACGTTTCT",
-                "rflank": "ATGGGGAGAA"
-              }, {
-                "seq": 16,
-                "pos": 17,
-                "rc": true,
-                "pvalue": 2.87e-05,
-                "lflank": "GAACGTTTCT",
-                "match": "CCACGTTTCT",
-                "rflank": "ATGGGGAGAA"
-              }, {
-                "seq": 9,
-                "pos": 28,
-                "rc": true,
-                "pvalue": 2.87e-05,
-                "lflank": "GAACGTTTCT",
-                "match": "CCACGTTTCT",
-                "rflank": "ATGGGGAGAA"
-              }, {
-                "seq": 0,
-                "pos": 23,
-                "rc": true,
-                "pvalue": 2.87e-05,
-                "lflank": "GAACGTTTCT",
-                "match": "CCACGTTTCT",
-                "rflank": "ATGGGGAGAA"
-              }, {
-                "seq": 28,
-                "pos": 89,
-                "rc": false,
-                "pvalue": 3.67e-05,
-                "lflank": "CCCCCTTTCT",
-                "match": "CTACTCTTCT",
-                "rflank": "TGGGATGATG"
-              }, {
-                "seq": 6,
-                "pos": 100,
-                "rc": false,
-                "pvalue": 5.26e-05,
-                "lflank": "AATAGACCTG",
-                "match": "GTGCTCTTCT",
-                "rflank": "G"
-              }, {
-                "seq": 3,
-                "pos": 66,
-                "rc": false,
-                "pvalue": 5.26e-05,
-                "lflank": "AATAGACCTG",
-                "match": "GTGCTCTTCT",
-                "rflank": "GGAGCCATCC"
-              }, {
-                "seq": 31,
-                "pos": 48,
-                "rc": true,
-                "pvalue": 8.27e-05,
-                "lflank": "TCTATCGAAT",
-                "match": "CCCGTCTTTT",
-                "rflank": "TGATAAGATA"
-              }, {
-                "seq": 14,
-                "pos": 17,
-                "rc": true,
-                "pvalue": 9.33e-05,
-                "lflank": "AATGGACTTC",
-                "match": "GCCCTCTTCA",
-                "rflank": "TGGAAAGGTA"
-              }, {
-                "seq": 5,
-                "pos": 81,
-                "rc": false,
-                "pvalue": 1.24e-04,
-                "lflank": "ACTCAATTCA",
-                "match": "GTCCGCTTTT",
-                "rflank": "ACTGGCTAAC"
-              }, {
-                "seq": 4,
-                "pos": 77,
-                "rc": false,
-                "pvalue": 1.24e-04,
-                "lflank": "ACTCAATTCA",
-                "match": "GTCCGCTTTT",
-                "rflank": "ACTGGCTAAC"
-              }, {
-                "seq": 15,
-                "pos": 94,
-                "rc": true,
-                "pvalue": 1.42e-04,
-                "lflank": "CCCATCA",
-                "match": "CCGCTCTATT",
-                "rflank": "TTATGAAAAA"
+                "pvalue": 1.70e-05,
+                "lflank": "CCACGCTCAT",
+                "match": "GAGAAAGGT",
+                "rflank": "TATATAGGTC"
               }, {
                 "seq": 13,
-                "pos": 93,
-                "rc": true,
-                "pvalue": 1.42e-04,
-                "lflank": "ACCCATCA",
-                "match": "CCGCTCTATT",
-                "rflank": "TTATGAAAAA"
+                "pos": 63,
+                "rc": false,
+                "pvalue": 1.70e-05,
+                "lflank": "CCACGCTCAT",
+                "match": "GAGAAAGGT",
+                "rflank": "TATATAGGTC"
+              }, {
+                "seq": 2,
+                "pos": 36,
+                "rc": false,
+                "pvalue": 1.70e-05,
+                "lflank": "ATGCAGAAAA",
+                "match": "GGGAAAAGT",
+                "rflank": "AGAGCCATGC"
+              }, {
+                "seq": 1,
+                "pos": 30,
+                "rc": false,
+                "pvalue": 1.70e-05,
+                "lflank": "ATGCAGAAAA",
+                "match": "GGGAAAAGT",
+                "rflank": "AGAGCCATGC"
+              }, {
+                "seq": 27,
+                "pos": 34,
+                "rc": false,
+                "pvalue": 4.02e-05,
+                "lflank": "TCGAGCTTGA",
+                "match": "GTGAAAGCT",
+                "rflank": "CAGGCCCCAA"
+              }, {
+                "seq": 26,
+                "pos": 14,
+                "rc": false,
+                "pvalue": 4.02e-05,
+                "lflank": "TCGAGCTTGA",
+                "match": "GTGAAAGCT",
+                "rflank": "CAGGCCCCAA"
+              }, {
+                "seq": 25,
+                "pos": 63,
+                "rc": false,
+                "pvalue": 4.02e-05,
+                "lflank": "TCGAGCTTGA",
+                "match": "GTGAAAGCT",
+                "rflank": "CAGGCCCCAA"
+              }, {
+                "seq": 11,
+                "pos": 71,
+                "rc": false,
+                "pvalue": 4.02e-05,
+                "lflank": "TCGAGCTTGA",
+                "match": "GTGAAAGCT",
+                "rflank": "CAGGCCCCAA"
+              }, {
+                "seq": 17,
+                "pos": 28,
+                "rc": false,
+                "pvalue": 6.57e-05,
+                "lflank": "TAGAAACGTG",
+                "match": "GAGAAACGT",
+                "rflank": "TCTGAAACAC"
+              }, {
+                "seq": 16,
+                "pos": 26,
+                "rc": false,
+                "pvalue": 6.57e-05,
+                "lflank": "TAGAAACGTG",
+                "match": "GAGAAACGT",
+                "rflank": "TCTGAAACAC"
+              }, {
+                "seq": 9,
+                "pos": 37,
+                "rc": false,
+                "pvalue": 6.57e-05,
+                "lflank": "TAGAAACGTG",
+                "match": "GAGAAACGT",
+                "rflank": "TCTGAAACAC"
+              }, {
+                "seq": 0,
+                "pos": 32,
+                "rc": false,
+                "pvalue": 6.57e-05,
+                "lflank": "TAGAAACGTG",
+                "match": "GAGAAACGT",
+                "rflank": "TCTGAAACAC"
+              }, {
+                "seq": 6,
+                "pos": 39,
+                "rc": false,
+                "pvalue": 9.51e-05,
+                "lflank": "TTACTTTTTT",
+                "match": "GGCAAAGGT",
+                "rflank": "AACTCGCTGG"
+              }, {
+                "seq": 3,
+                "pos": 5,
+                "rc": false,
+                "pvalue": 9.51e-05,
+                "lflank": "TTTTT",
+                "match": "GGCAAAGGT",
+                "rflank": "AACTCGCTGG"
               }, {
                 "seq": 24,
-                "pos": 97,
-                "rc": true,
-                "pvalue": 4.42e-04,
-                "lflank": "TCCA",
-                "match": "GCAGTTTTTT",
-                "rflank": "TTTTCAGCTC"
+                "pos": 72,
+                "rc": false,
+                "pvalue": 2.17e-04,
+                "lflank": "GTGGATGGAC",
+                "match": "GTTAAAGGT",
+                "rflank": "TTAGACGAGC"
+              }, {
+                "seq": 23,
+                "pos": 50,
+                "rc": false,
+                "pvalue": 2.37e-04,
+                "lflank": "AATGGCTTCA",
+                "match": "GAGAAAACC",
+                "rflank": "CTCATCTTGG"
+              }, {
+                "seq": 22,
+                "pos": 45,
+                "rc": false,
+                "pvalue": 2.37e-04,
+                "lflank": "AATGGCTTCA",
+                "match": "GAGAAAACC",
+                "rflank": "CTCATCTTGG"
+              }, {
+                "seq": 5,
+                "pos": 65,
+                "rc": false,
+                "pvalue": 2.37e-04,
+                "lflank": "TTACAAAGAC",
+                "match": "GTGCAAACT",
+                "rflank": "CAATTCAGTC"
+              }, {
+                "seq": 4,
+                "pos": 61,
+                "rc": false,
+                "pvalue": 2.37e-04,
+                "lflank": "TTACAAAGAC",
+                "match": "GTGCAAACT",
+                "rflank": "CAATTCAGTC"
+              }, {
+                "seq": 21,
+                "pos": 100,
+                "rc": false,
+                "pvalue": 3.39e-04,
+                "lflank": "AATCGCAATT",
+                "match": "GTTAAAACT",
+                "rflank": "TG"
+              }, {
+                "seq": 20,
+                "pos": 93,
+                "rc": false,
+                "pvalue": 3.39e-04,
+                "lflank": "AATCGCAATT",
+                "match": "GTTAAAACT",
+                "rflank": "TGCCTGTGG"
+              }, {
+                "seq": 30,
+                "pos": 67,
+                "rc": false,
+                "pvalue": 3.57e-04,
+                "lflank": "CACTTTGTTA",
+                "match": "GGCAAACCT",
+                "rflank": "ATATAAGTTA"
+              }, {
+                "seq": 28,
+                "pos": 59,
+                "rc": false,
+                "pvalue": 4.24e-04,
+                "lflank": "AATTTCCTTT",
+                "match": "GAGAAGGCT",
+                "rflank": "TAGCTTTTTA"
+              }, {
+                "seq": 31,
+                "pos": 67,
+                "rc": false,
+                "pvalue": 4.97e-04,
+                "lflank": "GATTCGATAG",
+                "match": "AGGAAAGGT",
+                "rflank": "TTTTATATAA"
+              }, {
+                "seq": 14,
+                "pos": 62,
+                "rc": false,
+                "pvalue": 4.97e-04,
+                "lflank": "TATTGAAGTA",
+                "match": "GAGAAAAAT",
+                "rflank": "ATAAATTTTG"
+              }, {
+                "seq": 8,
+                "pos": 62,
+                "rc": false,
+                "pvalue": 4.97e-04,
+                "lflank": "TTCGCCTGGA",
+                "match": "GCGCAAAGT",
+                "rflank": "TTTTAAACAC"
+              }, {
+                "seq": 7,
+                "pos": 44,
+                "rc": false,
+                "pvalue": 5.49e-04,
+                "lflank": "TTTTTTCATC",
+                "match": "GGGAATACT",
+                "rflank": "TTTACAAGAA"
+              }, {
+                "seq": 29,
+                "pos": 66,
+                "rc": false,
+                "pvalue": 1.22e-03,
+                "lflank": "ATTAGGATAA",
+                "match": "CCGAAAAGT",
+                "rflank": "TTATAATCAT"
+              }, {
+                "seq": 12,
+                "pos": 48,
+                "rc": false,
+                "pvalue": 1.39e-03,
+                "lflank": "CCTTTAGTTT",
+                "match": "GGAAAAGGC",
+                "rflank": "CGTTAAAAAA"
               }
             ]
           }, {
             "db": 0,
-            "id": "HKYCCAGAGG",
+            "id": "AAYCCMCYYT",
             "alt": "MEME-2",
             "len": 10,
-            "nsites": 17,
-            "evalue": "1.4e-010",
-            "ic": 14.3,
-            "re": 15.1,
-            "llr": 178,
-            "bt": 7.64733,
-            "time": 0.333720,
+            "nsites": 18,
+            "evalue": "1.6e-009",
+            "ic": 13.2,
+            "re": 13.3,
+            "llr": 166,
+            "bt": 7.62953,
+            "time": 0.178838,
             "psm": [
-              [2, 117, -1073, -30], [-1073, -1073, 75, 115], 
-              [-1073, 149, -1073, 50], [-1073, 217, -1073, -230], 
-              [-1073, 225, -1073, -1073], [169, -183, -1073, -1073], 
-              [2, -1073, 175, -1073], [140, 17, -1073, -1073], 
-              [-1073, -1073, 225, -1073], [-1073, -1073, 225, -1073]
+              [174, -1081, -1081, -1081], [174, -1081, -1081, -1081], 
+              [-1081, 122, -187, 66], [-1081, 222, -1081, -1081], 
+              [-1081, 196, -29, -1081], [15, 163, -1081, -1081], 
+              [-1081, 222, -1081, -1081], [-84, 63, -88, 46], 
+              [-143, 122, -1081, 46], [-43, -1081, -1081, 146]
             ],
             "pwm": [
-              [0.294118, 0.470588, 0.000000, 0.235294], 
-              [0.000000, 0.000000, 0.352941, 0.647059], 
-              [0.000000, 0.588235, 0.000000, 0.411765], 
-              [0.000000, 0.941176, 0.000000, 0.058824], 
+              [1.000000, 0.000000, 0.000000, 0.000000], 
+              [1.000000, 0.000000, 0.000000, 0.000000], 
+              [0.000000, 0.500000, 0.055556, 0.444444], 
               [0.000000, 1.000000, 0.000000, 0.000000], 
-              [0.941176, 0.058824, 0.000000, 0.000000], 
-              [0.294118, 0.000000, 0.705882, 0.000000], 
-              [0.764706, 0.235294, 0.000000, 0.000000], 
-              [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.000000, 0.000000, 1.000000, 0.000000]
+              [0.000000, 0.833333, 0.166667, 0.000000], 
+              [0.333333, 0.666667, 0.000000, 0.000000], 
+              [0.000000, 1.000000, 0.000000, 0.000000], 
+              [0.166667, 0.333333, 0.111111, 0.388889], 
+              [0.111111, 0.500000, 0.000000, 0.388889], 
+              [0.222222, 0.000000, 0.000000, 0.777778]
             ],
             "sites": [
               {
                 "seq": 27,
-                "pos": 7,
-                "rc": true,
-                "pvalue": 4.29e-07,
-                "lflank": "CGACCTCGTT",
-                "match": "CTCCCAGAGG",
-                "rflank": "CCATGGA"
-              }, {
-                "seq": 25,
-                "pos": 36,
-                "rc": true,
-                "pvalue": 4.29e-07,
-                "lflank": "CGACCTCGTT",
-                "match": "CTCCCAGAGG",
-                "rflank": "CCATGGATGT"
-              }, {
-                "seq": 11,
-                "pos": 44,
-                "rc": true,
-                "pvalue": 4.29e-07,
-                "lflank": "CGACCTCGTT",
-                "match": "CTCCCAGAGG",
-                "rflank": "CCATGGATGT"
-              }, {
-                "seq": 28,
-                "pos": 25,
-                "rc": false,
-                "pvalue": 1.34e-06,
-                "lflank": "CAGTGAAATC",
-                "match": "CTTCCAGAGG",
-                "rflank": "GATATCATCG"
-              }, {
-                "seq": 15,
-                "pos": 21,
-                "rc": true,
-                "pvalue": 3.27e-06,
-                "lflank": "ATCAGGAATA",
-                "match": "TTCCCAGAGG",
-                "rflank": "TTATGAAAAG"
-              }, {
-                "seq": 13,
-                "pos": 20,
-                "rc": true,
-                "pvalue": 3.27e-06,
-                "lflank": "ATCAGGAATA",
-                "match": "TTCCCAGAGG",
-                "rflank": "TTATGAAAAG"
-              }, {
-                "seq": 19,
-                "pos": 58,
-                "rc": false,
-                "pvalue": 6.64e-06,
-                "lflank": "GACATAAAAT",
-                "match": "CGCCCAAAGG",
-                "rflank": "ATTTAAATGC"
-              }, {
-                "seq": 2,
-                "pos": 10,
-                "rc": false,
-                "pvalue": 6.64e-06,
-                "lflank": "GACATAAAAT",
-                "match": "CGCCCAAAGG",
-                "rflank": "ATTTAAATGC"
-              }, {
-                "seq": 1,
-                "pos": 4,
-                "rc": false,
-                "pvalue": 6.64e-06,
-                "lflank": "AAAT",
-                "match": "CGCCCAAAGG",
-                "rflank": "ATTTAAATGC"
-              }, {
-                "seq": 17,
                 "pos": 51,
                 "rc": false,
-                "pvalue": 1.46e-05,
-                "lflank": "AAACACGAAA",
-                "match": "ATTCCAGCGG",
-                "rflank": "GTTCCTAATA"
+                "pvalue": 1.24e-06,
+                "lflank": "CTCAGGCCCC",
+                "match": "AACCCCCTCT",
+                "rflank": "TCTTTTTAAT"
               }, {
-                "seq": 16,
-                "pos": 49,
+                "seq": 26,
+                "pos": 31,
                 "rc": false,
-                "pvalue": 1.46e-05,
-                "lflank": "AAACACGAAA",
-                "match": "ATTCCAGCGG",
-                "rflank": "GTTCCTAATA"
+                "pvalue": 1.24e-06,
+                "lflank": "CTCAGGCCCC",
+                "match": "AACCCCCTCT",
+                "rflank": "TCTTTTTAAT"
               }, {
-                "seq": 9,
-                "pos": 60,
+                "seq": 25,
+                "pos": 80,
                 "rc": false,
-                "pvalue": 1.46e-05,
-                "lflank": "AAACACGAAA",
-                "match": "ATTCCAGCGG",
-                "rflank": "GTTCCTAATA"
+                "pvalue": 1.24e-06,
+                "lflank": "CTCAGGCCCC",
+                "match": "AACCCCCTCT",
+                "rflank": "TCTTTTTAAT"
               }, {
-                "seq": 0,
-                "pos": 55,
+                "seq": 23,
+                "pos": 14,
                 "rc": false,
-                "pvalue": 1.46e-05,
-                "lflank": "AAACACGAAA",
-                "match": "ATTCCAGCGG",
-                "rflank": "GTTCCTAATA"
+                "pvalue": 1.24e-06,
+                "lflank": "CTCAGGCCCC",
+                "match": "AACCCCCTCT",
+                "rflank": "TCTTTTTAAT"
               }, {
-                "seq": 6,
-                "pos": 61,
+                "seq": 22,
+                "pos": 9,
                 "rc": false,
-                "pvalue": 1.92e-05,
-                "lflank": "TCGCTGGAAC",
-                "match": "TGCCCAAAGG",
-                "rflank": "TTTATAAAGT"
+                "pvalue": 1.24e-06,
+                "lflank": "TCAGGCCCC",
+                "match": "AACCCCCTCT",
+                "rflank": "TCTTTTTAAT"
               }, {
-                "seq": 3,
-                "pos": 27,
+                "seq": 11,
+                "pos": 88,
                 "rc": false,
-                "pvalue": 1.92e-05,
-                "lflank": "TCGCTGGAAC",
-                "match": "TGCCCAAAGG",
-                "rflank": "TTTATAAAGT"
+                "pvalue": 1.24e-06,
+                "lflank": "CTCAGGCCCC",
+                "match": "AACCCCCTCT",
+                "rflank": "TCTTTTTAAT"
+              }, {
+                "seq": 28,
+                "pos": 77,
+                "rc": false,
+                "pvalue": 4.48e-06,
+                "lflank": "TTAGCTTTTT",
+                "match": "AACCCCCTTT",
+                "rflank": "CTCTACTCTT"
+              }, {
+                "seq": 2,
+                "pos": 83,
+                "rc": false,
+                "pvalue": 3.46e-05,
+                "lflank": "GGAAGGGAAT",
+                "match": "AACCGCCCTT",
+                "rflank": "GAGCCGTGGA"
+              }, {
+                "seq": 1,
+                "pos": 77,
+                "rc": false,
+                "pvalue": 3.46e-05,
+                "lflank": "GGAAGGGAAT",
+                "match": "AACCGCCCTT",
+                "rflank": "GAGCCGTGGA"
+              }, {
+                "seq": 15,
+                "pos": 51,
+                "rc": false,
+                "pvalue": 4.70e-05,
+                "lflank": "GGGATTCGAT",
+                "match": "AATCCACGCT",
+                "rflank": "CATGAGAAAG"
+              }, {
+                "seq": 13,
+                "pos": 50,
+                "rc": false,
+                "pvalue": 4.70e-05,
+                "lflank": "GGGATTCGAT",
+                "match": "AATCCACGCT",
+                "rflank": "CATGAGAAAG"
+              }, {
+                "seq": 5,
+                "pos": 34,
+                "rc": false,
+                "pvalue": 6.86e-05,
+                "lflank": "TTTGGAGTTA",
+                "match": "AATCCACATT",
+                "rflank": "AAACTCCAGA"
+              }, {
+                "seq": 4,
+                "pos": 30,
+                "rc": false,
+                "pvalue": 6.86e-05,
+                "lflank": "TTTGGAGTTA",
+                "match": "AATCCACATT",
+                "rflank": "AAACTCCAGA"
+              }, {
+                "seq": 14,
+                "pos": 84,
+                "rc": false,
+                "pvalue": 7.92e-05,
+                "lflank": "AATTTTGCAT",
+                "match": "AAGCCCCACT",
+                "rflank": "AGGAGTATGA"
               }, {
                 "seq": 21,
-                "pos": 1,
-                "rc": true,
-                "pvalue": 3.14e-05,
-                "lflank": "CCCAGCCCCC",
-                "match": "CTTTCAGAGG",
-                "rflank": "C"
-              }, {
-                "seq": 30,
-                "pos": 99,
+                "pos": 34,
                 "rc": false,
-                "pvalue": 4.07e-05,
-                "lflank": "TTCCCAACAT",
-                "match": "AGTCCCGAGG",
-                "rflank": "TG"
+                "pvalue": 8.64e-05,
+                "lflank": "TTGATAGGTC",
+                "match": "AATCCACCTA",
+                "rflank": "TGCACGGTCC"
+              }, {
+                "seq": 20,
+                "pos": 27,
+                "rc": false,
+                "pvalue": 8.64e-05,
+                "lflank": "TTGATAGGTC",
+                "match": "AATCCACCTA",
+                "rflank": "TGCACGGTCC"
+              }, {
+                "seq": 29,
+                "pos": 15,
+                "rc": false,
+                "pvalue": 1.03e-04,
+                "lflank": "TTGAGTCACC",
+                "match": "AATCCCCCAA",
+                "rflank": "GCTAAGAGCA"
+              }, {
+                "seq": 19,
+                "pos": 55,
+                "rc": false,
+                "pvalue": 2.01e-04,
+                "lflank": "AACGACATAA",
+                "match": "AATCGCCCAA",
+                "rflank": "AGGATTTAAA"
               }
             ]
           }, {
             "db": 0,
-            "id": "AGGMAYGGCT",
+            "id": "TWTTARTCGT",
             "alt": "MEME-3",
             "len": 10,
-            "nsites": 18,
-            "evalue": "4.7e-007",
-            "ic": 13.6,
-            "re": 13.9,
-            "llr": 174,
-            "bt": 7.62953,
-            "time": 0.496784,
+            "nsites": 10,
+            "evalue": "1.5e-009",
+            "ic": 18.1,
+            "re": 17.2,
+            "llr": 119,
+            "bt": 8.59832,
+            "time": 0.253401,
             "psm": [
-              [131, -1081, -1081, -7], [-1081, -1081, 209, -139], 
-              [-1081, -1081, 226, -1081], [42, 141, -1081, -238], 
-              [178, -1081, -1081, -1081], [-139, 89, -1081, 78], 
-              [-1081, -1081, 226, -1081], [-39, -91, 126, -80], 
-              [-1081, 199, -1081, -80], [-1081, -1081, -1081, 178]
+              [-997, -997, -997, 183], [42, -997, -997, 109], 
+              [-997, -997, -997, 183], [-997, -997, -997, 183], 
+              [174, -997, -997, -997], [100, -997, 97, -997], 
+              [-997, -997, -997, 183], [-997, 222, -997, -997], 
+              [-997, -997, 229, -997], [-997, -997, -997, 183]
             ],
             "pwm": [
-              [0.722222, 0.000000, 0.000000, 0.277778], 
-              [0.000000, 0.000000, 0.888889, 0.111111], 
-              [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.388889, 0.555556, 0.000000, 0.055556], 
+              [0.000000, 0.000000, 0.000000, 1.000000], 
+              [0.400000, 0.000000, 0.000000, 0.600000], 
+              [0.000000, 0.000000, 0.000000, 1.000000], 
+              [0.000000, 0.000000, 0.000000, 1.000000], 
               [1.000000, 0.000000, 0.000000, 0.000000], 
-              [0.111111, 0.388889, 0.000000, 0.500000], 
+              [0.600000, 0.000000, 0.400000, 0.000000], 
+              [0.000000, 0.000000, 0.000000, 1.000000], 
+              [0.000000, 1.000000, 0.000000, 0.000000], 
               [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.222222, 0.111111, 0.500000, 0.166667], 
-              [0.000000, 0.833333, 0.000000, 0.166667], 
               [0.000000, 0.000000, 0.000000, 1.000000]
             ],
             "sites": [
               {
                 "seq": 27,
-                "pos": 74,
+                "pos": 64,
                 "rc": false,
-                "pvalue": 2.46e-06,
-                "lflank": "TTTTAATCGT",
-                "match": "AGGAATGGCT",
-                "rflank": "TCAGAGAAAA"
+                "pvalue": 3.32e-06,
+                "lflank": "CCCCTCTTCT",
+                "match": "TTTTAATCGT",
+                "rflank": "AGGAATGGCT"
               }, {
                 "seq": 26,
-                "pos": 54,
+                "pos": 44,
                 "rc": false,
-                "pvalue": 2.46e-06,
-                "lflank": "TTTTAATCGT",
-                "match": "AGGAATGGCT",
-                "rflank": "TCAGAGAAAA"
+                "pvalue": 3.32e-06,
+                "lflank": "CCCCTCTTCT",
+                "match": "TTTTAATCGT",
+                "rflank": "AGGAATGGCT"
+              }, {
+                "seq": 25,
+                "pos": 93,
+                "rc": false,
+                "pvalue": 3.32e-06,
+                "lflank": "CCCCTCTTCT",
+                "match": "TTTTAATCGT",
+                "rflank": "AGGAATGG"
               }, {
                 "seq": 23,
-                "pos": 37,
+                "pos": 27,
                 "rc": false,
-                "pvalue": 2.46e-06,
-                "lflank": "TTTTAATCGT",
-                "match": "AGGAATGGCT",
-                "rflank": "TCAGAGAAAA"
+                "pvalue": 3.32e-06,
+                "lflank": "CCCCTCTTCT",
+                "match": "TTTTAATCGT",
+                "rflank": "AGGAATGGCT"
               }, {
                 "seq": 22,
-                "pos": 32,
+                "pos": 22,
                 "rc": false,
-                "pvalue": 2.46e-06,
-                "lflank": "TTTTAATCGT",
-                "match": "AGGAATGGCT",
-                "rflank": "TCAGAGAAAA"
+                "pvalue": 3.32e-06,
+                "lflank": "CCCCTCTTCT",
+                "match": "TTTTAATCGT",
+                "rflank": "AGGAATGGCT"
               }, {
-                "seq": 19,
-                "pos": 95,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "TATTGG",
-                "match": "TGGCATGGCT",
-                "rflank": "CTACTTTTCC"
+                "seq": 11,
+                "pos": 101,
+                "rc": false,
+                "pvalue": 3.32e-06,
+                "lflank": "CCCCTCTTCT",
+                "match": "TTTTAATCGT",
+                "rflank": ""
               }, {
                 "seq": 17,
-                "pos": 75,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "GATAATGACT",
-                "match": "AGGCACGACT",
-                "rflank": "AATATATTAG"
+                "pos": 71,
+                "rc": false,
+                "pvalue": 6.83e-06,
+                "lflank": "GTTCCTAATA",
+                "match": "TATTAGTCGT",
+                "rflank": "GCCTAGTCAT"
               }, {
                 "seq": 16,
-                "pos": 73,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "GATAATGACT",
-                "match": "AGGCACGACT",
-                "rflank": "AATATATTAG"
+                "pos": 69,
+                "rc": false,
+                "pvalue": 6.83e-06,
+                "lflank": "GTTCCTAATA",
+                "match": "TATTAGTCGT",
+                "rflank": "GCCTAGTCAT"
               }, {
                 "seq": 9,
-                "pos": 84,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "GATAATGACT",
-                "match": "AGGCACGACT",
-                "rflank": "AATATATTAG"
-              }, {
-                "seq": 2,
-                "pos": 47,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "TCAGTATTGG",
-                "match": "TGGCATGGCT",
-                "rflank": "CTACTTTTCC"
-              }, {
-                "seq": 1,
-                "pos": 41,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "TCAGTATTGG",
-                "match": "TGGCATGGCT",
-                "rflank": "CTACTTTTCC"
+                "pos": 80,
+                "rc": false,
+                "pvalue": 6.83e-06,
+                "lflank": "GTTCCTAATA",
+                "match": "TATTAGTCGT",
+                "rflank": "GCCTAGTCAT"
               }, {
                 "seq": 0,
-                "pos": 79,
-                "rc": true,
-                "pvalue": 4.08e-06,
-                "lflank": "GATAATGACT",
-                "match": "AGGCACGACT",
-                "rflank": "AATATATTAG"
-              }, {
-                "seq": 10,
-                "pos": 87,
+                "pos": 75,
                 "rc": false,
-                "pvalue": 1.77e-05,
-                "lflank": "ACACGACATG",
-                "match": "AGGAATGCCT",
-                "rflank": "ATCGGTGAGA"
-              }, {
-                "seq": 14,
-                "pos": 2,
-                "rc": true,
-                "pvalue": 2.56e-05,
-                "lflank": "CTTCATGGAA",
-                "match": "AGGTACGGCT",
-                "rflank": "AC"
-              }, {
-                "seq": 7,
-                "pos": 25,
-                "rc": false,
-                "pvalue": 7.60e-05,
-                "lflank": "GATCTCAGCC",
-                "match": "AGGAATGCTT",
-                "rflank": "TTTTTCATCG"
-              }, {
-                "seq": 31,
-                "pos": 67,
-                "rc": false,
-                "pvalue": 8.03e-05,
-                "lflank": "GATTCGATAG",
-                "match": "AGGAAAGGTT",
-                "rflank": "TTTATATAAC"
-              }, {
-                "seq": 5,
-                "pos": 61,
-                "rc": true,
-                "pvalue": 1.09e-04,
-                "lflank": "TGAATTGAGT",
-                "match": "TTGCACGTCT",
-                "rflank": "TTGTAAGTCT"
-              }, {
-                "seq": 4,
-                "pos": 57,
-                "rc": true,
-                "pvalue": 1.09e-04,
-                "lflank": "TGAATTGAGT",
-                "match": "TTGCACGTCT",
-                "rflank": "TTGTAAGTCT"
-              }, {
-                "seq": 20,
-                "pos": 97,
-                "rc": true,
-                "pvalue": 1.13e-04,
-                "lflank": "CCAC",
-                "match": "AGGCAAGTTT",
-                "rflank": "TAACAATTGC"
+                "pvalue": 6.83e-06,
+                "lflank": "GTTCCTAATA",
+                "match": "TATTAGTCGT",
+                "rflank": "GCCTAGTCAT"
               }
             ]
           }, {
             "db": 0,
-            "id": "GGGGCCTGAG",
+            "id": "TTCCAGMGGG",
             "alt": "MEME-4",
             "len": 10,
             "nsites": 7,
-            "evalue": "7.8e-005",
-            "ic": 18.3,
-            "re": 20.0,
-            "llr": 97,
-            "bt": 10.0861,
-            "time": 0.676859,
+            "evalue": "1.5e-004",
+            "ic": 17.3,
+            "re": 18.2,
+            "llr": 88,
+            "bt": 8.7055,
+            "time": 0.342253,
             "psm": [
-              [-945, -945, 225, -945], [-945, -945, 225, -945], 
-              [-945, -945, 225, -945], [-945, -945, 225, -945], 
-              [-945, 177, 45, -945], [-945, 225, -945, -945], 
-              [-945, -945, -945, 178], [-945, -945, 225, -945], 
-              [130, -945, 45, -945], [-945, -945, 225, -945]
+              [-945, -945, -945, 183], [-945, -945, -945, 183], 
+              [-945, 222, -945, -945], [-945, 222, -945, -945], 
+              [125, -945, -945, 2], [-945, -945, 229, -945], 
+              [52, 141, -945, -945], [-945, -945, 181, 2], 
+              [-945, -945, 229, -945], [-945, -945, 229, -945]
             ],
             "pwm": [
-              [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.000000, 0.714286, 0.285714, 0.000000], 
-              [0.000000, 1.000000, 0.000000, 0.000000], 
               [0.000000, 0.000000, 0.000000, 1.000000], 
+              [0.000000, 0.000000, 0.000000, 1.000000], 
+              [0.000000, 1.000000, 0.000000, 0.000000], 
+              [0.000000, 1.000000, 0.000000, 0.000000], 
+              [0.714286, 0.000000, 0.000000, 0.285714], 
               [0.000000, 0.000000, 1.000000, 0.000000], 
-              [0.714286, 0.000000, 0.285714, 0.000000], 
+              [0.428571, 0.571429, 0.000000, 0.000000], 
+              [0.000000, 0.000000, 0.714286, 0.285714], 
+              [0.000000, 0.000000, 1.000000, 0.000000], 
               [0.000000, 0.000000, 1.000000, 0.000000]
             ],
             "sites": [
               {
-                "seq": 27,
-                "pos": 41,
-                "rc": true,
-                "pvalue": 3.08e-07,
-                "lflank": "AGAGGGGGTT",
-                "match": "GGGGCCTGAG",
-                "rflank": "CTTTCACTCA"
-              }, {
-                "seq": 26,
-                "pos": 21,
-                "rc": true,
-                "pvalue": 3.08e-07,
-                "lflank": "AGAGGGGGTT",
-                "match": "GGGGCCTGAG",
-                "rflank": "CTTTCACTCA"
-              }, {
-                "seq": 25,
-                "pos": 70,
-                "rc": true,
-                "pvalue": 3.08e-07,
-                "lflank": "AGAGGGGGTT",
-                "match": "GGGGCCTGAG",
-                "rflank": "CTTTCACTCA"
-              }, {
-                "seq": 23,
-                "pos": 4,
-                "rc": true,
-                "pvalue": 3.08e-07,
-                "lflank": "AGAGGGGGTT",
-                "match": "GGGGCCTGAG",
-                "rflank": "CTTT"
-              }, {
-                "seq": 11,
-                "pos": 78,
-                "rc": true,
-                "pvalue": 3.08e-07,
-                "lflank": "AGAGGGGGTT",
-                "match": "GGGGCCTGAG",
-                "rflank": "CTTTCACTCA"
-              }, {
-                "seq": 21,
-                "pos": 11,
+                "seq": 17,
+                "pos": 52,
                 "rc": false,
-                "pvalue": 1.06e-06,
-                "lflank": "CCTCTGAAAG",
-                "match": "GGGGGCTGGG",
-                "rflank": "CATTTGATAG"
+                "pvalue": 4.09e-07,
+                "lflank": "AACACGAAAA",
+                "match": "TTCCAGCGGG",
+                "rflank": "TTCCTAATAT"
               }, {
-                "seq": 20,
-                "pos": 4,
+                "seq": 16,
+                "pos": 50,
                 "rc": false,
-                "pvalue": 1.06e-06,
-                "lflank": "AAAG",
-                "match": "GGGGGCTGGG",
-                "rflank": "CATTTGATAG"
+                "pvalue": 4.09e-07,
+                "lflank": "AACACGAAAA",
+                "match": "TTCCAGCGGG",
+                "rflank": "TTCCTAATAT"
+              }, {
+                "seq": 9,
+                "pos": 61,
+                "rc": false,
+                "pvalue": 4.09e-07,
+                "lflank": "AACACGAAAA",
+                "match": "TTCCAGCGGG",
+                "rflank": "TTCCTAATAT"
+              }, {
+                "seq": 0,
+                "pos": 56,
+                "rc": false,
+                "pvalue": 4.09e-07,
+                "lflank": "AACACGAAAA",
+                "match": "TTCCAGCGGG",
+                "rflank": "TTCCTAATAT"
+              }, {
+                "seq": 28,
+                "pos": 26,
+                "rc": false,
+                "pvalue": 9.78e-07,
+                "lflank": "AGTGAAATCC",
+                "match": "TTCCAGAGGG",
+                "rflank": "ATATCATCGC"
+              }, {
+                "seq": 15,
+                "pos": 33,
+                "rc": false,
+                "pvalue": 4.53e-06,
+                "lflank": "TCTGGGAATA",
+                "match": "TTCCTGATGG",
+                "rflank": "GATTCGATAA"
+              }, {
+                "seq": 13,
+                "pos": 32,
+                "rc": false,
+                "pvalue": 4.53e-06,
+                "lflank": "TCTGGGAATA",
+                "match": "TTCCTGATGG",
+                "rflank": "GATTCGATAA"
               }
             ]
           }
         ],
         "scan": [
           {
-            "pvalue": 1.49e-05,
+            "pvalue": 2.45e-07,
             "sites": [
               {
                 "motif": 0,
-                "pos": 23,
-                "rc": true,
-                "pvalue": 2.87e-05
-              }, {
-                "motif": 1,
-                "pos": 55,
+                "pos": 32,
                 "rc": false,
-                "pvalue": 1.46e-05
+                "pvalue": 6.57e-05
+              }, {
+                "motif": 3,
+                "pos": 56,
+                "rc": false,
+                "pvalue": 4.09e-07
               }, {
                 "motif": 2,
-                "pos": 79,
-                "rc": true,
-                "pvalue": 4.08e-06
+                "pos": 75,
+                "rc": false,
+                "pvalue": 6.83e-06
               }
             ]
           }, {
-            "pvalue": 3.89e-06,
+            "pvalue": 8.35e-04,
             "sites": [
               {
-                "motif": 1,
-                "pos": 4,
-                "rc": false,
-                "pvalue": 6.64e-06
-              }, {
-                "motif": 0,
-                "pos": 24,
-                "rc": true,
-                "pvalue": 2.41e-05
-              }, {
-                "motif": 2,
-                "pos": 41,
-                "rc": true,
-                "pvalue": 4.08e-06
-              }
-            ]
-          }, {
-            "pvalue": 3.89e-06,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 10,
-                "rc": false,
-                "pvalue": 6.64e-06
-              }, {
                 "motif": 0,
                 "pos": 30,
-                "rc": true,
-                "pvalue": 2.41e-05
+                "rc": false,
+                "pvalue": 1.70e-05
               }, {
-                "motif": 2,
-                "pos": 47,
-                "rc": true,
-                "pvalue": 4.08e-06
+                "motif": 1,
+                "pos": 77,
+                "rc": false,
+                "pvalue": 3.46e-05
               }
             ]
           }, {
-            "pvalue": 2.45e-03,
+            "pvalue": 8.35e-04,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 36,
+                "rc": false,
+                "pvalue": 1.70e-05
+              }, {
+                "motif": 1,
+                "pos": 83,
+                "rc": false,
+                "pvalue": 3.46e-05
+              }
+            ]
+          }, {
+            "pvalue": 2.15e-02,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 5,
+                "rc": false,
+                "pvalue": 9.51e-05
+              }
+            ]
+          }, {
+            "pvalue": 9.59e-03,
+            "sites": [
+              {
+                "motif": 1,
+                "pos": 30,
+                "rc": false,
+                "pvalue": 6.86e-05
+              }
+            ]
+          }, {
+            "pvalue": 9.59e-03,
+            "sites": [
+              {
+                "motif": 1,
+                "pos": 34,
+                "rc": false,
+                "pvalue": 6.86e-05
+              }
+            ]
+          }, {
+            "pvalue": 1.31e-01,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 39,
+                "rc": false,
+                "pvalue": 9.51e-05
+              }
+            ]
+          }, {
+            "pvalue": 1.67e-02,
+            "sites": []
+          }, {
+            "pvalue": 9.56e-02,
+            "sites": []
+          }, {
+            "pvalue": 2.45e-07,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 37,
+                "rc": false,
+                "pvalue": 6.57e-05
+              }, {
+                "motif": 3,
+                "pos": 61,
+                "rc": false,
+                "pvalue": 4.09e-07
+              }, {
+                "motif": 2,
+                "pos": 80,
+                "rc": false,
+                "pvalue": 6.83e-06
+              }
+            ]
+          }, {
+            "pvalue": 7.88e-01,
+            "sites": []
+          }, {
+            "pvalue": 2.05e-07,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 71,
+                "rc": false,
+                "pvalue": 4.02e-05
+              }, {
+                "motif": 1,
+                "pos": 88,
+                "rc": false,
+                "pvalue": 1.24e-06
+              }, {
+                "motif": 2,
+                "pos": 101,
+                "rc": false,
+                "pvalue": 3.32e-06
+              }
+            ]
+          }, {
+            "pvalue": 3.91e-01,
+            "sites": []
+          }, {
+            "pvalue": 4.14e-06,
+            "sites": [
+              {
+                "motif": 3,
+                "pos": 32,
+                "rc": false,
+                "pvalue": 4.53e-06
+              }, {
+                "motif": 1,
+                "pos": 50,
+                "rc": false,
+                "pvalue": 4.70e-05
+              }, {
+                "motif": 0,
+                "pos": 63,
+                "rc": false,
+                "pvalue": 1.70e-05
+              }
+            ]
+          }, {
+            "pvalue": 1.81e-02,
+            "sites": [
+              {
+                "motif": 1,
+                "pos": 84,
+                "rc": false,
+                "pvalue": 7.92e-05
+              }
+            ]
+          }, {
+            "pvalue": 4.14e-06,
+            "sites": [
+              {
+                "motif": 3,
+                "pos": 33,
+                "rc": false,
+                "pvalue": 4.53e-06
+              }, {
+                "motif": 1,
+                "pos": 51,
+                "rc": false,
+                "pvalue": 4.70e-05
+              }, {
+                "motif": 0,
+                "pos": 64,
+                "rc": false,
+                "pvalue": 1.70e-05
+              }
+            ]
+          }, {
+            "pvalue": 2.45e-07,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 26,
+                "rc": false,
+                "pvalue": 6.57e-05
+              }, {
+                "motif": 3,
+                "pos": 50,
+                "rc": false,
+                "pvalue": 4.09e-07
+              }, {
+                "motif": 2,
+                "pos": 69,
+                "rc": false,
+                "pvalue": 6.83e-06
+              }
+            ]
+          }, {
+            "pvalue": 2.45e-07,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 28,
+                "rc": false,
+                "pvalue": 6.57e-05
+              }, {
+                "motif": 3,
+                "pos": 52,
+                "rc": false,
+                "pvalue": 4.09e-07
+              }, {
+                "motif": 2,
+                "pos": 71,
+                "rc": false,
+                "pvalue": 6.83e-06
+              }
+            ]
+          }, {
+            "pvalue": 6.42e-01,
+            "sites": []
+          }, {
+            "pvalue": 1.12e-03,
+            "sites": [
+              {
+                "motif": 0,
+                "pos": 84,
+                "rc": false,
+                "pvalue": 1.70e-05
+              }
+            ]
+          }, {
+            "pvalue": 1.78e-02,
             "sites": [
               {
                 "motif": 1,
                 "pos": 27,
                 "rc": false,
-                "pvalue": 1.92e-05
-              }, {
-                "motif": 0,
-                "pos": 66,
-                "rc": false,
-                "pvalue": 5.26e-05
+                "pvalue": 8.64e-05
               }
             ]
           }, {
-            "pvalue": 1.50e-02,
-            "sites": []
-          }, {
-            "pvalue": 1.50e-02,
-            "sites": []
-          }, {
-            "pvalue": 7.18e-03,
+            "pvalue": 1.72e-02,
             "sites": [
               {
                 "motif": 1,
-                "pos": 61,
+                "pos": 34,
                 "rc": false,
-                "pvalue": 1.92e-05
-              }, {
-                "motif": 0,
-                "pos": 100,
-                "rc": false,
-                "pvalue": 5.26e-05
+                "pvalue": 8.64e-05
               }
             ]
           }, {
-            "pvalue": 6.80e-02,
+            "pvalue": 6.43e-07,
             "sites": [
               {
-                "motif": 2,
-                "pos": 25,
+                "motif": 1,
+                "pos": 9,
                 "rc": false,
-                "pvalue": 7.60e-05
+                "pvalue": 1.24e-06
+              }, {
+                "motif": 2,
+                "pos": 22,
+                "rc": false,
+                "pvalue": 3.32e-06
               }
             ]
           }, {
-            "pvalue": 5.11e-01,
+            "pvalue": 1.26e-06,
+            "sites": [
+              {
+                "motif": 1,
+                "pos": 14,
+                "rc": false,
+                "pvalue": 1.24e-06
+              }, {
+                "motif": 2,
+                "pos": 27,
+                "rc": false,
+                "pvalue": 3.32e-06
+              }
+            ]
+          }, {
+            "pvalue": 2.20e-01,
             "sites": []
           }, {
-            "pvalue": 1.49e-05,
+            "pvalue": 2.05e-07,
             "sites": [
               {
                 "motif": 0,
-                "pos": 28,
-                "rc": true,
-                "pvalue": 2.87e-05
+                "pos": 63,
+                "rc": false,
+                "pvalue": 4.02e-05
               }, {
                 "motif": 1,
-                "pos": 60,
+                "pos": 80,
                 "rc": false,
-                "pvalue": 1.46e-05
+                "pvalue": 1.24e-06
               }, {
                 "motif": 2,
-                "pos": 84,
-                "rc": true,
-                "pvalue": 4.08e-06
+                "pos": 93,
+                "rc": false,
+                "pvalue": 3.32e-06
               }
             ]
           }, {
-            "pvalue": 9.79e-02,
+            "pvalue": 2.05e-07,
             "sites": [
               {
-                "motif": 2,
-                "pos": 87,
+                "motif": 0,
+                "pos": 14,
                 "rc": false,
-                "pvalue": 1.77e-05
-              }
-            ]
-          }, {
-            "pvalue": 2.38e-09,
-            "sites": [
-              {
+                "pvalue": 4.02e-05
+              }, {
                 "motif": 1,
+                "pos": 31,
+                "rc": false,
+                "pvalue": 1.24e-06
+              }, {
+                "motif": 2,
                 "pos": 44,
-                "rc": true,
-                "pvalue": 4.29e-07
-              }, {
-                "motif": 3,
-                "pos": 78,
-                "rc": true,
-                "pvalue": 3.08e-07
-              }, {
-                "motif": 0,
-                "pos": 91,
                 "rc": false,
-                "pvalue": 5.98e-07
+                "pvalue": 3.32e-06
               }
             ]
           }, {
-            "pvalue": 7.64e-01,
-            "sites": []
-          }, {
-            "pvalue": 3.45e-03,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 20,
-                "rc": true,
-                "pvalue": 3.27e-06
-              }
-            ]
-          }, {
-            "pvalue": 1.97e-03,
-            "sites": [
-              {
-                "motif": 2,
-                "pos": 2,
-                "rc": true,
-                "pvalue": 2.56e-05
-              }, {
-                "motif": 0,
-                "pos": 17,
-                "rc": true,
-                "pvalue": 9.33e-05
-              }
-            ]
-          }, {
-            "pvalue": 3.45e-03,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 21,
-                "rc": true,
-                "pvalue": 3.27e-06
-              }
-            ]
-          }, {
-            "pvalue": 1.49e-05,
+            "pvalue": 2.05e-07,
             "sites": [
               {
                 "motif": 0,
-                "pos": 17,
-                "rc": true,
-                "pvalue": 2.87e-05
-              }, {
-                "motif": 1,
-                "pos": 49,
+                "pos": 34,
                 "rc": false,
-                "pvalue": 1.46e-05
-              }, {
-                "motif": 2,
-                "pos": 73,
-                "rc": true,
-                "pvalue": 4.08e-06
-              }
-            ]
-          }, {
-            "pvalue": 1.49e-05,
-            "sites": [
-              {
-                "motif": 0,
-                "pos": 19,
-                "rc": true,
-                "pvalue": 2.87e-05
+                "pvalue": 4.02e-05
               }, {
                 "motif": 1,
                 "pos": 51,
                 "rc": false,
-                "pvalue": 1.46e-05
+                "pvalue": 1.24e-06
               }, {
                 "motif": 2,
-                "pos": 75,
-                "rc": true,
-                "pvalue": 4.08e-06
-              }
-            ]
-          }, {
-            "pvalue": 5.09e-01,
-            "sites": []
-          }, {
-            "pvalue": 3.89e-06,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 58,
-                "rc": false,
-                "pvalue": 6.64e-06
-              }, {
-                "motif": 0,
-                "pos": 78,
-                "rc": true,
-                "pvalue": 2.41e-05
-              }, {
-                "motif": 2,
-                "pos": 95,
-                "rc": true,
-                "pvalue": 4.08e-06
-              }
-            ]
-          }, {
-            "pvalue": 1.28e-05,
-            "sites": [
-              {
-                "motif": 3,
-                "pos": 4,
-                "rc": false,
-                "pvalue": 1.06e-06
-              }, {
-                "motif": 0,
                 "pos": 64,
                 "rc": false,
-                "pvalue": 2.41e-05
+                "pvalue": 3.32e-06
               }
             ]
           }, {
-            "pvalue": 3.18e-06,
+            "pvalue": 1.86e-06,
             "sites": [
               {
+                "motif": 3,
+                "pos": 26,
+                "rc": false,
+                "pvalue": 9.78e-07
+              }, {
                 "motif": 1,
-                "pos": 1,
-                "rc": true,
-                "pvalue": 3.14e-05
-              }, {
-                "motif": 3,
-                "pos": 11,
+                "pos": 77,
                 "rc": false,
-                "pvalue": 1.06e-06
-              }, {
-                "motif": 0,
-                "pos": 71,
-                "rc": false,
-                "pvalue": 2.41e-05
+                "pvalue": 4.48e-06
               }
             ]
           }, {
-            "pvalue": 4.17e-07,
-            "sites": [
-              {
-                "motif": 0,
-                "pos": 12,
-                "rc": false,
-                "pvalue": 5.98e-07
-              }, {
-                "motif": 2,
-                "pos": 32,
-                "rc": false,
-                "pvalue": 2.46e-06
-              }
-            ]
-          }, {
-            "pvalue": 1.03e-08,
-            "sites": [
-              {
-                "motif": 3,
-                "pos": 4,
-                "rc": true,
-                "pvalue": 3.08e-07
-              }, {
-                "motif": 0,
-                "pos": 17,
-                "rc": false,
-                "pvalue": 5.98e-07
-              }, {
-                "motif": 2,
-                "pos": 37,
-                "rc": false,
-                "pvalue": 2.46e-06
-              }
-            ]
-          }, {
-            "pvalue": 5.96e-01,
+            "pvalue": 9.36e-03,
             "sites": []
           }, {
-            "pvalue": 2.38e-09,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 36,
-                "rc": true,
-                "pvalue": 4.29e-07
-              }, {
-                "motif": 3,
-                "pos": 70,
-                "rc": true,
-                "pvalue": 3.08e-07
-              }, {
-                "motif": 0,
-                "pos": 83,
-                "rc": false,
-                "pvalue": 5.98e-07
-              }
-            ]
-          }, {
-            "pvalue": 1.03e-08,
-            "sites": [
-              {
-                "motif": 3,
-                "pos": 21,
-                "rc": true,
-                "pvalue": 3.08e-07
-              }, {
-                "motif": 0,
-                "pos": 34,
-                "rc": false,
-                "pvalue": 5.98e-07
-              }, {
-                "motif": 2,
-                "pos": 54,
-                "rc": false,
-                "pvalue": 2.46e-06
-              }
-            ]
-          }, {
-            "pvalue": 2.76e-12,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 7,
-                "rc": true,
-                "pvalue": 4.29e-07
-              }, {
-                "motif": 3,
-                "pos": 41,
-                "rc": true,
-                "pvalue": 3.08e-07
-              }, {
-                "motif": 0,
-                "pos": 54,
-                "rc": false,
-                "pvalue": 5.98e-07
-              }, {
-                "motif": 2,
-                "pos": 74,
-                "rc": false,
-                "pvalue": 2.46e-06
-              }
-            ]
-          }, {
-            "pvalue": 2.03e-04,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 25,
-                "rc": false,
-                "pvalue": 1.34e-06
-              }, {
-                "motif": 1,
-                "pos": 54,
-                "rc": true,
-                "pvalue": 6.28e-05
-              }, {
-                "motif": 0,
-                "pos": 89,
-                "rc": false,
-                "pvalue": 3.67e-05
-              }
-            ]
-          }, {
-            "pvalue": 6.99e-01,
+            "pvalue": 2.40e-01,
             "sites": []
           }, {
-            "pvalue": 6.19e-02,
-            "sites": [
-              {
-                "motif": 1,
-                "pos": 99,
-                "rc": false,
-                "pvalue": 4.07e-05
-              }
-            ]
-          }, {
-            "pvalue": 9.32e-03,
-            "sites": [
-              {
-                "motif": 0,
-                "pos": 48,
-                "rc": true,
-                "pvalue": 8.27e-05
-              }, {
-                "motif": 2,
-                "pos": 67,
-                "rc": false,
-                "pvalue": 8.03e-05
-              }
-            ]
+            "pvalue": 2.40e-01,
+            "sites": []
           }
         ]
       };
