@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+# perosnal note: remember to activate your conda env - source ~/miniconda3/bin/activate; conda activate meme-env
+
 memeinput_folder="./memeinput"
 memeoutput_folder="./memeoutput"
 
@@ -15,13 +18,23 @@ cd "$(dirname "$0")"
 
 # meme sequence.fasta -dna -oc . -nostatus -time 18000 -mod zoops -nmotifs 5 -minw 6 -maxw 50 -objfun classic -revcomp -markov_order 0
 
-find . -mindepth 2 -maxdepth 2 -iwholename "$memeinput_folder/*.fasta" | while read file; do
-  echo "For file $file.."
+#find . -mindepth 2 -maxdepth 2 -iwholename "$memeinput_folder/*.fasta" | while read file; do
+#  echo "For file $file.."
+#  newfoldername="${file/#*\/}"
+#  newfoldername="${newfoldername/%\.*}"
+#  meme "$file" -dna -oc "$memeoutput_folder/$newfoldername" -time 18000 \
+#    -mod zoops -nmotifs 5 -minw 5 -maxw 10 -p $1 \
+#    -objfun classic -revcomp -markov_order 0
+#done;
+
+find . -mindepth 2 -maxdepth 2 -iwholename "$memeinput_folder/*.fasta" | \
+while read -r file; do
   newfoldername="${file/#*\/}"
   newfoldername="${newfoldername/%\.*}"
+  echo "For file $file.. (Saving results at $memeoutput_folder/$newfoldername"
   # -revcomp should not be used, because we already give the reverse-complementary of reverse strands.
   # doing so would be... finding motifs in the reverse strand of the TSS, which is counterintuitive.
   meme "$file" -dna -oc "$memeoutput_folder/$newfoldername" -brief 100000 -time 18000 \
-    -mod zoops -nmotifs 5 -minw 6 -maxw 50 -p $1 \
-    -objfun classic -markov_order 0 >> "$memeoutput_folder/$newfoldername.log.txt"
-done;
+    -mod zoops -nmotifs 4 -minw 5 -maxw 10 -minsites 40 -p "$1" \
+    -objfun classic -markov_order 0 < /dev/null
+done
