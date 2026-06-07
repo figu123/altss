@@ -115,11 +115,11 @@ for (i in 1:nrow(dados)) {
           chr = pchr,
           start = ifelse(motifattrs[["strand"]] == "plus", 
                          ppos - upstream_count + as.numeric(motifattrs[["position"]]),
-                         ppos - upstream_count + as.numeric(motifattrs[["position"]]) - motifinfo$width
+                         ppos - upstream_count + as.numeric(motifattrs[["position"]])
                         ),
           end = ifelse(motifattrs[["strand"]] == "plus", 
                          ppos - upstream_count + as.numeric(motifattrs[["position"]]) + motifinfo$width,
-                         ppos - upstream_count + as.numeric(motifattrs[["position"]])
+                         ppos - upstream_count + as.numeric(motifattrs[["position"]]) + motifinfo$width
                         ),
           strand = ifelse(motifattrs[["strand"]] == "plus", "+", "-"),
           id = motifinfo$id,
