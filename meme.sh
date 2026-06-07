@@ -21,7 +21,7 @@ find . -mindepth 2 -maxdepth 2 -iwholename "$memeinput_folder/*.fasta" | while r
   newfoldername="${newfoldername/%\.*}"
   # -revcomp should not be used, because we already give the reverse-complementary of reverse strands.
   # doing so would be... finding motifs in the reverse strand of the TSS, which is counterintuitive.
-  meme "$file" -dna -oc "$memeoutput_folder/$newfoldername" -time 18000 \
+  meme "$file" -dna -oc "$memeoutput_folder/$newfoldername" -brief 100000 -time 18000 \
     -mod zoops -nmotifs 5 -minw 6 -maxw 50 -p $1 \
     -objfun classic -markov_order 0 >> "$memeoutput_folder/$newfoldername.log.txt"
 done;
