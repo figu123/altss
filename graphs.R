@@ -119,6 +119,7 @@ ggplot(df, aes(x = species, y = GeneReadcount)) +
 
 
 
+###### TSSs Class x Gene Count x Sequence Depth ((DEPRECATED)) ######
 # continuation: comparing gene amount for each species and stuff like that
 dff <- data.frame(
   species = as.character(),
@@ -206,7 +207,7 @@ tssToGeneGraph <- grid.arrange(
   widths = c(1, 1, 1, 1),
   nrow = 1,
   # nrow = 4,
-  top = "iTSS position relative to start of the gene"
+  top = "Relationship between TSS count, gene count and sequencing depth"
 )
 
 ggsave(file.path(start_wd, "./misc/graphstsstogene.png"), plot = tssToGeneGraph, units = "px", width=1080, height=720, scale=3)
@@ -221,7 +222,7 @@ tssToGenePlots[[1]] <- ggplot(dff, aes(x = totalGenes, y = alTSS, label = label,
   geom_text(hjust = c(.05, .05, .05, .8, .05, .05, .05, .8),
             vjust = c(-1, -1, -1, 1.55, -1, -1, -1, -1),
             check_overlap = TRUE, fontface = "italic") + theme_bw() +
-  scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(1, 7)) +
+  scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(4, 12)) +
   theme(legend.position = "none") + xlab("Número de Genes")
 
 
@@ -230,7 +231,7 @@ tssToGenePlots[[2]] <- ggplot(dff, aes(x = totalGenes, y = pTSS, label = label, 
   geom_text(hjust = c(.05, .05, .05, .8, .05, .05, .05, .8),
             vjust = c(-1, -1, -1, 1.55, -1, -1, -1, -1),
             check_overlap = TRUE, fontface = "italic") + theme_bw() +
-  scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(1, 7))  +
+  scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(4, 12))  +
   theme(legend.position = "none") + xlab("Número de Genes")
 
 
@@ -240,7 +241,7 @@ tssToGenePlots[[3]] <- ggplot(dff, aes(x = totalGenes, y = gTSS, label = label, 
   geom_text(hjust = c(.05, .05, .05, .8, .05, .05, .05, .8),
             vjust = c(-1, -1, -1, 1.55, -1, -1, -1, -1),
             check_overlap = TRUE, fontface = "italic") + theme_bw() +
-  scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(1, 7)) + # Adjust point size range
+  scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(4, 12)) + # Adjust point size range
   theme(legend.position = "none") + xlab("Número de Genes")
 
 tssToGenePlots[[4]] <- get_legend(
@@ -249,14 +250,8 @@ tssToGenePlots[[4]] <- get_legend(
     geom_text(hjust = c(.05, .05, .05, .8, .05, .05, .05, .8),
               vjust = c(-1, -1, -1, 1.55, -1, -1, -1, -1),
               check_overlap = TRUE, fontface = "italic") + theme_bw() +
-    scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(1, 7)) + # Adjust point size range
-    guides(color = "none") + labset.seed(1014)
-  df <- tibble(
-    a = rnorm(10),
-    b = rnorm(10),
-    c = rnorm(10),
-    d = rnorm(10)
-  )s(color = "Espécie", size = "Reads / Gene")
+    scale_size(breaks = c(1000, 5000, 10000, 20000, 50000), limits = c(1000, 60000), range = c(4, 12)) + # Adjust point size range
+    guides(color = "none") + labs(color = "Espécie", size = "Reads / Gene")
 )
 
 tssToGeneGraph <- grid.arrange(
@@ -272,7 +267,187 @@ tssToGeneGraph <- grid.arrange(
 )
 
 
+##### Better version of the one above #####
 
+frtc_folder <- "~/files/frtc/"
+tssarout_folder <- "tssarresult" # generated from running tssar.sh
+readcount_folder <- "readcount" # generated from running RSubRead (altss.R)
+
+mydf <- tibble(
+  Output = as.character(),
+  Depth = as.numeric(), # sum of both LibP and LibM read counts 
+  filename = as.character(),
+  Class = as.character(),
+  Count = as.character(),
+  CountsPerGene = as.numeric(),
+  CountsPerGene80 = as.numeric(),
+  LibP = as.character(),
+  LibM = as.character(),
+  DepthLibP = as.numeric(),
+  DepthLibM = as.numeric(),
+  cpgGenecount = as.numeric(),
+  cpgPairedLibP = as.numeric(),
+  cpgUnpairedLibP = as.numeric(),
+  cpgPairedLibM = as.numeric(),
+  cpgUnpairedLibM = as.numeric(),
+  cpgGenecount80 = as.numeric(),
+  cpgPairedLibP80 = as.numeric(),
+  cpgUnpairedLibP80 = as.numeric(),
+  cpgPairedLibM80 = as.numeric(),
+  cpgUnpairedLibM80 = as.numeric()
+)
+for (i in 1:nrow(dados)) {
+  filename <- dados[i,]$Filenames
+  print(paste0("Checking Sequencing Depth for ", filename))
+  
+  # Here, I use the same code of generating the "merged" table.
+  # Because I need to extract data from TSSAR, BEFORE merging things. 
+  files <- list.files(
+    path = file.path(frtc_folder, filename, tssarout_folder),
+    pattern = "\\.table")
+  files <- files[!grepl("smear.table", files)]    # removes smear.table
+  pathes <- file.path(frtc_folder, filename, tssarout_folder, files)
+  
+  df <- data.frame(File = files, Path = pathes) |>
+    mutate(Id = sub("_([^_]+)$", "", sub("_([^_]+)$", "", File)))
+  print("Found the following files | chromossomes:")
+  head(df)
+  
+  # first, check for empty files
+  invalid_df <- df |> filter(file.info(Path)$size == 0)
+  if (nrow(invalid_df) > 0) {
+    print("WARN There are files in tssarresult that are empty.")
+    print(invalid_df$File)
+    df <- df |> filter(file.info(Path)$size > 0)
+  }
+  
+  merged <- df |>
+    group_by(File) |>
+    do(bind_rows(lapply(.$Path, read.table, header = FALSE, sep="\t"))) |>
+    mutate(OriginalFile = sub("^[^_]*_", "", 
+                              sub("^[^_]*_", "", 
+                                  sub("_TSS.table", "", File)
+                              ))) |>
+    mutate(File = { chr <- sub("_([^_]+)$", "", sub("_([^_]+)$", "", File)) }) |>
+    ungroup()
+  colnames(merged) <- c("Chromossome", "Position", "Strand", "V4", "V5", "d", 
+                        "Pvalue", "V8", "Class", "Location", "OriginalFile")
+
+  # From here on out, you're no longer look at "merged" data generation.
+  # Because we are not removing duplicate TSSs, instead we will make a graph
+  
+  # Samples
+  samples <- read.csv(file.path("./samples/", paste0(filename, ".csv")))
+  # samples <- samples %>% pivot_longer(cols = 1:2, values_to = "srr", names_to = "Library")
+  samples$DepthLibP <- NA
+  samples$DepthLibM <- NA
+  
+  # fetches sequencing depth from entrez. Output is in kilobase.
+  getLibraryDepth <- function(libraryId) {
+    csv <- entrez_fetch(db="sra", id = libraryId, rettype="runinfo", retmode="text")
+    depthdf <- read.csv(text = csv)
+    return(round(depthdf$bases/1000)) 
+  }
+  for (j in 1:nrow(samples)) {
+    samples[j,]$DepthLibP <- getLibraryDepth(samples[j,]$LibP)
+    samples[j,]$DepthLibM <- getLibraryDepth(samples[j,]$LibM)
+  }
+  samples <- samples %>% mutate(Depth = DepthLibM + DepthLibP)
+  #samps <- samples %>% 
+  #  pivot_wider(names_from = Library, values_from = srr) %>% 
+  #  group_by(Output) %>% summarize(
+  #    Depth = sum(Depth),
+  #    LibP = first(na.omit(LibP)),
+  #    LibM = first(na.omit(LibM))
+  #  ) %>% ungroup()
+  
+  samples$TSS <- 0
+  samples$pTSS <- 0
+  for (j in 1:nrow(samples)) {
+    samples[j,]$TSS <- nrow({merged |> filter(OriginalFile == samples[j,]$Output)})
+    samples[j,]$pTSS <- nrow({merged |> filter(OriginalFile == samples[j,]$Output, Class == "P")})
+  }
+
+  # Lastly, I need to fetch RSubRead results
+  samples$cpgPairedLibP <- 0
+  samples$cpgUnpairedLibP <- 0
+  samples$cpgPairedLibM <- 0
+  samples$cpgUnpairedLibM <- 0
+  samples$cpgGenecount <- 0
+  samples$cpgPairedLibP80 <- 0
+  samples$cpgUnpairedLibP80 <- 0
+  samples$cpgPairedLibM80 <- 0
+  samples$cpgUnpairedLibM80 <- 0
+  samples$cpgGenecount80 <- 0
+  samples$CountsPerGene <- 0
+  samples$CountsPerGene80 <- 0
+  
+  unpairedfile <- file.path(start_wd, readfile_folder, paste0(filename, "-unpaired.csv"))
+  pairedfile <- file.path(start_wd, readfile_folder, paste0(filename, "-paired.csv"))
+  unpairedtable <- NA
+  pairedtable <- NA
+  if (file.exists(unpairedfile)) {
+    unpairedtable <- read_csv(unpairedfile)
+  }
+  if (file.exists(pairedfile)) {
+    pairedtable <- read_csv(pairedfile)
+  }
+  
+  for (j in 1:nrow(samples)) {
+    if (is.tibble(unpairedtable)) {
+      LibPcol <- unpairedtable %>% select(starts_with(samples[j,]$LibP))
+      LibMcol <- unpairedtable %>% select(starts_with(samples[j,]$LibM))
+      genesCounted <- nrow(unpairedtable)
+      
+      # removes top10% and bottom10%, only getting the middle
+      LibPEighty <- LibPcol %>% arrange(LibPcol[[1]]) %>%
+        slice(ceiling(n() * 0.1):(floor(n() * 0.9)))
+      LibMEighty <- LibMcol %>% arrange(LibMcol[[1]]) %>%
+        slice(ceiling(n() * 0.1):(floor(n() * 0.9)))
+      genesEighty <- nrow(LibPEighty)
+      
+      # sums everything up
+      samples[j,]$cpgUnpairedLibP <- {LibPcol %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgUnpairedLibM <- {LibMcol %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgGenecount <- genesCounted
+      samples[j,]$cpgUnpairedLibP80 <- {LibPEighty %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgUnpairedLibM80 <- {LibMEighty %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgGenecount80 <- genesEighty
+    }
+    
+    # i will now copypaste the code for paired
+    if (is.tibble(pairedtable)) {
+      LibPcol <- pairedtable %>% select(starts_with(samples[j,]$LibP))
+      LibMcol <- pairedtable %>% select(starts_with(samples[j,]$LibM))
+      genesCounted <- nrow(pairedtable)
+      
+      # removes top10% and bottom10%, only getting the middle
+      LibPEighty <- LibPcol %>% arrange(LibPcol[[1]]) %>%
+        slice(ceiling(n() * 0.1):(floor(n() * 0.9)))
+      LibMEighty <- LibMcol %>% arrange(LibMcol[[1]]) %>%
+        slice(ceiling(n() * 0.1):(floor(n() * 0.9)))
+      genesEighty <- nrow(LibPEighty)
+      
+      # sums everything up
+      samples[j,]$cpgPairedLibP <- {LibPcol %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgPairedLibM <- {LibMcol %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgGenecount <- genesCounted
+      samples[j,]$cpgPairedLibP80 <- {LibPEighty %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgPairedLibM80 <- {LibMEighty %>% summarise(across(everything(), ~ sum(., na.rm = TRUE)))}[[1]]
+      samples[j,]$cpgGenecount80 <- genesEighty
+    }
+    
+    samples[j,]$CountsPerGene <- (samples[j,]$cpgPairedLibP + samples[j,]$cpgUnpairedLibP + samples[j,]$cpgPairedLibM + samples[j,]$cpgUnpairedLibM)/samples[j,]$cpgGenecount
+    samples[j,]$CountsPerGene80 <- (samples[j,]$cpgPairedLibP80 + samples[j,]$cpgUnpairedLibP80 + samples[j,]$cpgPairedLibM80 + samples[j,]$cpgUnpairedLibM80)/samples[j,]$cpgGenecount80
+  }
+
+  samples$filename <- filename
+  samples <- samples %>% pivot_longer(cols = c("TSS", "pTSS"), names_to = "Class", values_to = "Count")
+  
+  mydf <- rbind(mydf, samples)
+}
+
+ggplot(mydf, aes(Depth, Count)) + geom_point(aes(colour = filename)) + scale_x_log10()
 
 ##### Checking how many reads that alTSS have less relative to gTSS #####
 print("1. Checking how many reads that alTSS have less relative to gTSS")
