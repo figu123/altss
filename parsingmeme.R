@@ -103,7 +103,9 @@ for (i in 1:nrow(dados)) {
         position = as.numeric(xml_attr(sites[k], "position")),
         parent_seqid = as.character(pseqid),
         chr = pchr,
-        start = ppos - upstream_count + position,
+        start = ifelse(pstr == "+", 
+                       ppos - upstream_count + position,
+                       ppos + upstream_count - position - nchar(sequence)),
         end = start + nchar(sequence),
         strand = pstr,
         parent_position = ppos
@@ -148,7 +150,7 @@ for (i in 1:nrow(dados)) {
   }
 
   write_xlsx(ptss, paste0("./altss/", fn, "-pTSS.xlsx"))
-  print("Saved on altss table.")
+  print("Generated meme.gtf and added numsites column for altss table.")
 
   # 2. appending to TSS what motifs they have
   # memeresults <- tibble(
