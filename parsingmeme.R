@@ -53,7 +53,7 @@ for (i in 1:nrow(dados)) {
   )
   
   
-  myxml_sequences <- xml_find_all(mfxml, ".//sequence")
+  myxml_sequences <- xml_find_all(myxml, ".//sequence")
   for (j in 1:length(myxml_sequences)) {
     sequences_attrs <- xml_attrs(myxml_sequences[j])[[1]]
     pchr <- str_split_i(sequences_attrs[["name"]], "\\|", 1)
@@ -81,7 +81,7 @@ for (i in 1:nrow(dados)) {
     )
     
     # here i learned that "contributing_site" is what describes the motifs.
-    sites <- xml_children(xml_find_all(myxmlmotif[j], ".//contributing_sites"))
+    sites <- xml_children(xml_find_all(myxml_motifs[j], ".//contributing_sites"))
     for (k in 1:length(sites)) {
       sitesequence <- paste0(xml_attr(xml_find_all(sites[k], ".//letter_ref"), "letter_id"), collapse = "")
       fullsiteseq <- paste0(xml_text(xml_find_first(sites[k], "left_flank")),
@@ -114,6 +114,7 @@ for (i in 1:nrow(dados)) {
   }
   datamotifs
   motifsites
+  write_tsv(motifsites, paste0("./debug/meme-", fn, ".tsv"))
 
   motifsitesextrainfo <- paste0('motifid \"', as.character(motifsites$motif_id), '\";',
                      'motifseq \"', as.character(motifsites$motif_seq), '\";',
