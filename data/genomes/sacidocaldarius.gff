@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_000012285.1-RS_2025_03_29
 ##sequence-region NC_007181.1 1 2225959
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=330779
-NC_007181.1	RefSeq	region	1	2225959	.	+	.	ID=NC_007181.1:1..2225959;Dbxref=taxon:330779;Is_circular=true;Name=ANONYMOUS;gbkey=Src;genome=chromosome;mol_type=genomic DNA;strain=DSM 639;type-material=type strain of Sulfolobus acidocaldarius
 NC_007181.1	RefSeq	gene	101	1261	.	+	.	ID=gene-SACI_RS00005;Dbxref=GeneID:3472568;Name=SACI_RS00005;gbkey=Gene;gene_biotype=protein_coding;locus_tag=SACI_RS00005;old_locus_tag=Saci_0001
 NC_007181.1	Protein Homology	CDS	101	1261	.	+	0	ID=cds-WP_011276932.1;Parent=gene-SACI_RS00005;Dbxref=GenBank:WP_011276932.1,GeneID:3472568;Name=WP_011276932.1;Ontology_term=GO:0006270,GO:0051301,GO:0005524;gbkey=CDS;go_function=ATP binding|0005524||IEA;go_process=DNA replication initiation|0006270||IEA,cell division|0051301||IEA;inference=COORDINATES: similar to AA sequence:RefSeq:WP_011276932.1;locus_tag=SACI_RS00005;product=Cdc6/Cdc18 family protein;protein_id=WP_011276932.1;transl_table=11
 NC_007181.1	RefSeq	gene	1294	1629	.	+	.	ID=gene-SACI_RS00010;Dbxref=GeneID:3472569;Name=SACI_RS00010;gbkey=Gene;gene_biotype=protein_coding;locus_tag=SACI_RS00010;old_locus_tag=Saci_0002

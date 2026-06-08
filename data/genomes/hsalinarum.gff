@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_000006805.1-RS_2025_04_07
 ##sequence-region NC_002607.1 1 2014239
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=64091
-NC_002607.1	RefSeq	region	1	2014239	.	+	.	ID=NC_002607.1:1..2014239;Dbxref=taxon:64091;Is_circular=true;Name=ANONYMOUS;culture-collection=ATCC:700922;gbkey=Src;genome=chromosome;mol_type=genomic DNA;old-name=Halobacterium sp. NRC-1;strain=NRC-1%3B ATCC 700922
 NC_002607.1	RefSeq	gene	248	1453	.	+	.	ID=gene-VNG_RS00010;Dbxref=GeneID:1446951;Name=VNG_RS00010;gbkey=Gene;gene_biotype=protein_coding;locus_tag=VNG_RS00010;old_locus_tag=VNG0001H%2CVNG_0001H
 NC_002607.1	Protein Homology	CDS	248	1453	.	+	0	ID=cds-WP_010901943.1;Parent=gene-VNG_RS00010;Dbxref=GenBank:WP_010901943.1,GeneID:1446951;Name=WP_010901943.1;gbkey=CDS;inference=COORDINATES: similar to AA sequence:RefSeq:WP_010901943.1;locus_tag=VNG_RS00010;product=CARDB domain-containing protein;protein_id=WP_010901943.1;transl_table=11
 NC_002607.1	RefSeq	gene	1450	2115	.	+	.	ID=gene-VNG_RS00015;Dbxref=GeneID:1446952;Name=VNG_RS00015;gbkey=Gene;gene_biotype=protein_coding;locus_tag=VNG_RS00015;old_locus_tag=VNG0002G%2CVNG_0002G

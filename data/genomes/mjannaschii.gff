@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_000091665.1-RS_2025_11_21
 ##sequence-region NC_000909.1 1 1664970
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=243232
-NC_000909.1	RefSeq	region	1	1664970	.	+	.	ID=NC_000909.1:1..1664970;Dbxref=taxon:243232;Is_circular=true;Name=ANONYMOUS;gbkey=Src;genome=chromosome;mol_type=genomic DNA;strain=DSM 2661;type-material=type strain of Methanocaldococcus jannaschii
 NC_000909.1	RefSeq	direct_repeat	378	2060	.	+	.	ID=id-NC_000909.1:378..2060;gbkey=repeat_region;inference=COORDINATES: alignment:CRISPRCasFinder:4.3.2;rpt_family=CRISPR;rpt_type=direct;rpt_unit_range=378..407;rpt_unit_seq=attaaaatcagaccgtttcggaatggaaat
 NC_000909.1	RefSeq	gene	2216	3343	.	-	.	ID=gene-MJ_RS00005;Dbxref=GeneID:1450840;Name=MJ_RS00005;gbkey=Gene;gene_biotype=protein_coding;locus_tag=MJ_RS00005;old_locus_tag=MJ0001%2CMJ_0001
 NC_000909.1	Protein Homology	CDS	2216	3343	.	-	0	ID=cds-WP_010869494.1;Parent=gene-MJ_RS00005;Dbxref=GenBank:WP_010869494.1,GeneID:1450840;Name=WP_010869494.1;Ontology_term=GO:0009058,GO:0008483,GO:0030170;gbkey=CDS;go_function=transaminase activity|0008483||IEA,pyridoxal phosphate binding|0030170||IEA;go_process=biosynthetic process|0009058||IEA;inference=COORDINATES: similar to AA sequence:RefSeq:WP_010869494.1;locus_tag=MJ_RS00005;product=pyridoxal phosphate-dependent aminotransferase;protein_id=WP_010869494.1;transl_table=11

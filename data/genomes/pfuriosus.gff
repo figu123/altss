@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_008245085.1-RS_2025_11_21
 ##sequence-region NZ_CP023154.1 1 1889914
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=186497
-NZ_CP023154.1	RefSeq	region	1	1889914	.	+	.	ID=NZ_CP023154.1:1..1889914;Dbxref=taxon:186497;Is_circular=true;Name=ANONYMOUS;collected-by=Gerhard Fiala and Karl O. Stetter;country=Italy: Vulcano%2C beach of Porto di Levante;culture-collection=DSM:3638;gbkey=Src;genome=chromosome;isolation-source=geothermally heated marine sediments at the beach of Porto di Levante%2C Vulcano%2C Italy;mol_type=genomic DNA;note=VC1;strain=DSM 3638;type-material=type strain of Pyrococcus furiosus
 NZ_CP023154.1	RefSeq	gene	1	1263	.	+	.	ID=gene-PFDSM3638_RS00005;Dbxref=GeneID:41711803;Name=PFDSM3638_RS00005;gbkey=Gene;gene_biotype=protein_coding;locus_tag=PFDSM3638_RS00005;old_locus_tag=PFDSM3638_00005
 NZ_CP023154.1	Protein Homology	CDS	1	1263	.	+	0	ID=cds-WP_011011129.1;Parent=gene-PFDSM3638_RS00005;Dbxref=GenBank:WP_011011129.1,GeneID:41711803;Name=WP_011011129.1;gbkey=CDS;inference=COORDINATES: similar to AA sequence:RefSeq:WP_011011129.1;locus_tag=PFDSM3638_RS00005;product=ORC1-type DNA replication protein;protein_id=WP_011011129.1;transl_table=11
 NZ_CP023154.1	RefSeq	gene	1263	3104	.	+	.	ID=gene-PFDSM3638_RS00010;Dbxref=GeneID:41711804;Name=PFDSM3638_RS00010;gbkey=Gene;gene_biotype=protein_coding;locus_tag=PFDSM3638_RS00010;old_locus_tag=PFDSM3638_00010

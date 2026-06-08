@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_000025685.1-RS_2025_12_05
 ##sequence-region NC_013967.1 1 2847757
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=309800
-NC_013967.1	RefSeq	region	1	2847757	.	+	.	ID=NC_013967.1:1..2847757;Dbxref=taxon:309800;Is_circular=true;Name=ANONYMOUS;gbkey=Src;genome=chromosome;mol_type=genomic DNA;note=type strain of Haloferax volcanii;strain=DS2;type-material=type strain of Halobacterium volcanii
 NC_013967.1	RefSeq	gene	258	1952	.	+	.	ID=gene-HVO_RS04710;Dbxref=GeneID:8926884;Name=HVO_RS04710;gbkey=Gene;gene_biotype=protein_coding;locus_tag=HVO_RS04710;old_locus_tag=HVO_0001
 NC_013967.1	Protein Homology	CDS	258	1952	.	+	0	ID=cds-WP_004044954.1;Parent=gene-HVO_RS04710;Dbxref=GenBank:WP_004044954.1,GeneID:8926884;Name=WP_004044954.1;gbkey=CDS;inference=COORDINATES: similar to AA sequence:RefSeq:WP_004044954.1;locus_tag=HVO_RS04710;product=Cdc6/Cdc18 family protein;protein_id=WP_004044954.1;transl_table=11
 NC_013967.1	RefSeq	gene	2000	2797	.	-	.	ID=gene-HVO_RS04715;Dbxref=GeneID:8926122;Name=HVO_RS04715;gbkey=Gene;gene_biotype=protein_coding;locus_tag=HVO_RS04715;old_locus_tag=HVO_0002

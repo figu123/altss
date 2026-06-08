@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_000018365.1-RS_2025_11_21
 ##sequence-region NC_011529.1 1 1847607
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=523850
-NC_011529.1	RefSeq	region	1	1847607	.	+	.	ID=NC_011529.1:1..1847607;Dbxref=taxon:523850;Name=ANONYMOUS;gbkey=Src;genome=chromosome;isolation-source=deep-sea hydrothermal vent area at PACMANUS field;mol_type=genomic DNA;old-name=Thermococcus onnurineus;strain=NA1;type-material=type strain of Thermococcus onnurineus
 NC_011529.1	RefSeq	gene	1	3927	.	+	.	ID=gene-TON_RS10735;Dbxref=GeneID:95969050;Name=TON_RS10735;gbkey=Gene;gene_biotype=protein_coding;locus_tag=TON_RS10735;old_locus_tag=TON_0001
 NC_011529.1	Protein Homology	CDS	1	3927	.	+	0	ID=cds-WP_012570957.1;Parent=gene-TON_RS10735;Dbxref=GenBank:WP_012570957.1,GeneID:95969050;Name=WP_012570957.1;Ontology_term=GO:0000166,GO:0003677;gbkey=CDS;go_function=nucleotide binding|0000166||IEA,DNA binding|0003677||IEA;inference=COORDINATES: similar to AA sequence:RefSeq:WP_012570957.1;locus_tag=TON_RS10735;product=DNA polymerase domain-containing protein;protein_id=WP_012570957.1;transl_table=11
 NC_011529.1	RefSeq	gene	4079	4774	.	-	.	ID=gene-TON_RS00010;Dbxref=GeneID:7017647;Name=TON_RS00010;gbkey=Gene;gene_biotype=protein_coding;locus_tag=TON_RS00010;old_locus_tag=TON_0002

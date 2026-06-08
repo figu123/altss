@@ -7,7 +7,6 @@
 #!annotation-source NCBI RefSeq GCF_000306765.2-RS_2025_12_02
 ##sequence-region NC_017941.2 1 2948884
 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=523841
-NC_017941.2	RefSeq	region	1	2948884	.	+	.	ID=NC_017941.2:1..2948884;Dbxref=taxon:523841;Is_circular=true;Name=ANONYMOUS;culture-collection=ATCC:33500;gbkey=Src;genome=chromosome;mol_type=genomic DNA;strain=CGMCC 1.2087;type-material=type strain of Halobacterium mediterranei
 NC_017941.2	RefSeq	gene	1	1617	.	+	.	ID=gene-HFX_RS00005;Dbxref=GeneID:13028973;Name=HFX_RS00005;gbkey=Gene;gene_biotype=protein_coding;locus_tag=HFX_RS00005;old_locus_tag=HFX_0001
 NC_017941.2	Protein Homology	CDS	1	1617	.	+	0	ID=cds-WP_004058834.1;Parent=gene-HFX_RS00005;Dbxref=GenBank:WP_004058834.1,GeneID:13028973;Name=WP_004058834.1;Ontology_term=GO:0006270,GO:0051301,GO:0005524;gbkey=CDS;go_function=ATP binding|0005524||IEA;go_process=DNA replication initiation|0006270||IEA,cell division|0051301||IEA;inference=COORDINATES: similar to AA sequence:RefSeq:WP_004044954.1;locus_tag=HFX_RS00005;product=Cdc6/Cdc18 family protein;protein_id=WP_004058834.1;transl_table=11
 NC_017941.2	RefSeq	gene	1777	2652	.	-	.	ID=gene-HFX_RS00010;Dbxref=GeneID:13028986;Name=HFX_RS00010;gbkey=Gene;gene_biotype=protein_coding;locus_tag=HFX_RS00010;old_locus_tag=HFX_0002
