@@ -2,8 +2,10 @@ library(readxl)
 
 files <- list.files("./altss", pattern="\\.xlsx$", full.names=TRUE)
 
-lapply(files, function(f){
-  df <- read_excel(f)
-  write.table(df, sub("\\.xlsx$", ".tsv", f),
-              sep="\t", row.names=FALSE, quote=FALSE)
-})
+for (i in 1:length(files)) {
+  fn <- files[i]
+  exceltable <- read_xlsx(fn)
+  write_tsv(exceltable, sub("\\.xlsx", "\\.tsv", fn))
+  
+}
+
