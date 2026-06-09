@@ -83,6 +83,7 @@ mygrid = {
         { field: "Product", width: 420, headerName: 'Function' },
         { field: "TSSCount", width: 140, headerName: 'n(TSS)' },
         { field: "total_ortho", width: 140, headerName: 'n(ortho)'  },
+        { field: "Orthogroup", width: 140, headerName: 'Orthogroup'  },
         { field: "memenumsites", width: 140, headerName: 'n(motifs)' },
         { field: "SubClass", width: 90, headerName: 'Subclass'  }
       ],
