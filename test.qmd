@@ -17,13 +17,14 @@ igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(
 
 ```{r}
 #| output: false
+library(readr)
 
-dados <- read.table(file = "./data/dados.tsv", sep = '\t', header = TRUE)
+dados <- read_tsv(file = "./data/dados.tsv")
 
 results <- list()
 samples <- list()
 for (i in 1:nrow(dados)) {
-  results[[dados[i,]$Filenames]] <- read.table(paste0("./altss/", dados[i,]$Filenames, "-pTSS.tsv"), sep = '\t', header = TRUE)
+  results[[dados[i,]$Filenames]] <- read_tsv(paste0("./altss/", dados[i,]$Filenames, "-pTSS.tsv"))
   samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
 }
 
@@ -91,7 +92,7 @@ mygrid = {
       //   editable: true,
       },
       // Grid Options & Callbacks
-      // pagination: true,
+      pagination: true,
       rowSelection: { mode: "singleRow", checkboxes: false, enableClickSelection: true, copySelectedRows: true },
       onSelectionChanged: (event) => {
         // console.log("Row Selection Event!", event);
