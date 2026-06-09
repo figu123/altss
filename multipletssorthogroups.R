@@ -1,6 +1,6 @@
 
 
-# script created to filter candidates for my project.
+# script created to filter "candidates".
 # here i'm fetching for all TSSs that:
 #  1. have orthogroups
 #  2. has more than >= 2 TSSs
@@ -9,11 +9,12 @@
 
 dados <- read_tsv("./dados.tsv")
 
-df <- tibble()
+df <- tibble(filename = as.character())
 for (i in 1:nrow(dados)) {
   fn <- dados[i,]$Filenames
   
   ptss <- read_xlsx(paste0("./altss/", fn, "-pTSS.xlsx"))
+  ptss$filename <- fn
   
   df <- bind_rows(df, ptss)
 }
@@ -31,3 +32,6 @@ View(uniqs)
 
 write_xlsx(uniqs, "./uniqs.xlsx")
 write_xlsx(dff, "./all.xlsx")
+
+
+
