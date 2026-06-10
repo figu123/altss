@@ -1,0 +1,347 @@
+---
+title: "Alternative Start Sites 2"
+author: "Gapminder Analytics Group"
+format: dashboard
+css: test.css
+---
+
+```{ojs}
+//| output: false
+dados = await FileAttachment("./data/dados.tsv").tsv({ typed: true })
+
+igvserver = "http://localhost:5497"
+// results = await FileAttachment(`./results/altss/hsalinarum-alTSS.tsv`).tsv({ typed: true })
+
+igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(m => m.default)
+```
+
+```{r}
+#| output: false
+library(readr)
+
+dados <- read_tsv(file = "./data/dados.tsv")
+
+results <- list()
+samples <- list()
+for (i in 1:nrow(dados)) {
+  results[[dados[i,]$Filenames]] <- read_tsv(paste0("./altss/", dados[i,]$Filenames, "-pTSS.tsv"))
+  samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
+}
+tableall = read_tsv("./all.tsv")
+# ojs_define(dados = dados)
+ojs_define(results = results)
+ojs_define(samples = samples)
+ojs_define(tableall = tableall)
+```
+
+```{=html}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+</head>
+```
+
+## Row {height=70%}
+
+```{=html}
+<div id="myGrid" style="height: 100%;"></div>
+```
+
+```{ojs}
+//| output: false
+
+// fn = typeof lineselected !== "undefined" ? lineselected[["filename"]] : species["Filenames"];
+// fn = species["Filenames"]
+// sp = species["Species"]
+// altsstsv = results[fn]
+// trans = transpose(tableall)
+
+
+toUniprot = function(params) {
+    const link = `<a href="https://www.uniprot.org/uniprotkb?query=${params.value}" target="_blank">${params.value}</a>`;
+    
+    return link;
+}
+    
+mygrid = {
+    document.querySelector("#myGrid").innerHTML = ""
+    
+    // Grid Options: Contains all of the Data Grid configurations
+    const gridOptions = {
+      // Data to be displayed
+      rowData: transpose(tableall),
+      // Columns to be displayed (Should match rowData properties)
+      columnDefs: [
+        { field: "filename", width: 150,  headerName: 'Species' },
+        { field: "Chromossome", width: 150,  headerName: 'Chromosome' },
+        { field: "Position",width: 130 },
+        { field: "Strand", width: 30 },
+        { field: "OriginalFile", width: 130, headerName: 'Library' },
+        { field: "Gene", width: 180, headerName: 'Gene' },
+        { field: "Protein", width: 180, cellRenderer: toUniprot },
+        { field: "Product", width: 420, headerName: 'Function' },
+        { field: "TSSCount", width: 140, headerName: 'n(TSS)' },
+        { field: "total_ortho", width: 140, headerName: 'n(ortho)'  },
+        { field: "Orthogroup", width: 140, headerName: 'Orthogroup'  },
+        { field: "memenumsites", width: 140, headerName: 'n(motifs)' },
+        { field: "SubClass", width: 90, headerName: 'Subclass'  }
+      ],
+      // Configurations applied to all columns
+      defaultColDef: {
+        filter: true,
+      //   editable: true,
+      },
+      // Grid Options & Callbacks
+      pagination: true,
+      rowSelection: { mode: "singleRow", checkboxes: false, enableClickSelection: true, copySelectedRows: true },
+      onSelectionChanged: (event) => {
+        // console.log("Row Selection Event!", event);
+        if (event.selectedNodes.length == 0) return;
+        const lineselected = event.selectedNodes[0].data
+        
+        const fn = lineselected[["filename"]]
+        
+        const start = parseInt(lineselected[["Position"]]) - 600
+        const end = parseInt(lineselected[["Position"]]) + 600
+        const locus = `${lineselected[["Chromossome"]]}:${start}-${end}`;
+    
+        
+        const container = document.querySelector("#igv-container");
+        
+        
+        
+        // tracks
+        
+        const gettracks = async function() {
+          let candidates = [
+            {
+              name: "Anotação",
+              type: "annotation",
+              format: "gff3", 
+              url: `${igvserver}/data/genomes/${fn}.gff`,
+              searchable: true
+            },
+            {
+              name: "TSSAR-pTSSs",
+              type: "annotation",
+              format: "gtf", 
+              url: `${igvserver}/altss/${fn}-pTSS.gtf`,
+              searchable: true
+            },
+            {
+              name: "MEME Motif",
+              type: "annotation",
+              format: "gtf", 
+              url: `${igvserver}/altss/${fn}-meme-pTSS.gtf`,
+              searchable: true
+            },
+          ]
+          
+          // attempts to add samples into mytracks
+          // https://igv.org/doc/igvjs/#tracks
+          transpose(samples[fn]).forEach(samp => { 
+            
+            candidates.push({
+              "name": `${samp["Output"]} TEX+ FWD Unpaired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
+            });
+            candidates.push({
+              "name": `${samp["Output"]} TEX- FWD Unpaired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
+            });
+            candidates.push({
+              "name": `${samp["Output"]} TEX+ REV Unpaired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
+            });
+            candidates.push({
+              "name": `${samp["Output"]} TEX- REV Unpaired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
+            });
+          
+            candidates.push({
+              "name": `${samp["Output"]} TEX+ FWD Paired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
+            });
+            candidates.push({
+              "name": `${samp["Output"]} TEX- FWD Paired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
+            });
+            candidates.push({
+              "name": `${samp["Output"]} TEX+ REV Paired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
+            });
+            candidates.push({
+              "name": `${samp["Output"]} TEX- REV Paired`,
+              "type": "wig",
+              "format": "bedGraph",
+              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
+            });
+          })
+          
+          // tests if file exists, if it does, append to "results".
+          async function urlExists(url) {
+            try {
+              let res = await fetch(url, { method: 'HEAD' })
+              if (res.status === 405 || res.status === 501) {
+                res = await fetch(url, { method: 'GET', cache: 'no-store' })
+              }
+              return res.ok
+            } catch (e) {
+              return false
+            }
+          }
+        
+          const results = await Promise.all(candidates.map(async t => {
+            if (!t.url) return null
+            const ok = await urlExists(t.url)
+            if (ok) return t
+            // console.warn('URL missing:', t.url)
+            return null
+          }))
+        
+          return results.filter(Boolean)
+        }
+        
+        // defining mytracks
+        gettracks().then((v) => {
+          const mytracks = v
+          
+          const options = {
+            reference: {
+              id: `${fn}`,
+              name: `${fn}`,
+              fastaURL: `${igvserver}/data/genomes/${fn}.fna`,
+              indexURL: `${igvserver}/data/genomes/${fn}.fna.fai`
+            },
+            tracks: mytracks,
+            locus: locus
+          };
+          
+          igv.removeAllBrowsers();
+        
+          igv.createBrowser(container, options);
+        })
+        
+      },
+      onCellValueChanged: (event) => {
+        console.log(`New Cell Value: ${event.value}`);
+      },
+    };
+
+    const myGridElement = document.querySelector('#myGrid');
+    agGrid.createGrid(myGridElement, gridOptions);
+}
+
+```
+
+## Row {height=70%}
+
+```{=html}
+<div id="igv-container" style="height: 100%; width: 100%; padding: 5px;"></div>
+```
+
+
+```{ojs}
+//| output: false
+
+thisblockquoteisdisabled = true
+
+// updateigvposition = {
+  // if (selectedline && igvbrowser) {
+    
+    // console.log(selectedline[["Chromossome"]], selectedline[["Position"]])
+    
+    // const start = parseInt(selectedline[["Position"]]) - 600
+    // const end = parseInt(selectedline[["Position"]]) + 600
+    // const locus = `${selectedline[["Chromossome"]]}:${start}-${end}`;
+
+    
+    // await igvbrowser.search(locus)
+    
+    /*
+    await igvbrowser.search({
+      "chromosome": selectedline[["Chromossome"]],
+      "start": parseInt(selectedline[["Position"]]) - 40,
+      "end": parseInt(selectedline[["Position"]]) + 40
+    })
+    const excludon_atual = amostra_selecionada;
+
+    const amostra = excludon_atual.run;
+    const chr = excludon_atual.seqname;
+
+    const margem = 300;
+    const start_num = parseInt(excludon_atual.merged_start);
+    const end_num = parseInt(excludon_atual.merged_end);
+
+    const inicio = Math.max(1, start_num - margem);
+    const fim = end_num + margem;
+
+    const locus = `${chr}:${inicio}-${fim}`;
+
+    await meu_igv.search(locus);
+
+    let tracksParaRemover = meu_igv.trackViews.filter(tv => {
+        let nomeDaTrack = tv.track.name || "";
+        return nomeDaTrack.includes("Forward (+)") ||
+               nomeDaTrack.includes("Reverse (-)") ||
+               nomeDaTrack.includes("Excludon");
+    });
+
+    for (let tv of tracksParaRemover) {
+        meu_igv.removeTrack(tv.track);
+    }
+
+    await meu_igv.loadTrack({
+        name: "Forward (+)",
+        url: "${igvserver}/results/hvol/cov/" + amostra + "_plus.bedgraph",
+        type: "wig",
+        color: "rgb(102,102,102)",
+        autoscaleGroup: "1",
+        height: 70,
+        order: 1
+    });
+
+    await meu_igv.loadTrack({
+        name: "ExcludonFinder Results",
+        url: "${igvserver}/results/hvol/excludon-finder/viz/" + amostra + ".gff",
+        type: "annotation",
+        format: "gff3",
+        displayMode: "expanded",
+        color: "rgb(0,0,0)",
+        altColor: "rgb(0,102,51)",
+        fontSize: "10",
+        autoHeight: true,
+        maxHeight: 10000,
+        groupByStrand: "false",
+        order: 2
+    });
+
+    await meu_igv.loadTrack({
+        name: "Reverse (-)",
+        url: "${igvserver}/results/hvol/cov/" + amostra + "_minus.bedgraph",
+        type: "wig",
+        color: "rgb(0,102,51)",
+        autoscaleGroup: "1",
+        height: 70,
+        order: 3
+    });
+    
+  */
+//  }
+//}
+
+
+```
