@@ -136,60 +136,148 @@ mygrid = {
             },
           ]
           
+          // The idea is to compare blue x red colors. So Blue = TEX+, Red = TEX-.
+          // Lighter colors is Positive Strand (FWD) and Darker colors Negative Strand (REV)
+          // tex+: 44CCFF fwd; 011627 rev      tex-: F03A47 fwd; 5E0B15 rev
           // attempts to add samples into mytracks
           // https://igv.org/doc/igvjs/#tracks
-          transpose(samples[fn]).forEach(samp => { 
-            
-            candidates.push({
-              "name": `${samp["Output"]} TEX+ FWD Unpaired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
-            });
-            candidates.push({
-              "name": `${samp["Output"]} TEX- FWD Unpaired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
-            });
-            candidates.push({
-              "name": `${samp["Output"]} TEX+ REV Unpaired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
-            });
-            candidates.push({
-              "name": `${samp["Output"]} TEX- REV Unpaired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
-            });
           
-            candidates.push({
-              "name": `${samp["Output"]} TEX+ FWD Paired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
-            });
-            candidates.push({
-              "name": `${samp["Output"]} TEX- FWD Paired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
-            });
-            candidates.push({
-              "name": `${samp["Output"]} TEX+ REV Paired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
-            });
-            candidates.push({
-              "name": `${samp["Output"]} TEX- REV Paired`,
-              "type": "wig",
-              "format": "bedGraph",
-              "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
-            });
-          })
+          if (lineselected[["Strand"]] == "+") {
+          
+              transpose(samples[fn]).forEach(samp => { 
+                // fwd
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ FWD Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
+                  "color": "#44CCFF"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- FWD Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
+                  "color": "#F03A47"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ FWD Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
+                  "color": "#44CCFF"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- FWD Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
+                  "color": "#F03A47"
+                });
+              })
+              
+              transpose(samples[fn]).forEach(samp => { 
+                // rev
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ REV Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
+                  "color": "#011627"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- REV Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
+                  "color": "#5E0B15"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ REV Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
+                  "color": "#011627"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- REV Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
+                  "color": "#5E0B15"
+                });
+              })
+              
+              
+              
+          } else {
+          
+            // same thing but flipped.
+              transpose(samples[fn]).forEach(samp => { 
+                // rev
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ REV Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
+                  "color": "#011627"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- REV Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
+                  "color": "#5E0B15"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ REV Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
+                  "color": "#011627"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- REV Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
+                  "color": "#5E0B15"
+                });
+              })
+            
+              transpose(samples[fn]).forEach(samp => { 
+                // fwd
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ FWD Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
+                  "color": "#44CCFF"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- FWD Paired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
+                  "color": "#F03A47"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX+ FWD Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
+                  "color": "#44CCFF"
+                });
+                candidates.push({
+                  "name": `${samp["Output"]} TEX- FWD Unpaired`,
+                  "type": "wig",
+                  "format": "bedGraph",
+                  "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
+                  "color": "#F03A47"
+                });
+              })
+              
+          }
           
           // tests if file exists, if it does, append to "results".
           async function urlExists(url) {
