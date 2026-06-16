@@ -118,21 +118,26 @@ mygrid = {
               type: "annotation",
               format: "gff3", 
               url: `${igvserver}/data/genomes/${fn}.gff`,
-              searchable: true
+              searchable: true,
+              color: "#6874E8",
+              altColor: "#392759"
             },
             {
               name: "TSSAR-pTSSs",
               type: "annotation",
               format: "gtf", 
               url: `${igvserver}/altss/${fn}-pTSS.gtf`,
-              searchable: true
+              searchable: true,
+              color: "#6874E8",
+              altColor: "#392759"
             },
             {
               name: "MEME Motif",
               type: "annotation",
               format: "gtf", 
               url: `${igvserver}/altss/${fn}-meme-pTSS.gtf`,
-              searchable: true
+              searchable: true,
+              colorBy: "motifid"
             },
           ]
           
@@ -320,7 +325,7 @@ mygrid = {
           
           igv.removeAllBrowsers();
         
-          igv.createBrowser(container, options);
+          igv.createBrowser(container, options)
         })
         
       },
@@ -328,6 +333,7 @@ mygrid = {
         console.log(`New Cell Value: ${event.value}`);
       },
     };
+    
 
     const myGridElement = document.querySelector('#myGrid');
     agGrid.createGrid(myGridElement, gridOptions);
