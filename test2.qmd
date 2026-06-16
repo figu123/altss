@@ -74,6 +74,7 @@ mygrid = {
         { field: "filename", width: 150,  headerName: 'Species' },
         { field: "Chromossome", width: 150,  headerName: 'Chromosome' },
         { field: "Position",width: 130 },
+        { field: "Pvalue", width: 100 },
         { field: "Strand", width: 30 },
         { field: "OriginalFile", width: 130, headerName: 'Library' },
         { field: "Gene", width: 180, headerName: 'Gene' },
