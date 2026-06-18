@@ -20,7 +20,7 @@ for (i in 1:nrow(dados)) {
 }
 
 dff <- df %>% filter(!is.na(Orthogroup)) %>% group_by(Orthogroup) %>%
-       filter(TSSCount > 1) %>%
+       filter(TSSCount > 1) %>% filter(total_ortho > 1) %>%
        filter(n_distinct(Chromossome) >= 2) %>% ungroup()
 
 uniqs <- dff %>% group_by(Orthogroup) %>% slice_head(n = 1)
@@ -33,5 +33,7 @@ View(uniqs)
 write_xlsx(uniqs, "./uniqs.xlsx")
 write_xlsx(dff, "./all.xlsx")
 
-
+write_tsv(uniqs, "./uniqs.tsv")
+write_tsv(dff, "./all.tsv")
+write_tsv(df, "./allmerged.tsv")
 
