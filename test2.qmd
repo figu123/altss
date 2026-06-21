@@ -27,7 +27,7 @@ for (i in 1:nrow(dados)) {
   results[[dados[i,]$Filenames]] <- read_tsv(paste0("./altss/", dados[i,]$Filenames, "-pTSS.tsv"))
   samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
 }
-tableall = read_tsv("./all.tsv")
+tableall = read_tsv("./candidatos.tsv")
 # ojs_define(dados = dados)
 ojs_define(results = results)
 ojs_define(samples = samples)
@@ -81,6 +81,7 @@ mygrid = {
         { field: "Protein", width: 180, cellRenderer: toUniprot },
         { field: "Product", width: 420, headerName: 'Function' },
         { field: "TSSCount", width: 140, headerName: 'n(TSS)' },
+        { field: "gTSSDistance", width: 200, headerName: 'dist(TSS)' },
         { field: "total_ortho", width: 140, headerName: 'n(ortho)'  },
         { field: "Orthogroup", width: 140, headerName: 'Orthogroup'  },
         { field: "memenumsites", width: 140, headerName: 'n(motifs)' },
