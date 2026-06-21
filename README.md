@@ -1,18 +1,21 @@
 # altss
 
-Pipeline for identification of alternative promoters of multiple prokaryotic genomes based on dRNA-seq data.
+Pipeline for mapping and analysing alternative promoters in archea based on dRNA-seq data.
 
 This is a repository organizing all the tools that I've been using throughout my scientific initiation.
-It has the same requirements described on https://github.com/alanlorenzetti/frtc/ , and relies on the output files of this program for running it.
+Initial sequencing processing was done thanks to the pipeline of https://github.com/alanlorenzetti/frtc/ .
+This Pipeline expects that you will have the same results as obtained by running FRTC.
 It is also integrated with the TSSAR commandline tool, http://rna.tbi.univie.ac.at/TSSAR , having some modifications that were done in its clusterization as described in (IBRAHIM Amr, 2023) https://doi.org/10.11606/T.95.2023.tde-17082023-215744
 
-TODO: Maybe reduce the amount of packages that are requirements in R.
+-----
 
 ### Setup
 
 1. Clone the repository. 
 
-2. Create a tab separated value (.tsv) file called "dados.tsv". Use the exact columns as described below, substituting each row name by your sample. 
+2. Inside the `data` folder, provide the following files:
+
+2. 1. Create a tab separated value (.tsv) file called "dados.tsv". Use the exact columns as described below, substituting each row name by your sample. 
 
 | Assembly | Species | Filenames | Shortened | 
 | -------- | ------- | --------- | --------- | 
@@ -21,7 +24,9 @@ TODO: Maybe reduce the amount of packages that are requirements in R.
 | GCF_000009965.1 | Thermococcus kodakarensis KOD1 | tkodakarensis | T. kodakarensis |
 | GCF_000012285.1 | Sulfolobus acidocaldarius DSM 639 | sacidocaldarius | S. acidocaldarius |
 
-3. Create a folder called `samples/`. Inside this folder, place the exact same term used in the column "`Filenames`" above, naming it {filename}.csv. This comma separated value should have information about each run, specifying the TEX+ and TEX- library, as well as a descriptor for identification. For example, given the species `Halobacterium salinarum NRC-1` of the table above, supposing it has 10 different conditions. Each condition has two libraries, one TEX+ and one TEX-. You can give any descriptor for the condition, such as simplifying "17 hours, sample A" into "17ha". Here's how that can look like:
+2. 2. Create a folder called `samples/`. Inside this folder, place the exact same term used in the column "`Filenames`" above, naming it `{filename}`.csv. This comma separated value should have information about each run, specifying the TEX+ and TEX- library, as well as a descriptor for identification. 
+
+For example, given the species `Halobacterium salinarum NRC-1` of the table above, supposing it has 10 different conditions. Each condition has two libraries, one TEX+ and one TEX-. You can give any descriptor for the condition, but it is recommended keeping it simple, such as simplifying "17 hours, sample A" into "17ha". Here's how that can look like:
 
 ```csv
 LibP,LibM,Output
@@ -37,7 +42,11 @@ SRR6953863,SRR6953873,86ha
 SRR6953864,SRR6953874,86hb
 ```
 
-4. Finally, specify the folder that contains results of the pipeline frtc ( https://github.com/alanlorenzetti/frtc/ ) for each filename. frtc is a pipeline that produces various outputs, only two are of interest: `tssarinput` and `coverage`. It is assumed that this folder will also follow the {filename} naming convention established above. So for example, if you've used FRTC on the 4 archeal organisms described in the table `dados.tsv` above, it is assumed that the folder path of frtc will have the following files:
+2. 3. Change the pathes inside the `altss.R` script to your own.
+
+Make one folder for each `{filename}` specified in dados.tsv (2.1.), each one should have the files from running the frtc pipeline ( https://github.com/alanlorenzetti/frtc/ ). 
+
+For example, if you've used FRTC on the 4 archeal organisms described in the table `dados.tsv` above, it is assumed that the folder path of frtc will have the following files:
 
 ```
 ./frtc/
@@ -55,34 +64,56 @@ SRR6953864,SRR6953874,86hb
  |  |- ./tssarinput
 ```
 
-You must specify this folder inside the script altss.R, in the frtc_folder variable.
-Other variables in there can also be customized, at least until you reach the "hardcoded variables" spot.
+-----
 
 After all of this is done, this is how the final folder structure should look like
 
 ```
 # input folders
-./dados.tsv
-./samples/{filename}.csv
-(frtcfolder)/{filename}/coverage and tssarinput
-# scripts
-./2tssar.sh
-./3altss.R
-./4meme.sh
-./5graphs.R
-./6ortho.sh
-./7tree.sh
+(frtcfolder)/
+ |- {filenames}/
+ |  |- coverage
+ |  |- tssarinput
+./data/
+ |- dados.tsv
+ |- samples/
+ |  |- {filenames}.csv
+# scripts (WIP -- Prone to be changed)
+./tssar/              # folder containing scripts used in tssar.sh
+./1downloading-sras.sh   # <-- IF YOU NEED TO RUN FRTC, THIS SCRIPT HELPS in fetching raw sequencing files (sra)
+./1fetch-genomes.sh   # run this first
+./2tssar.sh           # then run this
+./3orthofinder.sh     # then run this
+./4altss.R            # then run this
+./5meme.sh            # then run this
+./meme-parsingresults # puts meme results into a table
+./6graphs.R           # then run this
+./7tree.sh (mafft.sh?)# then run this
 # output folders (automatically generated)
-./altss/
-./genomes/
-./memeinput/
-./merged/
-./misc/
-./readcount/
-./tssar/
+./results/
+ |  |- altss - contains table information for each TSS
+ |  |- memeinput - input data for meme for motif identification
+ |  |- memeoutput - output data for meme
+ |  |- merged - TSSAR results placed into one single spreadsheet
+ |  |- misc - some graphs
+ |  |- readcount - read count per gene (RSubread)
 ```
 
 ## Overview / Usage
 
 Once setup is done, just run the scripts in order. Dependencies are the same as the ones described in FRTC, TSSAR, including the packages that can be found at the top of each .R script.
+
+Things likely are broken, since this work is still in progress.
+
+Other things you need to be able to run:
+- basically all dependencies of FRTC and TSSAR (for running them in the first place)
+- SRA toolkit (for prefetch + fasterq-dump in 1downloading-sras.sh)
+- wget  (for 1fetch-genomes.sh)
+- bedtools/samtools  (for 1fetch-genomes.sh to generate the .fai files for IGV)
+- MEME (i used version 5.0.5)
+- Orthofinder (i used version 2.5.4)
+- IQTree
+- Quarto (for visualizing coverage data in browser)
+- python + package RangeHTTPServer (for igvserver.py)
+- some R packages (tidyverse, rtracklayer, seqinr, Rsubread, ggplot2)
 
