@@ -33,6 +33,7 @@ for (i in 1:length(orthos)) {
 
 
 
+seqs <- read_tsv("all.tsv")
 
-
+seqs %>% group_by(Orthogroup) %>% slice_head(n = 1) %>% ungroup()
 

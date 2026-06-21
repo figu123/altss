@@ -1,1 +1,0 @@
-AP006878.1	assembled-molecule	na	Chromosome	AP006878.1	=	NC_006624.1	Primary Assembly	2088737	na

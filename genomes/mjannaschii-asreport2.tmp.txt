@@ -1,3 +1,0 @@
-MAJN	assembled-molecule	na	Chromosome	L77117.1	=	NC_000909.1	Primary Assembly	1664970	na
-large ECE	assembled-molecule	pDSM2661_1	Plasmid	L77118.1	=	NC_001732.1	Primary Assembly	58407	na
-small ECE	assembled-molecule	pDSM2661_2	Plasmid	L77119.1	=	NC_001733.1	Primary Assembly	16550	na

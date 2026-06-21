@@ -1,1 +1,0 @@
-CP000077.1	assembled-molecule	na	Chromosome	CP000077.1	=	NC_007181.1	Primary Assembly	2225959	na
