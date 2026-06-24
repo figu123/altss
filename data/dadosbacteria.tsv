@@ -1,0 +1,58 @@
+Assembly	Filenames	Species
+GCF_013372085.1	abaumannii	Acinetobacter baumannii ATCC 17978
+GCF_000092025.1	afabrum	Agrobacterium fabrum C58
+GCF_013337045.2	avitis	Agrobacterium vitis T60/94
+GCF_000009485.1	bcenocepacia	Burkholderia cenocepacia J2315
+GCF_001642675.1	bdiazoefficiens	Bradyrhizobium diazoefficiens USDA 110
+GCF_029857595.2	blicheniformis	Bacillus licheniformis DSM13
+GCF_000009045.1	bsubtilis	Bacillus subtilis AR9
+GCF_000011065.1	bthetaiotaomicron	Bacteroides thetaiotaomicron VPI-5482
+GCF_000015785.2	bvelezensis-fzb42	Bacillus velezensis FZB42
+GCF_000008765.1	cacetobutylicum	Clostridium acetobutylicum ATCC 824
+GCF_000015085.1	cfetus8240	Campylobacter fetus subspecies fetus 82-40
+GCF_000967135.1	cfetus84112	Campylobacter fetus subsp. venerealis str. 84-112
+GCF_043099315.1	cfritschii	Chlorogloeopsis fritschii PCC 6912
+GCF_000171795.2	cjejuni	Campylobacter jejuni subsp. jejuni CG8421
+GCF_000012905.2	csphaeroides	Cereibacter sphaeroides 2.4.1
+GCF_000006985.1	ctepidum	Chlorobaculum tepidum TLS
+GCF_000022005.1	cvibrioides-na1000	Caulobacter crescentus NA1000
+GCF_000147055.1	ddadantii	Dickeya dadantii 3937
+GCF_000020685.1	ddeserti	Deinococcus deserti RD19/ derivada da VCD115
+GCF_000005845.2	ecoli-bw38028	Escherichia coli K-12 BW38028/ mutante da MG1655
+GCF_000005845.2	ecoli-mg1655-ga	Escherichia coli K-12 BW38028/ mutante da MG1655
+GCF_000005845.2	ecoli-mg1655-hs	Escherichia coli K-12 BW38028/ mutante da MG1655
+GCF_000714595.1	ecoli-nissle1917	Escherichia coli Nissle 1917
+GCF_022869985.1	ecoli-o104h4	Escherichia coli O104:H4
+GCF_000007785.1	efaecalis-v583	Enterococcus faecalis V583
+GCF_000250945.1	efaecium-aus0004	Enterococcus faecium Aus0004
+GCF_000807675.2	elimosum	Eubacterium limosum ATCC 8486
+GCF_000020865.1	episcicida	Edwardsiella piscicida EIB202
+GCF_000158275.2	fanimalis-71	Fusobacterium animalis 7_1
+GCF_003019295.1	fnucleatum-atcc25586	Fusobacterium nucleatum subsp. nucleatum ATCC 25586
+GCF_050233995.1	fnucleatum	Fusobacterium nucleatum subsp. nucleatum ATCC 23726
+GCF_003019755.1	fperiodonticum-2131	Fusobacterium periodonticum 2_1_31
+GCF_000153625.3	fpolymorphum-atcc10953	Fusobacterium polymorphum ATCC 10953
+GCF_000162235.2	fvincentii-3136a2	Fusobacterium vincentii 3_1_36A2
+GCF_000307795.1	hpylori	Helicobacter pylori 26695
+GCF_000083545.1	mextorquens	Methylorubrum extorquens DM4
+GCF_000195955.2	mtuberculosis-h37rv-2013	Mycobacterium tuberculosis H37Rv
+GCF_000006845.1	ngonorrhoeae	Neisseria gonorrhoeae GCM77/ FA1090
+GCF_000196295.1	nlactamica	Neisseria lactamica 020-06
+GCF_000026965.1	nmeningitidis	Neisseria meningitidis 8013
+GCF_000006765.1	paeruginosa-pao1	Pseudomonas aeruginosa PAO1
+GCF_000022065.1	rcellulolyticum-h10	Ruminiclostridium cellulolyticum H10
+GCF_000009265.1	rleguminosarum	Rhizobium leguminosarum 3841/Rhizobium johnstonii 3841
+GCF_900607245.1	saureus-jkd6009	Staphylococcus aureus subsp. aureus str. JKD6009
+GCF_000203835.1	scoelicolor	Streptomyces coelicolor A3(2)
+GCF_000188735.1	senterica-74-prjna257106	Salmonella enterica subsp. enterica serovar Typhimurium str. ST4/74
+GCF_000027025.1	senterica-d23580	Salmonella enterica subsp. enterica serovar Typhimurium str. D23580
+GCF_000011925.1	sepidermidis	Staphylococcus epidermidis RP62A
+GCF_004799585.1	sflexneri	Shigella flexneri 5a str. M90T
+GCF_001559015.1	sgranuli	Sphingopyxis granuli  TFA
+GCF_000072485.1	smaltophilia	Stenotrophomonas maltophilia K279a
+GCF_000568815.1	smultivorans	Sulfurospirillum multivorans DSM 12446
+GCF_008639165.1	svenezuelae-atcc10712	Streptomyces venezuelae ATCC 10712
+GCF_000017705.1	vcampbellii	Vibrio campbellii BB120/ ATCC BAA-1116
+GCF_008369605.1	vcholerae-c6706-2014	Vibrio cholerae RFB16 / C6706
+GCF_008369605.1	vcholerae-c6706-2023	Vibrio cholerae RFB16 / C6706
+GCA_000006745.1	vcholerae-n16961	Vibrio cholerae O1 biovar El Tor str. N16961
