@@ -29,9 +29,9 @@ for (i in 1:nrow(dados)) {
   
   if ("Orthogroup" %in% colnames(ptss)) {
     print(paste0("This script was already run for ", filename))
-    # running it multiple times will duplicate the number of columns each time. 
-    # not recommended.
-    next;
+    # running it multiple times would duplicate the number of columns each time. 
+    # failsafe:
+    ptss <- ptss %>% select(-total_ortho, -Orthogroup, -starts_with("ortho_"))
   }
   
   # ptssuq <- ptss |> group_by(Gene) |> slice_head() |> ungroup()
@@ -78,9 +78,22 @@ for (i in 1:nrow(dados)) {
     select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
   # na_summary <- ptss %>% summarise(across(everything(), ~ sum(!is.na(.))/n()))
   
-  resultSummary <- resultSummary %>% 
-    left_join(summarySpecies, by="Filenames")
+  # the mutate below is quite verbose, but it merges columns & 
+  resultSummary <- resultSummary %>%
+    left_join(summarySpecies, by = "Filenames") %>%
+    mutate(across(ends_with(".x"),
+                  ~ coalesce(.x, get(sub("\\.x$", ".y", cur_column()))),
+                  .names = "{sub('.x$','',.col)}")) %>%
+    select(-ends_with(".x"), -ends_with(".y"))
   
   write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
 }
-write_tsv(resultSummary, "./results/orthofinder-summary.tsv")
+resultSummary <- resultSummary %>% 
+  select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+
+resultSummary2 <- resultSummary %>%
+  mutate(Orthogroup = Orthogroup/Protein) %>%
+  mutate(across(starts_with("ortho_"), ~ .x/Protein))
+
+write_tsv(resultSummary, "./results/orthofinder-summary-total.tsv")
+write_tsv(resultSummary2, "./results/orthofinder-summary-percentages.tsv")
