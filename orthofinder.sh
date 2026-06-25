@@ -1,6 +1,8 @@
 #!/bin/bash
 
-orthofinder -f data/genomes -o results/orthofinder
+mkdir -p results/orthofinder/input >/dev/null 2>&1
+cp -r data/genomes/*.faa results/orthofinder/input >/dev/null 2>&1
+orthofinder -f results/orthofinder/input -o results/orthofinder/output
 
 #
 # Orthofinder feels very straightforward.
