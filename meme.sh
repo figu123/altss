@@ -3,8 +3,8 @@
 
 # perosnal note: remember to activate your conda env - source ~/miniconda3/bin/activate; conda activate meme-env
 
-memeinput_folder="./memeinput"
-memeoutput_folder="./memeoutput"
+memeinput_folder="./results/memeinput"
+memeoutput_folder="./results/memeoutput"
 
 mkdir "$memeoutput_folder"
 

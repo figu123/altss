@@ -2,8 +2,6 @@
 # https://xml2.r-lib.org/
 library("xml2")
 library("tidyverse")
-library("readxl")
-library("writexl")
 
 dados <- read_tsv("./dados.tsv")
 
@@ -14,7 +12,7 @@ downstream_count <- 10
 for (i in 1:nrow(dados)) {
   fn <- dados[i,]$Filenames
   print(paste0("Parsing meme results for ", fn))
-  xmlfile <- file.path(paste0("./memeoutput/", fn, "-pTSS-all/meme.xml"))
+  xmlfile <- file.path(paste0("./results/memeoutput/", fn, "-pTSS-all/meme.xml"))
   
   if (!file.exists(xmlfile)) {
     print("Could not find meme results.")
@@ -112,9 +110,9 @@ for (i in 1:nrow(dados)) {
       )
     }
   }
-  datamotifs
-  motifsites
-  write_tsv(motifsites, paste0("./debug/meme-", fn, ".tsv"))
+  # datamotifs
+  # motifsites
+  # write_tsv(motifsites, paste0("./debug/meme-", fn, ".tsv"))
 
   motifsitesextrainfo <- paste0('motifid \"', as.character(motifsites$motif_id), '\";',
                      'motifseq \"', as.character(motifsites$motif_seq), '\";',
@@ -134,13 +132,11 @@ for (i in 1:nrow(dados)) {
     V8 = ".",
     V9 = motifsitesextrainfo)
 
-  outfile_name <- paste0("./altss/", fn, "-meme-pTSS.gtf")
+  outfile_name <- paste0("./results/altss/", fn, "-meme-pTSS.gtf")
   write_tsv(memegtf, outfile_name, col_names = FALSE, escape = "none")
   
-  ptss <- read_xlsx(paste0("./altss/", fn, "-pTSS.xlsx"))
+  ptss <- read_tsv(paste0("./results/altss/", fn, "-pTSS.tsv"))
   ptss$memenumsites <- 0
-  ptss$memecombinedpval <- NA # deprecated, will always be NA
-  ptss$memesites <- NA # deprecated
   
   for (j in 1:nrow(motifsites)) {
     motifexists <- ptss$Position == motifsites$parent_position[j] &
@@ -150,7 +146,7 @@ for (i in 1:nrow(dados)) {
     ptss$memenumsites[motifexists] <- ptss$memenumsites[motifexists] + 1
   }
 
-  write_xlsx(ptss, paste0("./altss/", fn, "-pTSS.xlsx"))
+  write_tsv(ptss, paste0("./altss/", fn, "-pTSS.tsv"))
   print("Generated meme.gtf and added numsites column for altss table.")
 
   # 2. appending to TSS what motifs they have
