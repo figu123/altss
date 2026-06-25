@@ -1,6 +1,6 @@
 #!/bin/bash
 
-orthofinder -f data/genomes -o results
+orthofinder -f data/genomes -o results/orthofinder
 
 #
 # Orthofinder feels very straightforward.

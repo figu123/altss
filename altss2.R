@@ -1,6 +1,3 @@
-
-# library(readxl) 
-# library(writexl)
 library(tidyverse)    # Core used for working with datatables
 library(rtracklayer)  # Reading genomic annotation files
 library(seqinr)       # Extracting upstream regions (promoter regions)
@@ -19,10 +16,19 @@ library(Rsubread)     # Used in getting read counts for each gene.
 start_wd <- "~/files/analises/full"
 setwd(start_wd)
 
+# how many threads is Rsubread allowed to use. it can run on 1.
+rsubread_nthreads <- 1
+
 # How much upstream/downstream of each pTSS is extracted for promoter analysis.
 # (For motif searching. The length of the sequence below will be appended to the final spreadsheet.)
 upstream_count <- 100
 downstream_count <- 10
+
+
+# minimal DISTANCE in base pairs between alTSSs.
+# A distance of 5 is the equivalent of a 10 nucleotide window (5 nt left, 5 nt right)
+threshold_mindist <- 5
+threshold_pvalue <- 1e-6
 
 # INPUT DATA #
 
@@ -115,13 +121,17 @@ merge_tssar_results <- function(filename) {
                               sub("^[^_]*_", "", 
                                   sub("_TSS.table", "", File)
                               ))) |>
-    mutate(File = { chr <- sub("_([^_]+)$", "", sub("_([^_]+)$", "", File))
-    chromossomes[grepl(chr, chromossomes)]
-    }) |>
+    mutate(File = { chr <- sub("_([^_]+)$", "", sub("_([^_]+)$", "", File)) }) |>
     ungroup()
-  colnames(merged) <- c("Chromossome", "Position", "Strand", "V4", "V5", "d", 
+  colnames(merged) <- c("Chromossome", "Position", "Strand", "TSSid", "V5", "d", 
                         "Pvalue", "V8", "Class", "Location", "OriginalFile")
-
+  
+  # the TSSid column is outdated, since you merged multiple TSSAR results, multiple
+  # ids could exist. so these should be reassigned right now.
+  merged <- merged |>
+    arrange(Chromossome, Position) |>
+    mutate(TSSid = paste0("TSS_", sprintf("%07d", row_number())))
+  
   dir.create(file.path("./results/merged"), showWarnings = FALSE)
   write_tsv(merged, file.path("./results/merged/", paste0(filename, ".tsv")))
 }
@@ -143,11 +153,12 @@ gene_readcount <- function(filename) {
   # -- Counting -- #
   contagens_unpaired <- featureCounts(
     files = files_unpaired,
-    annot.ext = file.path(genome_f, paste0(filename, ".gff")),
+    annot.ext = file.path(genome_f, paste0(filename, "-original.gff1")),
     isGTFAnnotationFile = TRUE,    # vale para GTF e GFF como usamos GFF so trocar
     GTF.featureType = "gene",      # tipo de feição no GFF.
     GTF.attrType = "ID",           # nome do atributo do gene no GFF. Sempre olhe se o gff tem o "ID" do gene alguns nao tem (a grande maioria tem)
-    isPairedEnd = FALSE            # coloque FALSE se for single-end, sempre verificar
+    isPairedEnd = FALSE,            # coloque FALSE se for single-end, sempre verificar
+    nthreads = rsubread_nthreads
   )
   
   head(contagens_unpaired$counts) #Olhe se deu certo SEMPRE 
@@ -160,11 +171,12 @@ gene_readcount <- function(filename) {
   if (length(files_paired) > 0) {
     contagens_paired <- featureCounts(
       files = files_paired,
-      annot.ext = file.path(genome_f, paste0(filename, ".gff")),
+      annot.ext = file.path(genome_f, paste0(filename, "-original.gff1")),
       isGTFAnnotationFile = TRUE,    # vale para GTF e GFF como usamos GFF so trocar
       GTF.featureType = "gene",      # tipo de feição no GFF.
       GTF.attrType = "ID",           # nome do atributo do gene no GFF. Sempre olhe se o gff tem o "ID" do gene alguns nao tem (a grande maioria tem)
-      isPairedEnd = TRUE             # coloque FALSE se for single-end, sempre verificar
+      isPairedEnd = TRUE,             # coloque FALSE se for single-end, sempre verificar
+      nthreads = rsubread_nthreads
     )
     
     head(contagens_paired$counts) #Olhe se deu certo SEMPRE 
@@ -174,6 +186,42 @@ gene_readcount <- function(filename) {
     write.csv(contagens_paired$counts, 
               file = file.path("./results/readcount", paste0(filename, "-paired.csv")))
   }
+}
+
+merge_altss <- function(df) {
+  # This is like a greedy signal-intensity (d column) clustering
+  # Essentially, you define a window, and alTSSs within that window are "merged"
+  # -
+  # You should run this function following this https://dplyr.tidyverse.org/reference/group_map.html
+  # .x is the data frame for one gene.
+  if (nrow(df) == 1) {
+    df$dMerged <- df$d
+    return(df)
+  }
+  
+  # "df" is grouped by gene. So expect a short list of TSSs for the same gene.
+  # sorts by "d" column, and sequentially (from highest d, to lowest d)
+  # merges all TSSs within that nucleotide window.
+  df <- df %>% arrange(desc(d)) 
+  
+  used <- rep(FALSE, nrow(df)) 
+  # "used" TSSs either have 
+  #   (1) already merged all alTSSs within their window (with the for loop below)
+  #   (2) already been merged by another TSSs (that's why used[close] reassigns)
+  output <- rep(0, nrow(df)) 
+  
+  for (j in 1:nrow(df)) {
+    if (used[j]) next
+    
+    center <- df$Position[j]
+    close <- which(!used & abs(df$Position - center) < threshold_mindist)
+    
+    output[j] <- sum(df$d[close])
+    used[close] <- TRUE
+  }
+  
+  df$dMerged <- output
+  return(df)
 }
 
 extract_sequence_from_position <- function(PositionStart, PositionEnd, Chromossome, Strand, genomes) {
@@ -286,9 +334,9 @@ signal_counting <- function(merged, grs, samples) {
     # .. for each library that is in the same strand as this one...
     for (k in 1:length(valid_names)) {
       # .. determines the score for that TSS location for that library
-      score <- grs[[valid_names[k]]][seqnames(grs[[valid_names[k]]]) == merged[j,]$Chromossome & 
-                                       start(grs[[valid_names[k]]]) <= merged[j,]$Position & 
-                                       end(grs[[valid_names[k]]]) >= merged[j,]$Position, 
+      score <- grs[[valid_names[k]]][start(grs[[valid_names[k]]]) <= merged[j,]$Position & 
+                                       end(grs[[valid_names[k]]]) >= merged[j,]$Position &
+                                       grepl(merged[j,]$Chromossome, as.character(seqnames(grs[[valid_names[k]]]))),
                                      "score"]$score
       
       # .. sets that score to column LibP or LibM, if we're analysing the
@@ -411,10 +459,16 @@ generate_memeinput <- function(filtered, output_f) {
 
 ##### RUNNING #####
 
+sink("altss2.log", append = TRUE)
+
 print(paste0("Running at ", getwd()))
 dir.create(file.path("./results"), showWarnings = FALSE)
 
 for (i in 1:nrow(dados)) {
+  tryCatch(
+    {
+      
+  
   filename <- dados[i,]$Filenames
   gcf_id <- dados[i,]$Assembly
   
@@ -424,21 +478,26 @@ for (i in 1:nrow(dados)) {
   ##### checking input files #####
   print("1. Checking input files...")
   if (!dir.exists(file.path(frtc_f, filename))) {
-    print("Error: There's no frtc folder for this species. Skipping.")
+    paste0("Error: Folder not found at ", file.path(frtc_f, filename),". Skipping.")
     next
   }
   if (!dir.exists(file.path(frtc_f, filename, "tssarresult"))) {
-    print("Error: There's no tssar results for this species. Skipping. Make sure to setup & run tssar.sh first.")
+    print("Error: The FRTC folder doesn't have a tssarresult folder. Skipping.")
+    print("Make sure to setup & run tssar.sh first. Check the README.")
     next
   }
   if (!file.exists( file.path(samples_f, paste0(filename, ".csv")) )) {
     print("Error: There's no samples.csv file for this species. Skipping.")
-    print("For formatting on how to make this file, please check information in samples folder variable.")
+    print("For formatting on how to make this file, please check the README.")
+    next
+  }
+  if (!file.exists( file.path(genome_f, paste0(filename, ".gff")) )) {
+    print("Error: Missing genome files. Download them by running fetch-genomes.sh.")
     next
   }
   
   # Assigning it to genomes
-  print("1.1. Checking genomes...")
+  print("1. Checking genomes...")
   genomes <- list()
   chromossomes <- list.files(
     path = file.path(start_wd, genome_f),
@@ -450,7 +509,7 @@ for (i in 1:nrow(dados)) {
   for (j in 1:length(chromossomes)) {
     genomes[[sub("\\..*", "", chromossomes[j])]] <- read.fasta(pathes[[j]])[[1]]
   }
-  print("1.1.1. Read the following Chromossomes:")
+  print("1.1. Chromossomes:")
   print(chromossomes)
   print(summary(genomes))
   
@@ -458,45 +517,41 @@ for (i in 1:nrow(dados)) {
                 readGFF(file.path(start_wd, genome_f, paste0(filename, ".gff")), 
                                     tags=c("ID", "Parent", "Name"))
               ))
-  print("1.1.2. GFF_Data")
+  print("1.2. GFF_Data")
   print(head(gff_data))
 
   features <- read_tsv(file.path(start_wd, genome_f, paste0(filename, "-features.tsv")))
   names(features)[1] <- "feature"
   
-  print("1.1.3. Features")
+  print("1.3. Features")
   print(head(features))
   
   gaf_data <- read_tsv(file.path(start_wd, genome_f, paste0(filename, ".gaf")),
                            comment = "!", col_names = FALSE)
-  print("1.1.4. Gene Ontology")
+  print("1.4. Gene Ontology")
   print(head(gaf_data))
   
-  gbff <- import(file.path(start_wd, genome_f, paste0(filename, ".gbff")))
-  gbff <- read_gbk(file.path(start_wd, genome_f, paste0(filename, ".gbff")))
-  gbff_cds <- gbff |> filter(type == "CDS")
-  
+  # # This is deprecated. It was only used in the signal counting function.
+  # print("1.2. Checking bedgraphs")
+  # files <- list.files(path = file.path(frtc_f, filename, "coverage"), 
+  #                     pattern = "\\.bedgraph")
+  # files <- files[!grepl(".*paired-.*", files)]
   # 
-  print("1.2. Checking bedgraphs")
-  files <- list.files(path = file.path(frtc_f, filename, "coverage"), 
-                      pattern = "\\.bedgraph")
-  files <- files[!grepl(".*paired-.*", files)]
-  
-  grs <- List()
-  for (j in 1:length(files)) {
-    gr <- import(BEDGraphFile(
-      file.path(frtc_f, filename, "coverage", files[j])
-    ))
-    grs[[files[j]]] <- gr
-  }
+  # grs <- List()
+  # for (j in 1:length(files)) {
+  #   gr <- import(BEDGraphFile(
+  #     file.path(frtc_f, filename, "coverage", files[j])
+  #   ))
+  #   grs[[files[j]]] <- gr
+  # }
 
   ##### processing tables #####
   print("2. Merging TSSAR tables")
   merge_tssar_results(filename)
   
-  print("3. Processing merged table pTSSs")
+  print(paste0("3. Processing merged table pTSSs. pvalue cutoff: ", threshold_pvalue))
   ptss <- read_tsv(file.path("./results/merged/", paste0(filename, ".tsv")))
-  ptss <- ptss %>% filter(Class == "P")
+  ptss <- ptss %>% filter(Class == "P") %>% filter(Pvalue < threshold_pvalue)
   
   print("3.1. Removing duplicate entries")
   # if a TSS is in the same chromossome, same position, same strand
@@ -508,7 +563,7 @@ for (i in 1:nrow(dados)) {
   
   print("3.2. Creating column with Gene, Protein IDs, 5' UTR Length")
   ptss$Gene <- NA
-  ptss$FiveUTRLength <- NA
+  ptss$UTRLength <- NA
   ptss <- ptss %>% 
     mutate(
       Gene = ifelse(str_detect(Location, "upstream of gene"), 
@@ -529,12 +584,21 @@ for (i in 1:nrow(dados)) {
       ptss[j,]$Protein = cds[1,]$product_accession
     }
   }
-
-  print("3.3. Creating column with upstream/downstream sequence")
-  ptss <- ptss %>%
-    mutate(Sequence = mapply(extract_sequence_from_position, Position, Position, Chromossome, Strand))
   
-  print("3.4. Columns TSSCount, SubClass, gTSSDistance")
+  print(paste0("3.3. Merging alTSSs within a distance of ", threshold_mindist, "nt"))
+  ptss <- ptss %>%
+    group_by(Gene) %>%
+    group_modify(~ merge_altss(.x)) %>%
+    ungroup() %>%
+    filter(dMerged != 0)
+  
+  print("3.4. Creating column with upstream/downstream sequence")
+  ptss <- ptss %>%
+    mutate(Sequence = mapply(extract_sequence_from_position, 
+                             Position, Position, Chromossome, Strand, 
+                             MoreArgs = list(genomes = genomes)))
+  
+  print("3.5. Columns TSSCount, SubClass, gTSSDistance")
   # Assigns gTSS for one with lowest p-value
   ptss <- ptss %>%
     group_by(Gene) %>%
@@ -543,12 +607,13 @@ for (i in 1:nrow(dados)) {
     # Both_Total is intensity of the peaks of all samples. 
     # Whichever sample has the highest peak is called "gTSS", all others are "alTSS".
     # gTSS = Genuine TSS, alTSS = Alternative TSS.
-    arrange(desc(Pvalue)) %>%
+    arrange(desc(d)) %>%
     mutate(SubClass = ifelse(row_number() == 1, "gTSS", "alTSS")) %>%
     # The distance is from the TSS relative to the gTSS. For example, an alTSS
     # with distance -50, indicates that this alTSS is 50bp upstream of the gTSS.
     mutate(gTSSDistance = first(Position) - Position) %>%
-    ungroup()
+    ungroup() %>%
+    arrange(TSSid)
   
   paste0("  Saving results to altss/", filename,"-pTSS.tsv")
   dir.create(file.path("./results/altss"), showWarnings = FALSE)
@@ -560,13 +625,27 @@ for (i in 1:nrow(dados)) {
   print("4.1. Using RSubRead to get read counts for each gene")
   gene_readcount(filename)
   
-  print("4.2. Finding intensity for each TSS (This may take a while)")
-  samples <- read.csv(file.path(samples_f, paste0(filename, ".csv")))
-  ptss <- signal_counting(ptss, grs, samples)
-  
-  
-  paste0("  Saving results to altss/", filename,"-pTSS.tsv")
-  write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
+  # print("4.2. Finding intensity for each TSS (This may take a while)")
+  # Deprecated.
+  # The intensity of each TSS could be used to define gTSS/alTSS,
+  #   but because gene-expression is regulated based on an organisms conditions, 
+  #   it's not like this would give me any comparable data.
+  # For example: I can define the alTSS/gTSS based on intensity for
+  #   Halobacterium salinarum's dRNA-Seq experiment, which was run in
+  #   different points of the curve under optimal conditions.
+  #   And I can define the alTSS/gTSS based on intensity for dRNA-Seq of
+  #   Halobacterium mediterranei's dRNA-Seq experiment, which was run in
+  #   different mediums.
+  # That still doesn't mean the alTSS of hsalinarum is comparable to hmediterranei.
+  #   Since those intensities were only defined by the conditions these organisms were in.
+  #   And these conditions aren't comparable, since they were designed for different studies.
+  # So really, it doesn't contribute for my analysis to define who is gTSS who is alTSS.
+  # What contributes is seeing the number of alTSSs and comparing orthogroup-ed genes between species.
+  #  
+  # samples <- read.csv(file.path(samples_f, paste0(filename, ".csv")))
+  # ptss <- signal_counting(ptss, grs, samples)
+  # paste0("  Saving results to altss/", filename,"-pTSS.tsv")
+  # write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
 
   ##### generating input/summary files #####
   print("5. Generating input files")
@@ -589,23 +668,29 @@ for (i in 1:nrow(dados)) {
       Transcripts_leaderless = as.numeric()
     )
   }
-  summarydf %>% add_row(
-    DateRun = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
+  summarydf <- summarydf %>% add_row(
+    DateRun = paste0("TIME", as.character(format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"))),
     Filenames = filename,
-    Species = dados[i,]$Species,
-    Assembly = gcf_id,
-    Genes_total = nrow(gff_data %>% filter(type == "gene")),
+    Genes_total = nrow(gff_data %>% filter(type == "CDS")),
     Genes_ptss = length(unique(ptss$Gene)),
     Genes_multiple_ptss = length(unique({ptss %>% filter(TSSCount > 1)}$Gene)),
-    Transcripts_5utr = nrow(ptss %>% filter(FiveUTRLength > 10)),
-    Transcripts_leaderless = nrow(ptss %>% filter(FiveUTRLength <= 10))
+    Transcripts_5utr = nrow(ptss %>% filter(UTRLength > 10)),
+    Transcripts_leaderless = nrow(ptss %>% filter(UTRLength <= 10))
   )
   write_tsv(summarydf, "./results/summary.tsv")
   
+  
+    },
+  error=function(e) {
+    message('An Error Occurred')
+    print(e)
+  }
+  )
 }
 
 print("Done.")
 
+sink()
 
 
 
