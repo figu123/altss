@@ -83,12 +83,14 @@ After all of this is done, this is how the final folder structure should look li
 ./1downloading-sras.sh   # <-- IF YOU NEED TO RUN FRTC, THIS SCRIPT HELPS in fetching raw sequencing files (sra)
 ./1fetch-genomes.sh   # run this first
 ./2tssar.sh           # then run this
-./3orthofinder.sh     # then run this
-./4altss.R            # then run this
+./3altss.R            # then run this
+./4orthofinder.sh     # then run this
 ./5meme.sh            # then run this
 ./meme-parsingresults # puts meme results into a table
-./6graphs.R           # then run this
-./7tree.sh (mafft.sh?)# then run this
+./ortho-parsingresults# puts orthofinder results into a table
+./quarto-candidates   # filters the table for visualizing alTSS candidates in Quarto
+./6graphs.R           # then run this [[ WIP ]]
+./7tree.sh (mafft.sh?)# then run this [[ WIP ]]
 # output folders (automatically generated)
 ./results/
  |  |- altss - contains table information for each TSS
