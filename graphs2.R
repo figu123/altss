@@ -75,7 +75,7 @@ for (i in 1:nrow(dados)) {
     altss = numeric()
   )
   
-  data <- read_tsv(file.path("./results/altss", paste0(filename, "-unfiltered.tsv") ), show_col_types = FALSE)
+  data <- read_tsv(file.path("./results/altss", paste0(filename, "-unfiltered-pTSS.tsv") ), show_col_types = FALSE)
   
   for (j in 1:length(pvalues)) {
     currentp <- pvalues[j]
@@ -136,7 +136,7 @@ for (i in 1:nrow(dados)) {
   filename <- dados[i,]$Filenames
   gcf_id <- dados[i,]$Assembly
   
-  tsstable <- read_tsv(file.path("./results/altss", paste0(filename, "-unfiltered.tsv")), show_col_types = FALSE)
+  tsstable <- read_tsv(file.path("./results/altss", paste0(filename, "-unfiltered-pTSS.tsv")), show_col_types = FALSE)
   altss <- tsstable |> filter(SubClass == "alTSS")
   
   
