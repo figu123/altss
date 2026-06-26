@@ -553,6 +553,12 @@ for (i in 1:nrow(dados)) {
       ptss <- read_tsv(file.path("./results/merged/", paste0(filename, ".tsv")))
       ptss <- ptss %>% filter(Class == "P")
       
+      print("3.0. Fixing Chromossome Names")
+      # i don't know *when this started happening*, but some chromsosomes names are truncated.
+      # since we have already loaded the Chromossome names from the genome annotations above,
+      # it makes sense to replace the truncated chromossomes with fixed ones.
+      ptss$Chromossome <- sapply(ptss$Chromossome, function(x) { chromossomes[startsWith(chromossomes, x)] })
+      
       print("3.1. Removing duplicate entries")
       # if a TSS is in the same chromossome, same position, same strand
       # then we assume its the same TSS.
@@ -679,7 +685,7 @@ for (i in 1:nrow(dados)) {
       dir.create(file.path("./results/memeinput"), showWarnings = FALSE)
       generate_memeinput(ptss, file.path("./results/memeinput/"))
       
-      generate_gtf(ptss, file.path("./results/altss/", paste0(filename, "-TSS")))
+      generate_gtf(ptss, file.path("./results/altss/", paste0(filename, "-pTSS")))
       
       print("6. Writing summary.tsv")
       if (file.exists("./results/summary.tsv")) {
