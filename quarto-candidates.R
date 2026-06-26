@@ -9,7 +9,7 @@
 
 library(tidyverse)
 
-dados <- read_tsv("./dados.tsv")
+dados <- read_tsv("./data/dados.tsv")
 
 df <- tibble(filename = as.character())
 for (i in 1:nrow(dados)) {
