@@ -27,7 +27,7 @@ for (i in 1:nrow(dados)) {
   results[[dados[i,]$Filenames]] <- read_tsv(paste0("./results/altss/", dados[i,]$Filenames, "-pTSS.tsv"))
   samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
 }
-tableall = read_tsv("./candidatos.tsv")
+tableall = read_tsv("./results/candidates.tsv")
 # ojs_define(dados = dados)
 ojs_define(results = results)
 ojs_define(samples = samples)
