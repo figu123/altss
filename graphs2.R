@@ -156,9 +156,10 @@ graphsb <- grid.arrange(
 
 ggsave(file.path(start_wd, "./results/graphs/altssDistanceToGtss.png"), plot = graphsb, units = "px", width=940, height=940, scale=3)
 
-###### TSSs Class x Gene Count x Sequence Depth v3 ((TODO)) ######
+##### TSSs Class x Gene Count x Sequence Depth v3 ((TODO)) #####
 # make sure to get the sequence depth as "reads that aligned" which can be found in FRTC's folder.
 
+##### TODO: Heatmap for orthofinder results? ((TODO)) #####
 
 ##### 5' UTR Length & TSS Count per Species #####
 # USES PTSS FILTERED FOR PVALUE
