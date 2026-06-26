@@ -77,12 +77,11 @@ tail -n +2 "$dados" | while IFS=$'\t' read -r col1 col2 col3; do
 	{print >> out}                 # if regexp doesnt match, write sequence lines to file
 	' "./data/genomes/$fn.fna"     # input file, complete genome
 	
+	# generating .fai index for IGV
+	samtools faidx "./data/genomes/$fn.fna"
 	
 	echo "-----------------------------------"
 	
 done
-
-
-# samtools faidx 
 
 exit 0;
