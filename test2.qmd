@@ -24,7 +24,7 @@ dados <- read_tsv(file = "./data/dados.tsv")
 results <- list()
 samples <- list()
 for (i in 1:nrow(dados)) {
-  results[[dados[i,]$Filenames]] <- read_tsv(paste0("./altss/", dados[i,]$Filenames, "-pTSS.tsv"))
+  results[[dados[i,]$Filenames]] <- read_tsv(paste0("./results/altss/", dados[i,]$Filenames, "-pTSS.tsv"))
   samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
 }
 tableall = read_tsv("./candidatos.tsv")
@@ -128,7 +128,7 @@ mygrid = {
               name: "TSSAR-pTSSs",
               type: "annotation",
               format: "gtf", 
-              url: `${igvserver}/altss/${fn}-pTSS.gtf`,
+              url: `${igvserver}/results/altss/${fn}-pTSS.gtf`,
               searchable: true,
               color: "#6874E8",
               altColor: "#392759"
@@ -137,7 +137,7 @@ mygrid = {
               name: "MEME Motif",
               type: "annotation",
               format: "gtf", 
-              url: `${igvserver}/altss/${fn}-meme-pTSS.gtf`,
+              url: `${igvserver}/results/altss/${fn}-meme-pTSS.gtf`,
               searchable: true,
               colorBy: "motifid"
             },
