@@ -1,12 +1,13 @@
 #!/bin/bash
 
 
-# perosnal note: remember to activate your conda env - source ~/miniconda3/bin/activate; conda activate meme-env
+# perosnal note: remember to activate your enviroment
+# source ~/miniconda3/bin/activate; conda activate meme-env
 
 memeinput_folder="./results/memeinput"
 memeoutput_folder="./results/memeoutput"
 
-mkdir "$memeoutput_folder"
+mkdir "$memeoutput_folder" >/dev/null 2>&1
 
 if [ -z "$1" ]; then
   echo "Please specify the number of threads. Usage: bash meme.sh <number_of_threads>"
@@ -27,7 +28,7 @@ cd "$(dirname "$0")"
 #    -objfun classic -revcomp -markov_order 0
 #done;
 
-find . -mindepth 2 -maxdepth 2 -iwholename "$memeinput_folder/*.fasta" | \
+find . -iwholename "$memeinput_folder/*.fasta" | \
 while read -r file; do
   newfoldername="${file/#*\/}"
   newfoldername="${newfoldername/%\.*}"
