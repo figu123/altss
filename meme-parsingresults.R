@@ -3,7 +3,7 @@
 library("xml2")
 library("tidyverse")
 
-dados <- read_tsv("./dados.tsv")
+dados <- read_tsv("./data/dados.tsv")
 
 # insert here the same values that you used for your memeinput.
 upstream_count <- 100
