@@ -146,7 +146,7 @@ for (i in 1:nrow(dados)) {
     ptss$memenumsites[motifexists] <- ptss$memenumsites[motifexists] + 1
   }
 
-  write_tsv(ptss, paste0("./altss/", fn, "-pTSS.tsv"))
+  write_tsv(ptss, paste0("./results/altss/", fn, "-pTSS.tsv"))
   print("Generated meme.gtf and added numsites column for altss table.")
 
   # 2. appending to TSS what motifs they have
