@@ -13,7 +13,7 @@ library(Rsubread)     # Used in getting read counts for each gene.
 # --------------------- #
 ##### CONFIGURATION #####
 
-start_wd <- "~/files/analises/full"
+start_wd <- "~/files/analises/full/"
 setwd(start_wd)
 
 # how many threads is Rsubread allowed to use. it can run on 1.
@@ -162,7 +162,7 @@ gene_readcount <- function(filename) {
   )
   
   head(contagens_unpaired$counts) #Olhe se deu certo SEMPRE 
-
+  
   dir.create(file.path("./results/readcount"), showWarnings = FALSE)
   # criar um arquivo com as contagens
   write.csv(contagens_unpaired$counts, 
@@ -444,12 +444,12 @@ generate_memeinput <- function(filtered, output_f) {
             append=TRUE)
     } 
     if (filtered[j,]$SubClass == "gTSS") {
-        write(header, 
-              file=file.path("./", output_f, paste0(filename, "-pTSS-uniq.fasta")), 
-              append=TRUE)
-        write(sequence, 
-              file=file.path("./", output_f, paste0(filename, "-pTSS-uniq.fasta")), 
-              append=TRUE)
+      write(header, 
+            file=file.path("./", output_f, paste0(filename, "-pTSS-uniq.fasta")), 
+            append=TRUE)
+      write(sequence, 
+            file=file.path("./", output_f, paste0(filename, "-pTSS-uniq.fasta")), 
+            append=TRUE)
     }
     
     
@@ -468,223 +468,250 @@ for (i in 1:nrow(dados)) {
   tryCatch(
     {
       
-  
-  filename <- dados[i,]$Filenames
-  gcf_id <- dados[i,]$Assembly
-  
-  print("---------------------------------------")
-  print(paste0("Running for species: ", filename))
-  
-  ##### checking input files #####
-  print("1. Checking input files...")
-  if (!dir.exists(file.path(frtc_f, filename))) {
-    paste0("Error: Folder not found at ", file.path(frtc_f, filename),". Skipping.")
-    next
-  }
-  if (!dir.exists(file.path(frtc_f, filename, "tssarresult"))) {
-    print("Error: The FRTC folder doesn't have a tssarresult folder. Skipping.")
-    print("Make sure to setup & run tssar.sh first. Check the README.")
-    next
-  }
-  if (!file.exists( file.path(samples_f, paste0(filename, ".csv")) )) {
-    print("Error: There's no samples.csv file for this species. Skipping.")
-    print("For formatting on how to make this file, please check the README.")
-    next
-  }
-  if (!file.exists( file.path(genome_f, paste0(filename, ".gff")) )) {
-    print("Error: Missing genome files. Download them by running fetch-genomes.sh.")
-    next
-  }
-  
-  # Assigning it to genomes
-  print("1. Checking genomes...")
-  genomes <- list()
-  chromossomes <- list.files(
-    path = file.path(start_wd, genome_f),
-    pattern = "\\.fasta")
-  # filters for current species
-  chromossomes <- chromossomes[grepl(filename, chromossomes)]
-  pathes <- file.path(start_wd, genome_f, chromossomes)
-  chromossomes <- sub(paste0(filename,"-"), "", sub(".fasta", "", chromossomes))
-  for (j in 1:length(chromossomes)) {
-    genomes[[sub("\\..*", "", chromossomes[j])]] <- read.fasta(pathes[[j]])[[1]]
-  }
-  print("1.1. Chromossomes:")
-  print(chromossomes)
-  print(summary(genomes))
-  
-  gff_data <- tibble(as.data.frame(
-                readGFF(file.path(start_wd, genome_f, paste0(filename, ".gff")), 
-                                    tags=c("ID", "Parent", "Name"))
-              ))
-  print("1.2. GFF_Data")
-  print(head(gff_data))
-
-  features <- read_tsv(file.path(start_wd, genome_f, paste0(filename, "-features.tsv")))
-  names(features)[1] <- "feature"
-  
-  print("1.3. Features")
-  print(head(features))
-  
-  gaf_data <- read_tsv(file.path(start_wd, genome_f, paste0(filename, ".gaf")),
+      
+      filename <- dados[i,]$Filenames
+      gcf_id <- dados[i,]$Assembly
+      
+      print("---------------------------------------")
+      print(paste0("Running for species: ", filename))
+      
+      ##### checking input files #####
+      print("1. Checking input files...")
+      if (!dir.exists(file.path(frtc_f, filename))) {
+        paste0("Error: Folder not found at ", file.path(frtc_f, filename),". Skipping.")
+        next
+      }
+      if (!dir.exists(file.path(frtc_f, filename, "tssarresult"))) {
+        print("Error: The FRTC folder doesn't have a tssarresult folder. Skipping.")
+        print("Make sure to setup & run tssar.sh first. Check the README.")
+        next
+      }
+      if (!file.exists( file.path(samples_f, paste0(filename, ".csv")) )) {
+        print("Error: There's no samples.csv file for this species. Skipping.")
+        print("For formatting on how to make this file, please check the README.")
+        next
+      }
+      if (!file.exists( file.path(genome_f, paste0(filename, ".gff")) )) {
+        print("Error: Missing genome files. Download them by running fetch-genomes.sh.")
+        next
+      }
+      
+      # Assigning it to genomes
+      print("1. Checking genomes...")
+      genomes <- list()
+      chromossomes <- list.files(
+        path = file.path(start_wd, genome_f),
+        pattern = "\\.fasta")
+      # filters for current species
+      chromossomes <- chromossomes[grepl(filename, chromossomes)]
+      pathes <- file.path(start_wd, genome_f, chromossomes)
+      chromossomes <- sub(paste0(filename,"-"), "", sub(".fasta", "", chromossomes))
+      for (j in 1:length(chromossomes)) {
+        genomes[[sub("\\..*", "", chromossomes[j])]] <- read.fasta(pathes[[j]])[[1]]
+      }
+      print("1.1. Chromossomes:")
+      print(chromossomes)
+      print(summary(genomes))
+      
+      gff_data <- tibble(as.data.frame(
+        readGFF(file.path(start_wd, genome_f, paste0(filename, ".gff")), 
+                tags=c("ID", "Parent", "Name"))
+      ))
+      print("1.2. GFF_Data")
+      print(head(gff_data))
+      
+      features <- read_tsv(file.path(start_wd, genome_f, paste0(filename, "-features.tsv")))
+      names(features)[1] <- "feature"
+      
+      print("1.3. Features")
+      print(head(features))
+      
+      gaf_data <- read_tsv(file.path(start_wd, genome_f, paste0(filename, ".gaf")),
                            comment = "!", col_names = FALSE)
-  print("1.4. Gene Ontology")
-  print(head(gaf_data))
-  
-  # # This is deprecated. It was only used in the signal counting function.
-  # print("1.2. Checking bedgraphs")
-  # files <- list.files(path = file.path(frtc_f, filename, "coverage"), 
-  #                     pattern = "\\.bedgraph")
-  # files <- files[!grepl(".*paired-.*", files)]
-  # 
-  # grs <- List()
-  # for (j in 1:length(files)) {
-  #   gr <- import(BEDGraphFile(
-  #     file.path(frtc_f, filename, "coverage", files[j])
-  #   ))
-  #   grs[[files[j]]] <- gr
-  # }
-
-  ##### processing tables #####
-  print("2. Merging TSSAR tables")
-  merge_tssar_results(filename)
-  
-  print(paste0("3. Processing merged table pTSSs. pvalue cutoff: ", threshold_pvalue))
-  ptss <- read_tsv(file.path("./results/merged/", paste0(filename, ".tsv")))
-  ptss <- ptss %>% filter(Class == "P") %>% filter(Pvalue < threshold_pvalue)
-  
-  print("3.1. Removing duplicate entries")
-  # if a TSS is in the same chromossome, same position, same strand
-  # then we assume its the same TSS.
-  ptss <- ptss %>%
-    group_by(Chromossome, Position, Strand) %>%
-    slice_max(d, n = 1, with_ties = FALSE) %>% 
-    ungroup()
-  
-  print("3.2. Creating column with Gene, Protein IDs, 5' UTR Length")
-  ptss$Gene <- NA
-  ptss$UTRLength <- NA
-  ptss <- ptss %>% 
-    mutate(
-      Gene = ifelse(str_detect(Location, "upstream of gene"), 
-                    sub(";.*$", "", sub("^.*upstream of gene ", "", Location)), NA),
-      UTRLength = ifelse(str_detect(Location, "upstream of gene"), 
-                    as.numeric(sub(";.*$", "", sub("nt upstream of gene .*", "", Location))), NA)
-    )
-  
-  ptss$Protein <- NA
-  ptss$Product <- NA
-  for (j in 1:nrow(features)) {
-    cds <- features %>% 
-      filter(feature == "CDS") %>% 
-      filter(str_detect(locus_tag, ptss[j,]$Gene))
-    
-    if (nrow(cds) > 0) {
-      ptss[j,]$Product = cds[1,]$name
-      ptss[j,]$Protein = cds[1,]$product_accession
-    }
-  }
-  
-  print(paste0("3.3. Merging alTSSs within a distance of ", threshold_mindist, "nt"))
-  ptss <- ptss %>%
-    group_by(Gene) %>%
-    group_modify(~ merge_altss(.x)) %>%
-    ungroup() %>%
-    filter(dMerged != 0)
-  
-  print("3.4. Creating column with upstream/downstream sequence")
-  ptss <- ptss %>%
-    mutate(Sequence = mapply(extract_sequence_from_position, 
-                             Position, Position, Chromossome, Strand, 
-                             MoreArgs = list(genomes = genomes)))
-  
-  print("3.5. Columns TSSCount, SubClass, gTSSDistance")
-  # Assigns gTSS for one with lowest p-value
-  ptss <- ptss %>%
-    group_by(Gene) %>%
-    mutate(TSSCount = n()) %>%
-    # filter(n()>1) |> 
-    # Both_Total is intensity of the peaks of all samples. 
-    # Whichever sample has the highest peak is called "gTSS", all others are "alTSS".
-    # gTSS = Genuine TSS, alTSS = Alternative TSS.
-    arrange(desc(d)) %>%
-    mutate(SubClass = ifelse(row_number() == 1, "gTSS", "alTSS")) %>%
-    # The distance is from the TSS relative to the gTSS. For example, an alTSS
-    # with distance -50, indicates that this alTSS is 50bp upstream of the gTSS.
-    mutate(gTSSDistance = first(Position) - Position) %>%
-    ungroup() %>%
-    arrange(TSSid)
-  
-  paste0("  Saving results to altss/", filename,"-pTSS.tsv")
-  dir.create(file.path("./results/altss"), showWarnings = FALSE)
-  write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
-
-  ##### analysing signal intensity #####
-  print("4. Reading information of signal intensity")
-  
-  print("4.1. Using RSubRead to get read counts for each gene")
-  gene_readcount(filename)
-  
-  # print("4.2. Finding intensity for each TSS (This may take a while)")
-  # Deprecated.
-  # The intensity of each TSS could be used to define gTSS/alTSS,
-  #   but because gene-expression is regulated based on an organisms conditions, 
-  #   it's not like this would give me any comparable data.
-  # For example: I can define the alTSS/gTSS based on intensity for
-  #   Halobacterium salinarum's dRNA-Seq experiment, which was run in
-  #   different points of the curve under optimal conditions.
-  #   And I can define the alTSS/gTSS based on intensity for dRNA-Seq of
-  #   Halobacterium mediterranei's dRNA-Seq experiment, which was run in
-  #   different mediums.
-  # That still doesn't mean the alTSS of hsalinarum is comparable to hmediterranei.
-  #   Since those intensities were only defined by the conditions these organisms were in.
-  #   And these conditions aren't comparable, since they were designed for different studies.
-  # So really, it doesn't contribute for my analysis to define who is gTSS who is alTSS.
-  # What contributes is seeing the number of alTSSs and comparing orthogroup-ed genes between species.
-  #  
-  # samples <- read.csv(file.path(samples_f, paste0(filename, ".csv")))
-  # ptss <- signal_counting(ptss, grs, samples)
-  # paste0("  Saving results to altss/", filename,"-pTSS.tsv")
-  # write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
-
-  ##### generating input/summary files #####
-  print("5. Generating input files")
-  dir.create(file.path("./results/memeinput"), showWarnings = FALSE)
-  generate_memeinput(ptss, file.path("./results/memeinput/"))
-
-  generate_gtf(ptss, file.path("./results/altss/", paste0(filename, "-TSS")))
-  
-  print("6. Writing summary.tsv")
-  if (file.exists("./results/summary.tsv")) {
-    summarydf <- read_tsv("./results/summary.tsv")
-  } else {
-    summarydf <- tibble(
-      DateRun = as.character(),
-      Filenames = as.character(),
-      Genes_total = as.numeric(),
-      Genes_ptss = as.numeric(),
-      Genes_multiple_ptss = as.numeric(),
-      Transcripts_5utr = as.numeric(),
-      Transcripts_leaderless = as.numeric()
-    )
-  }
-  summarydf <- summarydf %>% add_row(
-    DateRun = paste0("TIME", as.character(format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"))),
-    Filenames = filename,
-    Genes_total = nrow(gff_data %>% filter(type == "CDS")),
-    Genes_ptss = length(unique(ptss$Gene)),
-    Genes_multiple_ptss = length(unique({ptss %>% filter(TSSCount > 1)}$Gene)),
-    Transcripts_5utr = nrow(ptss %>% filter(UTRLength > 10)),
-    Transcripts_leaderless = nrow(ptss %>% filter(UTRLength <= 10))
-  )
-  write_tsv(summarydf, "./results/summary.tsv")
-  
-  
+      print("1.4. Gene Ontology")
+      print(head(gaf_data))
+      
+      # # This is deprecated. It was only used in the signal counting function.
+      # print("1.2. Checking bedgraphs")
+      # files <- list.files(path = file.path(frtc_f, filename, "coverage"), 
+      #                     pattern = "\\.bedgraph")
+      # files <- files[!grepl(".*paired-.*", files)]
+      # 
+      # grs <- List()
+      # for (j in 1:length(files)) {
+      #   gr <- import(BEDGraphFile(
+      #     file.path(frtc_f, filename, "coverage", files[j])
+      #   ))
+      #   grs[[files[j]]] <- gr
+      # }
+      
+      ##### processing tables #####
+      print("2. Merging TSSAR tables")
+      merge_tssar_results(filename)
+      
+      print("3. Processing merged table pTSSs. ")
+      ptss <- read_tsv(file.path("./results/merged/", paste0(filename, ".tsv")))
+      ptss <- ptss %>% filter(Class == "P")
+      
+      print("3.1. Removing duplicate entries")
+      # if a TSS is in the same chromossome, same position, same strand
+      # then we assume its the same TSS.
+      ptss <- ptss %>%
+        group_by(Chromossome, Position, Strand) %>%
+        slice_max(d, n = 1, with_ties = FALSE) %>% 
+        ungroup()
+      
+      print("3.2. Creating column with Gene, Protein IDs, 5' UTR Length")
+      ptss$Gene <- NA
+      ptss$UTRLength <- NA
+      ptss <- ptss %>% 
+        mutate(
+          Gene = ifelse(str_detect(Location, "upstream of gene"), 
+                        sub(";.*$", "", sub("^.*upstream of gene ", "", Location)), NA),
+          UTRLength = ifelse(str_detect(Location, "upstream of gene"), 
+                             as.numeric(sub(";.*$", "", sub("nt upstream of gene .*", "", Location))), NA)
+        )
+      
+      ptss$Protein <- NA
+      ptss$Product <- NA
+      for (j in 1:nrow(features)) {
+        cds <- features %>% 
+          filter(feature == "CDS") %>% 
+          filter(str_detect(locus_tag, ptss[j,]$Gene))
+        
+        if (nrow(cds) > 0) {
+          ptss[j,]$Product = cds[1,]$name
+          ptss[j,]$Protein = cds[1,]$product_accession
+        }
+      }
+      
+      print("3.3. Creating column with upstream/downstream sequence")
+      ptss <- ptss %>%
+        mutate(Sequence = mapply(extract_sequence_from_position, 
+                                 Position, Position, Chromossome, Strand, 
+                                 MoreArgs = list(genomes = genomes)))
+      
+      print("3.4. Columns TSSCount, SubClass, gTSSDistance")
+      # Assigns gTSS for one with lowest value in "d" (equivalent of p-value)
+      ptss <- ptss %>%
+        group_by(Gene) %>%
+        mutate(TSSCount = n()) %>%
+        # here, if you do
+        # filter(n()>1) |>  # it filters only for alTSSs
+        # gTSS = Genuine TSS, alTSS = Alternative TSS.
+        arrange(desc(d)) %>%
+        mutate(SubClass = ifelse(row_number() == 1, "gTSS", "alTSS")) %>%
+        # The distance is from the TSS relative to the gTSS. For example, an alTSS
+        # with distance -50, indicates that this alTSS is 50bp upstream of the gTSS.
+        mutate(gTSSDistance = first(Position) - Position) %>%
+        ungroup() %>%
+        arrange(TSSid)
+      
+      paste0("  Saving results to altss/", filename,"-unfiltered-pTSS.tsv")
+      dir.create(file.path("./results/altss"), showWarnings = FALSE)
+      write_tsv(ptss, paste0("./results/altss/", filename, "-unfiltered-pTSS.tsv"))
+      # These unfiltered-pTSSs are useful for analysing information (see graphs.R)
+      #   by analysing how information is before applying filters, you determine
+      #   what is the best p-value, or merging window (for the filters below)
+      
+      
+      print(paste0("3.5. Applying filters: p-value and minimum alTSS distance"))
+      print(paste0("   p-value threshold: ", threshold_pvalue))
+      print(paste0("   merging pTSS within a distance of: ", threshold_mindist, "nt from each other"))
+      
+      ptss <- ptss %>% 
+        # pvalue
+        filter(Pvalue < threshold_pvalue) %>% 
+        # merging by distance
+        group_by(Gene) %>%
+        group_modify(~ merge_altss(.x)) %>%
+        ungroup() %>%
+        filter(dMerged != 0) %>%
+        # now that this is done, you need to reapply step 3.4., since the 
+        # TSS count per gene will have channged
+        # Assigns gTSS for one with lowest value in "d" (equivalent of p-value)
+        group_by(Gene) %>%
+        mutate(TSSCount = n()) %>%
+        # here, if you do
+        # filter(n()>1) |>  # it filters only for alTSSs
+        # gTSS = Genuine TSS, alTSS = Alternative TSS.
+        arrange(desc(d)) %>%
+        mutate(SubClass = ifelse(row_number() == 1, "gTSS", "alTSS")) %>%
+        # The distance is from the TSS relative to the gTSS. For example, an alTSS
+        # with distance -50, indicates that this alTSS is 50bp upstream of the gTSS.
+        mutate(gTSSDistance = first(Position) - Position) %>%
+        ungroup() %>%
+        arrange(TSSid)
+      
+      paste0("  Saving results to altss/", filename,"-pTSS.tsv")
+      write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
+      
+      ##### analysing signal intensity #####
+      print("4. Reading information of signal intensity")
+      
+      print("4.1. Using RSubRead to get read counts for each gene")
+      gene_readcount(filename)
+      
+      # print("4.2. Finding intensity for each TSS (This may take a while)")
+      # Deprecated.
+      # The intensity of each TSS could be used to define gTSS/alTSS,
+      #   but because gene-expression is regulated based on an organisms conditions, 
+      #   it's not like this would give me any comparable data.
+      # For example: I can define the alTSS/gTSS based on intensity for
+      #   Halobacterium salinarum's dRNA-Seq experiment, which was run in
+      #   different points of the curve under optimal conditions.
+      #   And I can define the alTSS/gTSS based on intensity for dRNA-Seq of
+      #   Halobacterium mediterranei's dRNA-Seq experiment, which was run in
+      #   different mediums.
+      # That still doesn't mean the alTSS of hsalinarum is comparable to hmediterranei.
+      #   Since those intensities were only defined by the conditions these organisms were in.
+      #   And these conditions aren't comparable, since they were designed for different studies.
+      # So really, it doesn't contribute for my analysis to define who is gTSS who is alTSS.
+      # What contributes is seeing the number of alTSSs and comparing orthogroup-ed genes between species.
+      #  
+      # samples <- read.csv(file.path(samples_f, paste0(filename, ".csv")))
+      # ptss <- signal_counting(ptss, grs, samples)
+      # paste0("  Saving results to altss/", filename,"-pTSS.tsv")
+      # write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
+      
+      ##### generating input/summary files #####
+      print("5. Generating input files")
+      dir.create(file.path("./results/memeinput"), showWarnings = FALSE)
+      generate_memeinput(ptss, file.path("./results/memeinput/"))
+      
+      generate_gtf(ptss, file.path("./results/altss/", paste0(filename, "-TSS")))
+      
+      print("6. Writing summary.tsv")
+      if (file.exists("./results/summary.tsv")) {
+        summarydf <- read_tsv("./results/summary.tsv")
+      } else {
+        summarydf <- tibble(
+          DateRun = as.character(),
+          Filenames = as.character(),
+          Genes_total = as.numeric(),
+          Genes_ptss = as.numeric(),
+          Genes_multiple_ptss = as.numeric(),
+          Transcripts_5utr = as.numeric(),
+          Transcripts_leaderless = as.numeric()
+        )
+      }
+      summarydf <- summarydf %>% add_row(
+        DateRun = paste0("TIME", as.character(format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"))),
+        Filenames = filename,
+        Genes_total = nrow(gff_data %>% filter(type == "CDS")),
+        Genes_ptss = length(unique(ptss$Gene)),
+        Genes_multiple_ptss = length(unique({ptss %>% filter(TSSCount > 1)}$Gene)),
+        Transcripts_5utr = nrow(ptss %>% filter(UTRLength > 10)),
+        Transcripts_leaderless = nrow(ptss %>% filter(UTRLength <= 10))
+      )
+      write_tsv(summarydf, "./results/summary.tsv")
+      
+      
     },
-  error=function(e) {
-    message('An Error Occurred')
-    print(e)
-  }
+    error=function(e) {
+      message('An Error Occurred')
+      print(e)
+    }
   )
 }
 
