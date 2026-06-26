@@ -72,6 +72,8 @@ for (i in 1:nrow(dados)) {
     ptss$total_ortho <- ptss$total_ortho + ptss$Protein %in% speciesOrthologuesTable$Protein
   }
   
+  ptss <- ptss %>% relocate(Orthogroup, .after = total_ortho)
+  
   summarySpecies <- ptss %>% 
     summarise(across(everything(), ~ sum(!is.na(.)))) %>%
     mutate(Filenames = filename) %>%
