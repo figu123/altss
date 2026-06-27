@@ -44,7 +44,7 @@ paste0("Or about ", nrow({filtered_candidates %>% group_by(Gene) %>% slice_head(
 
 orthogroups <- unique(filtered_candidates$Orthogroup)
 expanded_filtered_candidates <- df %>% filter(Orthogroup %in% orthogroups)
-write_tsv(filtered_candidates, "./results/candidates-big.tsv")
+write_tsv(expanded_filtered_candidates, "./results/candidates-big.tsv")
 
 
 # unshared_alternatives are pTSS that:
