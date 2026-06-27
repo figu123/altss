@@ -10,7 +10,7 @@ dados <- dados |> mutate(label = paste0(toupper(substr(Filenames, 1, 1)), ". ", 
 
 dir.create("./results/graphs", showWarnings = FALSE)
 
-##### Boxplotting the Coverage of Genes (RSubread) #####
+##### GeneReadCount Boxplotting the Coverage of Genes (RSubread) #####
 values_unpaired <- list()
 values_paired <- list()
 
@@ -60,7 +60,7 @@ ggsave("./results/graphs/GeneReadCount-paired.png")
 
 
 
-##### Checking how many alTSS / gTSS exist for each p-value #####
+##### altssPerPvalue Checking how many alTSS / gTSS exist for each p-value #####
 # Uses unfiltered pTSSs: non-filtered for pvalue nor with window merging alTSSs that are close to gTSSs
 
 print("2. Checking amount of alTSS for each p-value. Red is gTSS.")
@@ -129,7 +129,7 @@ annotate_figure(p, top = "P-value x TSS Count")
 ggsave(file.path(start_wd, "./results/graphs/altssPerPvalue.png"), plot = pvalgraphs, units = "px", width=940, height=940, scale=3)
 
 
-##### Distance each alTSS is from its respective gTSS #####
+##### altssDistanceToGtss Distance each alTSS is from its respective gTSS #####
 # Uses unfiltered pTSSs: non-filtered for pvalue nor with window merging alTSSs that are close to gTSSs
 plotsb <- list()
 for (i in 1:nrow(dados)) {
@@ -159,10 +159,86 @@ ggsave(file.path(start_wd, "./results/graphs/altssDistanceToGtss.png"), plot = g
 ##### TSSs Class x Gene Count x Sequence Depth v3 ((TODO)) #####
 # make sure to get the sequence depth as "reads that aligned" which can be found in FRTC's folder.
 
-##### TODO: Heatmap for orthofinder results? ((TODO)) #####
 
-##### 5' UTR Length & TSS Count per Species #####
+
+
+
+##### orthosummary Heatmap for orthofinder results #####
+df <- read_tsv("./results/orthofinder-summary-percentages.tsv")
+
+library(ComplexHeatmap)
+library(circlize)
+
+mat <- as.matrix(df[, -c(1, 2, 3)])
+rownames(mat) <- dados$label
+colnames(mat) <- sub("^ortho_", "", colnames(mat))
+
+col_fun <- circlize::colorRamp2(
+  c(min(mat, na.rm = TRUE), median(mat, na.rm = TRUE), max(mat, na.rm = TRUE)),
+  c("white", "orange", "red")
+)
+
+hm <- Heatmap(
+  mat,
+  name = "Orthogroups",
+  col = col_fun,
+  na_col = "grey90",
+  cluster_rows = FALSE,
+  cluster_columns = FALSE,
+  row_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
+  column_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
+  row_names_side = "left",
+  heatmap_legend_param = list(
+    title_gp = grid::gpar(fontsize = 16, fontface = "bold"),
+    labels_gp = grid::gpar(fontsize = 14)
+  )
+)
+
+png("./results/graphs/orthosummary.png", width = 2000, height = 1500, res = 300)
+hm
+dev.off()
+
+
+##### utrlengths 5' UTR Length (Global) #####
+
+df <- tibble(filename = as.character(), label = as.character())
+for (i in 1:nrow(dados)) {
+  fn <- dados[i,]$Filenames
+  ptss <- read_tsv(paste0("./results/altss/", fn, "-pTSS.tsv"))
+  ptss$filename <- fn
+  ptss$label <- dados[i,]$label
+  df <- bind_rows(df, ptss)
+}
+
+graphglobalutr <- ggplot(df, aes(x = UTRLength, y = label)) +
+  geom_boxplot(fill = "#7ea8cb") +
+  scale_x_continuous(limits = c(0, 250)) +
+  labs(
+    x = "UTR Length",
+    y = "Species"
+  ) +
+  theme_bw()  +
+  theme(axis.text.y = element_text(face = "italic"))
+
+ggsave(file.path(start_wd, "./results/graphs/utrlengths.png"), plot = graphglobalutr, units = "px", width=940, height=600, scale=2.4)
+
+
+graphglobalgtssdist <- ggplot(df, aes(x = gTSSDistance, y = label)) +
+  geom_violin(fill = "#7ea8cb", trim = FALSE) +
+  scale_x_continuous(limits = c(-250, 250)) +
+  labs(
+    x = "UTR Length",
+    y = "Filename"
+  ) +
+  theme_bw() +
+  theme(axis.text.y = element_text(face = "italic"))
+
+
+graphglobalgtssdist
+
+##### tsscount, tssutr.. 5' UTR Length & TSS Count per Species #####
 # USES PTSS FILTERED FOR PVALUE
+
 
 plotsfiveprime = list()
 plotsleaderless = list()
@@ -196,8 +272,7 @@ for (i in 1:nrow(dados)) {
   plotsleaderless[[filename]] <- ggplot(data, aes(UTRLength)) + geom_bar() + xlim(-1, 21) +
     ggtitle(paste0(filename, " (pTSS = ", nrow(data), ")"))
   plotstsscount[[filename]] <- ggplot(ggdf2, aes(tss_count, gene_count)) + geom_col() + ggtitle(paste0(filename, " (pTSS = ", nrow(data), ")"))
-  
-  
+
   # ggplot(ggdf[ggdf$nextFeatureDistance > 5, ], aes(nextFeatureDistance, fill=intensityTSS)) + geom_histogram(binwidth=10) + scale_fill_gradientn(colors = c("white", "blue"), limits=c(0, 100000))
   # ggplot(ggdf[ggdf$nextFeatureDistance > 5, ], aes(nextFeatureDistance, fill=factor(intensityTSS))) + geom_histogram(binwidth=10) # + scale_fill_gradientn(colors = c("white", "blue"), limits=c(0, 100000))
   
