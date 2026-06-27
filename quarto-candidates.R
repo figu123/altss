@@ -42,6 +42,11 @@ uniqs <- filtered_candidates %>% group_by(Orthogroup) %>% slice_head(n = 1)
 paste0("Number of ORTHOGROUPS with 2 or more organisms with pTSS > 1: ", nrow(uniqs))
 paste0("Or about ", nrow({filtered_candidates %>% group_by(Gene) %>% slice_head(n = 1)}), " genes.")
 
+orthogroups <- unique(filtered_candidates$Orthogroup)
+expanded_filtered_candidates <- df %>% filter(Orthogroup %in% orthogroups)
+write_tsv(expanded_filtered_candidates, "./results/candidates-big.tsv")
+
+
 # unshared_alternatives are pTSS that:
 #    (1) has alternative TSSs for that gene;
 #    (2) has Orthogroup (has orthology with the gene of another species)
