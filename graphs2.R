@@ -218,9 +218,10 @@ graphglobalutr <- ggplot(df, aes(x = UTRLength, y = label)) +
     y = "Species"
   ) +
   theme_bw()  +
-  theme(axis.text.y = element_text(face = "italic"))
+  theme(axis.text.y = element_text(face = "italic", color = "black"))
 
-ggsave(file.path(start_wd, "./results/graphs/utrlengths.png"), plot = graphglobalutr, units = "px", width=940, height=600, scale=2.4)
+# ggsave(file.path(start_wd, "./results/graphs/utrlengths.png"), plot = graphglobalutr, units = "px", width=940, height=600, scale=2.4)
+ggsave(file.path(start_wd, "./results/graphs/utrlengths.png"), plot = graphglobalutr, units = "px", width=940, height=600, scale=1.4)
 
 
 graphglobalgtssdist <- ggplot(df, aes(x = gTSSDistance, y = label)) +
@@ -235,6 +236,173 @@ graphglobalgtssdist <- ggplot(df, aes(x = gTSSDistance, y = label)) +
 
 
 graphglobalgtssdist
+
+##### tsscount3 #####
+
+
+mergeddf <- tibble(filename = as.character(), label = as.character())
+for (i in 1:nrow(dados)) {
+  fn <- dados[i,]$Filenames
+  ptss <- read_tsv(paste0("./results/merged/", fn, ".tsv"))
+  ptss$filename <- fn
+  ptss$label <- dados[i,]$label
+  mergeddf <- bind_rows(mergeddf, ptss)
+}
+
+aa <- mergeddf %>% 
+  group_by(label, Class) %>%
+  summarize(n = n()) %>%
+  ungroup()
+
+View(aa)
+
+##### summary statistics #####
+df <- tibble(filename = as.character(), label = as.character())
+for (i in 1:nrow(dados)) {
+  fn <- dados[i,]$Filenames
+  ptss <- read_tsv(paste0("./results/altss/", fn, "-pTSS.tsv"))
+  ptss$filename <- fn
+  ptss$label <- dados[i,]$label
+  df <- bind_rows(df, ptss)
+}
+
+results_summary <- tibble(label = dados$label)
+# Number of pTSS
+df_c <- df %>% 
+  group_by(label) %>%
+  summarize(pTSS = n()) %>%
+  ungroup()
+results_summary <- results_summary %>% left_join(df_c)
+# Number of gTSS/alTSS
+df_c <- df %>% 
+  group_by(label, SubClass) %>%
+  summarize(n = n()) %>%
+  ungroup() %>% 
+  pivot_wider(names_from = SubClass, values_from = n)
+results_summary <- results_summary %>% left_join(df_c)
+# Number of genes mapped for each species
+df_c <- df %>% 
+  group_by(label, Gene) %>%
+  slice_head(n = 1) %>%
+  ungroup() %>% group_by(label) %>%
+  summarize(Genes = n()) %>%
+  ungroup()
+results_summary <- results_summary %>% left_join(df_c)
+# Number of genes with alTSSs mapped for each species
+df_c <- df %>% 
+  group_by(label, Gene) %>%
+  filter(TSSCount > 1) %>%
+  slice_head(n = 1) %>%
+  ungroup() %>% group_by(label) %>%
+  summarize(GenesWithMultiplepTSS = n()) %>%
+  ungroup()
+results_summary <- results_summary %>% left_join(df_c)
+# Number of proteins mapped to each gene
+df_c <- df %>%
+  group_by(label) %>%
+  filter(SubClass == "gTSS") %>%
+  filter(!is.na(Protein)) %>%
+  summarize(GenesWithProtein = n())
+results_summary <- results_summary %>% left_join(df_c)
+# Number of orthogroups mapped for each species
+df_c <- df %>%
+  group_by(label, Orthogroup) %>%
+  filter(SubClass == "gTSS") %>%
+  filter(!is.na(Orthogroup)) %>%
+  slice_head(n = 1) %>% ungroup() %>% group_by(label) %>%
+  summarize(GenesWithOrthogroup = n())
+results_summary <- results_summary %>% left_join(df_c)
+# Number of orthogroups with multiple TSSs mapped for each species... 
+df_c <- df %>%
+  group_by(label, Orthogroup) %>%
+  filter(SubClass == "gTSS") %>%
+  filter(!is.na(Orthogroup)) %>%
+  filter(TSSCount > 1) %>%
+  slice_head(n = 1) %>% ungroup() %>% group_by(label) %>%
+  summarize(GenesWithMultiplepTSSandOrthogroup = n())
+results_summary <- results_summary %>% left_join(df_c)
+
+results_summary <- results_summary %>% 
+  mutate(altssRatio = alTSS/pTSS,
+         multipleTssGeneRatio = GenesWithMultiplepTSS/Genes) %>%
+  left_join({dados %>% select(label, Filenames)})
+
+# I just realized that the numbers of protein/orthogroup are inflated
+# because the presence of multiple TSSs does count these values twice
+# when generating orthofinder statistics, i should map these things for gTSSs methinks.
+# rorthosum <- read_tsv("./results/orthofinder-summary-total.tsv") %>%
+# select(Filenames, Protein, Orthogroup)
+#results_summary <- results_summary %>% 
+#  left_join(rorthosum) %>%
+#  mutate(proteinRatio = Protein/pTSS,
+#         OrthogroupRatio = Orthogroup/pTSS)
+
+results_summary
+
+# Btw, we had essentially 2700 orthogroups mapped.
+nrow({df %>% group_by(Orthogroup) %>% slice_head(n = 1)})
+
+##### tsscount2 #####
+df <- tibble(filename = as.character(), label = as.character())
+for (i in 1:nrow(dados)) {
+  fn <- dados[i,]$Filenames
+  ptss <- read_tsv(paste0("./results/altss/", fn, "-pTSS.tsv"))
+  ptss$filename <- fn
+  ptss$label <- dados[i,]$label
+  df <- bind_rows(df, ptss)
+}
+
+df_counts <- df %>% 
+  # clamps TSS count
+  mutate(TSSCount = ifelse(TSSCount >= 4, 4, TSSCount )) %>%
+  # removes duplicate counts (1 row = 1 gene)
+  group_by(label, Gene) %>% slice_head(n = 1) %>% ungroup() %>%
+  # maps distribution of multipleTSS genes
+  group_by(label, TSSCount) %>% summarize(n = n()) %>%ungroup()
+
+df_counts$TSSCount <- factor(df_counts$TSSCount,
+                             levels = c(1, 2, 3, 4),
+                             labels = c("1", "2", "3", "4+"))
+# arranging to the right order
+df_counts <- df_counts %>%
+  mutate(
+    label = factor(label, levels = c(
+      "H. mediterranei",
+      "H. salinarum",
+      "H. volcanii",
+      "P. furiosus",
+      "T. onnurineus",
+      "T. kodakarensis",
+      "M. jannaschii",
+      "S. acidocaldarius"
+    ))
+  ) %>%
+  arrange(label, TSSCount)
+
+ggplot(df_counts, aes(x = label, y = n, fill = TSSCount)) +
+  geom_col() +
+  scale_fill_manual(
+    values = c(
+      "1"  = "#d01c8b",
+      "2"  = "#f1b6da",
+      "3"  = "#b8e186",
+      "4+" = "#4dac26"
+    ),
+    name = "pTSS"
+  ) +
+  labs(x = "Sample", y = "Mapped genes") +
+  theme_bw(base_size = 16) +
+  theme(
+    axis.text.x  = element_text(face = "italic", angle = 90, vjust = 0.5, hjust = 1),
+    legend.title = element_text(size = 14),
+    legend.text  = element_text(size = 13)
+  )
+
+
+##### relative expression altss/gtss ######
+
+
+
 
 ##### tsscount, tssutr.. 5' UTR Length & TSS Count per Species #####
 # USES PTSS FILTERED FOR PVALUE
