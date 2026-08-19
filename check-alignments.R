@@ -84,7 +84,7 @@ for (d in directories) {
         # "Input Reads: 58212099 Surviving: 45513643 (78,19%) Dropped: 12698456 (21,81%)"
         reads_raw = as.numeric(sub(".*eads: ", "", sub(" Surv.*", "", logcontents)))      # 58212099
         reads_trimmed = as.numeric(sub(".*viving: ", "", sub(" \\(.*", "", logcontents))) # 45513643
-      }paste0(d, "/misc/readCounts.txt")
+      }
       
       reads_aligned = read_counts[grep(library, read_counts$library),]$counts
       reads_aligned_uniq = read_counts_uniq[grep(library, read_counts_uniq$library),]$counts
