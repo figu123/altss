@@ -1,6 +1,12 @@
 # Script for parsing data post running FRTC for multiple files,
 # which gives tables that can be used later for plotting boxplots, etc.
 
+# #
+# There can be some edge cases when the libraries are invalid, like SRR1871633
+# (which was having some issues in the trimming step)
+# Which likely will be skipped, and not display information about align rate
+# #
+
 setwd("~/files")
 
 library("tidyverse")
@@ -88,6 +94,12 @@ for (d in directories) {
       
       reads_aligned = read_counts[grep(library, read_counts$library),]$counts
       reads_aligned_uniq = read_counts_uniq[grep(library, read_counts_uniq$library),]$counts
+      
+      # failsafe, checks for numeric(0) https://stackoverflow.com/a/10664875
+      reads_raw = ifelse(length(reads_raw > 0), reads_raw, 0)
+      reads_trimmed = ifelse(length(reads_trimmed > 0), reads_trimmed, 0)
+      reads_aligned = ifelse(length(reads_aligned > 0), reads_aligned, 0)
+      reads_aligned_uniq = ifelse(length(reads_aligned_uniq > 0), reads_aligned_uniq, 0)
       
       readscounts_results <- rbind(readscounts_results,
                                    data.frame(
