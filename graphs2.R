@@ -159,45 +159,142 @@ ggsave(file.path(start_wd, "./results/graphs/altssDistanceToGtss.png"), plot = g
 ##### TSSs Class x Gene Count x Sequence Depth v3 ((TODO)) #####
 # make sure to get the sequence depth as "reads that aligned" which can be found in FRTC's folder.
 
+df <- tibble(filename = as.character(), label = as.character())
+for (i in 1:nrow(dados)) {
+  fn <- dados[i,]$Filenames
+  print(paste0("Checking Sequencing Depth for ", fn))
+  
+  merged <- read_tsv(paste0("./results/merged/", fn, ".tsv"))
+  merged$filename <- fn
 
+  ptss <- read_tsv(paste0("./results/altss/", fn, "-pTSS.tsv"))
+  ptss$filename <- fn
+
+  sp <- read_csv(paste0("./data/samples/", fn, ".csv"))
+  sp <- sp %>% pivot_longer(cols = c(LibP, LibM), values_to = "sample")
+  
+  md <- read_tsv(paste0("./results/readcount/", fn, "-mappedreads.tsv"))
+  md <- md %>% 
+    mutate(sample = sub("-.*", "", sample)) %>%
+    left_join(sp, by = join_by(sample)) %>%
+    filter(!is.na(name))
+  
+  # summarize
+  md <- md %>% group_by(Output) %>% 
+    select(-sample, -name) %>% 
+    summarize(mapreads = sum(mapped)) %>% 
+    ungroup() %>%
+    rename("OriginalFile" = Output)
+
+  mypvalue <- 1e-6
+  
+  tssc <- merged %>% 
+    filter(Pvalue < mypvalue) %>%
+    left_join(md, by = join_by(OriginalFile)) %>% 
+    group_by(OriginalFile, mapreads) %>% 
+    summarize(TSS = n()) %>%
+    ungroup()
+  
+  ptssc <- merged %>% 
+    filter(Pvalue < mypvalue & Class == "P") %>%
+    left_join(md, by = join_by(OriginalFile)) %>% 
+    group_by(OriginalFile, mapreads) %>% 
+    summarize(pTSS = n()) %>%
+    ungroup() %>%
+    left_join(tssc) %>%
+    mutate(filename = fn, label = dados[i,]$label)
+  
+  # amount of unique genes = amount of gTSS (since only 1 gTSS per gene)
+  # but is not something that makes sense map, since i'm not attributing
+  # who is the gTSS of each library. it's hard to say "library XYZ"
+  # contributed with 5 gTSSs! if i'm not making the criteria to classify gTSSs here
+  #merged %>% 
+  #  mutate(Gene = ifelse(str_detect(Location, "upstream of gene"), 
+  #                  sub(";.*$", "", sub("^.*upstream of gene ", "", Location)), NA)) %>%
+  # group_by(Gene) %>% slice_head(n = 1) %>% ungroup() %>%
+  #  filter(Pvalue < mypvalue & Class == "P") %>%
+  #  left_join(md, by = join_by(OriginalFile)) %>% 
+  #  group_by(OriginalFile, mapreads) %>% 
+  #  summarize(gTSS = n())
+
+  df <- bind_rows(df, ptssc)
+}
+
+graphmappedtss <- ggplot(df %>% rename("Species" = "label"), aes(mapreads, TSS)) + 
+  geom_point(aes(colour = Species, shape = Species), size = 3) + 
+  scale_x_log10() +
+  theme_bw() +
+  scale_shape_manual(values = c(15, 19, 17, 23, 25, 8, 7, 9)) +
+  xlab("Reads Mapeadas") 
+
+ggsave(file.path(start_wd, "./results/graphs/mappedreads-TSS.png"), plot = graphmappedtss, units = "px", width=940, height=600, scale=1.5)
+
+graphmappedptss <- ggplot(df %>% rename("Species" = "label"), aes(mapreads, pTSS)) + 
+  geom_point(aes(colour = Species, shape = Species), size = 3) + 
+  scale_x_log10() +
+  theme_bw() +
+  scale_shape_manual(values = c(15, 19, 17, 23, 25, 8, 7, 9)) +
+  xlab("Reads Mapeadas") 
+
+ggsave(file.path(start_wd, "./results/graphs/mappedreads-pTSS.png"), plot = graphmappedptss, units = "px", width=940, height=600, scale=1.5)
+
+# ggplot(df %>% pivot_longer(cols = c("pTSS", "TSS")), aes(mapreads, value)) + 
+#   geom_point(aes(colour = name, shape = filename), size = 3) + 
+#   scale_x_log10() +
+#   theme_bw() +
+#   scale_shape_manual(values = c(15, 19, 17, 23, 25, 8, 7, 9)) +
+#   xlab("Reads Mapeadas")
 
 
 
 ##### orthosummary Heatmap for orthofinder results #####
-df <- read_tsv("./results/orthofinder-summary-percentages.tsv")
 
-library(ComplexHeatmap)
-library(circlize)
-
-mat <- as.matrix(df[, -c(1, 2, 3)])
-rownames(mat) <- dados$label
-colnames(mat) <- sub("^ortho_", "", colnames(mat))
-
-col_fun <- circlize::colorRamp2(
-  c(min(mat, na.rm = TRUE), median(mat, na.rm = TRUE), max(mat, na.rm = TRUE)),
-  c("white", "orange", "red")
-)
-
-hm <- Heatmap(
-  mat,
-  name = "Orthogroups",
-  col = col_fun,
-  na_col = "grey90",
-  cluster_rows = FALSE,
-  cluster_columns = FALSE,
-  row_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
-  column_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
-  row_names_side = "left",
-  heatmap_legend_param = list(
-    title_gp = grid::gpar(fontsize = 16, fontface = "bold"),
-    labels_gp = grid::gpar(fontsize = 14)
+orthosummary_heatmap <- function(filein, fileout, title) {
+  
+  # df <- read_tsv("./results/orthofinder-summary-alTSSs.tsv")
+  df <- read_tsv(filein)
+  
+  # getting percentages
+  df <- df %>%
+    mutate(Orthogroup = Orthogroup/Protein) %>%
+    mutate(across(starts_with("ortho_"), ~ .x/Protein))
+  
+  library(ComplexHeatmap)
+  library(circlize)
+  
+  mat <- as.matrix(df[, -c(1, 2, 3)])
+  rownames(mat) <- paste0(dados$label, " (n=", df$Protein, ")") # dados$label
+  colnames(mat) <- sub("^ortho_", "", colnames(mat))
+  
+  col_fun <- circlize::colorRamp2(
+    c(min(mat, na.rm = TRUE), median(mat, na.rm = TRUE), max(mat, na.rm = TRUE)),
+    c("white", "orange", "red")
   )
-)
-
-png("./results/graphs/orthosummary.png", width = 2000, height = 1500, res = 300)
-hm
-dev.off()
-
+  
+  # png("./results/graphs/orthosummary3.png", width = 2000, height = 1500, res = 300)
+  png(fileout, width = 2100, height = 1500, res = 300)
+  print(Heatmap(
+    mat,
+    name = "Orthogroups",
+    col = col_fun,
+    na_col = "grey90",
+    cluster_rows = FALSE,
+    cluster_columns = FALSE,
+    column_title = title,
+    row_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
+    column_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
+    row_names_side = "left",
+    heatmap_legend_param = list(
+      title_gp = grid::gpar(fontsize = 16, fontface = "bold"),
+      labels_gp = grid::gpar(fontsize = 14)
+    )
+  ))
+  dev.off()
+}
+orthosummary_heatmap("./results/orthofinder-summary-TSSs.tsv", "./results/graphs/orthosummary-TSSs.png", "pTSS/ortologos")
+orthosummary_heatmap("./results/orthofinder-summary-alTSSs.tsv", "./results/graphs/orthosummary-alTSSs.png", "alTSS/ortologos")
+orthosummary_heatmap("./results/orthofinder-summary-genes-alTSS.tsv", "./results/graphs/orthosummary-genes-alTSS.png", "genes com alTSS/ortologos")
+orthosummary_heatmap("./results/orthofinder-summary-genes.tsv", "./results/graphs/orthosummary-genes.png", "genes com pTSS/ortologos")
 
 ##### utrlengths 5' UTR Length (Global) #####
 

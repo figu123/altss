@@ -5,7 +5,12 @@ faas <- list.files(path = file.path("./data/genomes"), pattern = "\\.faa$")
 orthos <- list.files(path = file.path("./results/orthofinder/output/"), pattern = "\\.tsv$", recursive = TRUE)
 orthos <- orthos[grepl("/Orthologues/", orthos)]
 
+dados <- read_tsv("./data/dados.tsv", show_col_types = FALSE)
 resultSummary <- read_tsv("./data/dados.tsv", show_col_types = FALSE)
+
+resultSummaryGenes <- read_tsv("./data/dados.tsv", show_col_types = FALSE)
+resultSummaryAltss <- read_tsv("./data/dados.tsv", show_col_types = FALSE)
+resultSummaryAltss2 <- read_tsv("./data/dados.tsv", show_col_types = FALSE)
 
 for (i in 1:nrow(dados)) {
   filename <- dados$Filenames[i]
@@ -80,9 +85,51 @@ for (i in 1:nrow(dados)) {
     select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
   # na_summary <- ptss %>% summarise(across(everything(), ~ sum(!is.na(.))/n()))
   
+  # filtered for genes ===  1 gene = 1 tss  === n(gTSS)
+  summarySpeciesGenes <- ptss %>% 
+    filter(SubClass == "gTSS") %>%
+    summarise(across(everything(), ~ sum(!is.na(.)))) %>%
+    mutate(Filenames = filename) %>%
+    select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+  
+  # filtered only for genes that have multiple TSS
+  summarySpeciesAltss <- ptss %>% 
+    filter(TSSCount > 1) %>%
+    summarise(across(everything(), ~ sum(!is.na(.)))) %>%
+    mutate(Filenames = filename) %>%
+    select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+  
+  # filtered only for genes that have multiple TSS, 1 gene == 1 tss
+  summarySpeciesAltss2 <- ptss %>% 
+    filter(TSSCount > 1 & SubClass == "gTSS") %>% 
+    summarise(across(everything(), ~ sum(!is.na(.)))) %>%
+    mutate(Filenames = filename) %>%
+    select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+  
   # the mutate below is quite verbose, but it merges columns & 
   resultSummary <- resultSummary %>%
     left_join(summarySpecies, by = "Filenames") %>%
+    mutate(across(ends_with(".x"),
+                  ~ coalesce(.x, get(sub("\\.x$", ".y", cur_column()))),
+                  .names = "{sub('.x$','',.col)}")) %>%
+    select(-ends_with(".x"), -ends_with(".y"))
+  
+  resultSummaryGenes <- resultSummaryGenes %>%
+    left_join(summarySpeciesGenes, by = "Filenames") %>%
+    mutate(across(ends_with(".x"),
+                  ~ coalesce(.x, get(sub("\\.x$", ".y", cur_column()))),
+                  .names = "{sub('.x$','',.col)}")) %>%
+    select(-ends_with(".x"), -ends_with(".y"))
+  
+  resultSummaryAltss <- resultSummaryAltss %>%
+    left_join(summarySpeciesAltss, by = "Filenames") %>%
+    mutate(across(ends_with(".x"),
+                  ~ coalesce(.x, get(sub("\\.x$", ".y", cur_column()))),
+                  .names = "{sub('.x$','',.col)}")) %>%
+    select(-ends_with(".x"), -ends_with(".y"))
+  
+  resultSummaryAltss2 <- resultSummaryAltss2 %>%
+    left_join(summarySpeciesAltss2, by = "Filenames") %>%
     mutate(across(ends_with(".x"),
                   ~ coalesce(.x, get(sub("\\.x$", ".y", cur_column()))),
                   .names = "{sub('.x$','',.col)}")) %>%
@@ -93,9 +140,22 @@ for (i in 1:nrow(dados)) {
 resultSummary <- resultSummary %>% 
   select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
 
-resultSummary2 <- resultSummary %>%
-  mutate(Orthogroup = Orthogroup/Protein) %>%
-  mutate(across(starts_with("ortho_"), ~ .x/Protein))
+# resultSummary2 <- resultSummary %>%
+#   mutate(Orthogroup = Orthogroup/Protein) %>%
+#   mutate(across(starts_with("ortho_"), ~ .x/Protein))
 
-write_tsv(resultSummary, "./results/orthofinder-summary-total.tsv")
-write_tsv(resultSummary2, "./results/orthofinder-summary-percentages.tsv")
+resultSummary3 <- resultSummaryGenes %>% 
+  select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+
+resultSummary4 <- resultSummaryAltss %>% 
+  select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+
+resultSummary5 <- resultSummaryAltss2 %>% 
+  select(Filenames, Protein, Orthogroup, starts_with("ortho_"))
+
+write_tsv(resultSummary, "./results/orthofinder-summary-TSSs.tsv")
+write_tsv(resultSummary3, "./results/orthofinder-summary-genes.tsv")
+write_tsv(resultSummary4, "./results/orthofinder-summary-alTSSs.tsv")
+write_tsv(resultSummary5, "./results/orthofinder-summary-genes-alTSS.tsv")
+
+
