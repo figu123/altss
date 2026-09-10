@@ -6,6 +6,15 @@
 #  2. has more than >= 2 TSSs
 #  3. at least one of their orthogroup counterpart also has >= 2 TSS
 
+# should make two outputs
+
+# candidates-big i only expanded to include all genes of that shared orthogroup.
+# So for example, for a cold regulating protein present in haloarchea, i can see:
+#   H. mediterranei: HFX_RS02250 - 1 pTSS (only visible in candidates-big.tsv), 
+#   H. volcanii: HVO_RS07105 - many pTSSs (visible on both)
+#   H. salinarum: VNG_RS07115 - 2 pTSSs (visible on both)
+
+
 library(tidyverse)
 
 dados <- read_tsv("./data/dados.tsv")
@@ -30,6 +39,20 @@ for (i in 1:nrow(dados)) {
 #    (1) has alternative TSSs (TSS Count > 1 for that gene);
 #    (2) has Orthogroup (has orthology with the gene of another species);
 #    (3) within that orthogroup, you can find at least 1 other species that has alternative TSSs (that passed through the first filter)
+
+# and lastly, a consideration about orthogroups.
+# total_ortho has the count of orthologues for the protein considering the WHOLE GENOME of species.
+#  (same goes for other mentionings of orthologues).
+# if I were to describe the ACTUAL COUNT of orthologues for my dataset, the number will be different.
+# for example, consider a hypothetical sugar metabolism gene that has 5 orthologues between species.
+# maybe in the mapped TSSs, only 2 orthologues were mapped, because the dRNA-seq only captured the expression of these 2 orthologues (only they had reads)
+#   [[idk why im explaining this in this detail, you get it]]
+
+df <- df %>% group_by(Orthogroup) %>% 
+  mutate(actual_n_orthogroups = n_distinct(filename)) %>% 
+  ungroup() %>%
+  relocate(actual_n_orthogroups, .after = total_ortho)
+
 
 filtered_candidates <- df %>% 
   filter(TSSCount > 1) %>% 
@@ -61,6 +84,13 @@ paste0("Or about ", nrow({unshared_alternatives %>% group_by(Gene) %>% slice_hea
 # == nrow({unshared_alternatives %>% filter(SubClass == "gTSS")})
 
 
+
+# 916 orthogroups inferred containing alTSS
+print(paste0("There were ",
+             nrow({df %>% group_by(Orthogroup) %>% filter(!is.na(Orthogroup) & SubClass == "alTSS") %>% slice_head(n = 1)}),
+             " orthogroups inferred containing alTSSs.",
+             " This should be the sum of the two previously defined datatables: ", 
+             nrow(uniqs2), " + ", nrow(uniqs)))
 
 
 # finally, there's the "non-orthogroupped alTSSs"
@@ -119,12 +149,6 @@ print(paste0("The list of ",
 # Exporting candidates
 write_tsv(expanded_filtered_candidates, "./results/candidates-big.tsv")
 write_tsv(filtered_candidates, "./results/candidates.tsv")
-# candidates-big i only expanded to include all genes of that shared orthogroup.
-# So for example, for a cold regulating protein present in haloarchea, i can see:
-#   H. mediterranei: HFX_RS02250 - 1 pTSS (only visible in candidates-big.tsv), 
-#   H. volcanii: HVO_RS07105 - many pTSSs (visible on both)
-#   H. salinarum: VNG_RS07115 - 2 pTSSs (visible on both)
-
 
 
 
