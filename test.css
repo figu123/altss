@@ -1,4 +1,4 @@
-/* fixes ag grid not allowing me to copy stuff from its cells */
+/* workaround for ag grid not allowing me to copy text from its cells */
 .ag-cell {
   user-select: text;
 }

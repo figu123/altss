@@ -1,6 +1,6 @@
 ---
 title: "Alternative Start Sites 2"
-author: "Gapminder Analytics Group"
+author: "figu123" 
 format: dashboard
 css: test.css
 ---
@@ -10,8 +10,6 @@ css: test.css
 dados = await FileAttachment("./data/dados.tsv").tsv({ typed: true })
 
 igvserver = "http://localhost:5497"
-// results = await FileAttachment(`./results/altss/hsalinarum-alTSS.tsv`).tsv({ typed: true })
-
 igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(m => m.default)
 ```
 
@@ -19,7 +17,10 @@ igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(
 #| output: false
 library(readr)
 
+# Defining TEX+ and TEX- samples by reading /samples/(filename).csv
+# Also the TSSs which will show up in a table for you to quickly jump to portions of the genome is defined by tableall.
 dados <- read_tsv(file = "./data/dados.tsv")
+tableall = read_tsv("./results/candidates.tsv")
 
 results <- list()
 samples <- list()
@@ -27,7 +28,6 @@ for (i in 1:nrow(dados)) {
   results[[dados[i,]$Filenames]] <- read_tsv(paste0("./results/altss/", dados[i,]$Filenames, "-pTSS.tsv"))
   samples[[dados[i,]$Filenames]] <- read.csv(paste0("./data/samples/", dados[i,]$Filenames, ".csv"), header = TRUE)
 }
-tableall = read_tsv("./results/candidates.tsv")
 # ojs_define(dados = dados)
 ojs_define(results = results)
 ojs_define(samples = samples)
@@ -36,32 +36,25 @@ ojs_define(tableall = tableall)
 
 ```{=html}
 <head>
+    <!-- ag-grid is used for interactible tables -->
     <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
 </head>
 ```
-
-## Row {height=70%}
+## Row {height="70%"}
 
 ```{=html}
 <div id="myGrid" style="height: 100%;"></div>
 ```
-
 ```{ojs}
 //| output: false
-
-// fn = typeof lineselected !== "undefined" ? lineselected[["filename"]] : species["Filenames"];
-// fn = species["Filenames"]
-// sp = species["Species"]
-// altsstsv = results[fn]
-// trans = transpose(tableall)
-
 
 toUniprot = function(params) {
     const link = `<a href="https://www.uniprot.org/uniprotkb?query=${params.value}" target="_blank">${params.value}</a>`;
     
     return link;
 }
-    
+ 
+
 mygrid = {
     document.querySelector("#myGrid").innerHTML = ""
     
@@ -70,6 +63,10 @@ mygrid = {
       // Data to be displayed
       rowData: transpose(tableall),
       // Columns to be displayed (Should match rowData properties)
+      
+      // Each one of these columns matches data available in your "tableall"
+      // (which in this case, contains TSSs of 8 archaea species)
+      // adjust it to your file.
       columnDefs: [
         { field: "filename", width: 150,  headerName: 'Species' },
         { field: "Chromossome", width: 150,  headerName: 'Chromosome' },
@@ -90,7 +87,6 @@ mygrid = {
       // Configurations applied to all columns
       defaultColDef: {
         filter: true,
-      //   editable: true,
       },
       // Grid Options & Callbacks
       pagination: true,
@@ -100,20 +96,32 @@ mygrid = {
         if (event.selectedNodes.length == 0) return;
         const lineselected = event.selectedNodes[0].data
         
-        const fn = lineselected[["filename"]]
+        // Upon selecting a line of the table, IGV loads tracks corresponding to the selected sample, 
+        // and positions your cursor in the TSS position.
         
+        // Information from the table can be fetched into variables here.
+        const fn = lineselected[["filename"]]
         const start = parseInt(lineselected[["Position"]]) - 600
         const end = parseInt(lineselected[["Position"]]) + 600
         const locus = `${lineselected[["Chromossome"]]}:${start}-${end}`;
-    
         
         const container = document.querySelector("#igv-container");
         
-        
-        
         // tracks
-        
         const gettracks = async function() {
+        
+          // Because files may or may not exist, first an array of candidates is defined.
+          //    ("May not exist" because paired files only exist for paired experiments)
+          // Each element on this list corresponds to an IGV track, URL points to the file location.
+          // 
+          // The end goal is to compare blue x red colors. So Blue = TEX+, Red = TEX-.
+          // Lighter colors is Positive Strand (FWD) and Darker colors Negative Strand (REV)
+          // tex+: 44CCFF fwd; 011627 rev      tex-: F03A47 fwd; 5E0B15 rev
+          // TEX+ and TEX- samples scale is grouped, since they'll be compared
+          // 
+          // For more information on how to add tracks (and available parameters), see
+          // https://igv.org/doc/igvjs/#tracks
+          
           let candidates = [
             {
               name: "Anotação",
@@ -143,20 +151,21 @@ mygrid = {
             },
           ]
           
-          // The idea is to compare blue x red colors. So Blue = TEX+, Red = TEX-.
-          // Lighter colors is Positive Strand (FWD) and Darker colors Negative Strand (REV)
-          // tex+: 44CCFF fwd; 011627 rev      tex-: F03A47 fwd; 5E0B15 rev
-          // attempts to add samples into mytracks
-          // https://igv.org/doc/igvjs/#tracks
+
+          // If you select a TSS in the negative strand, load positive strand bedgraphs first.
+          // If you select a TSS in the negative strand, load negative strand bedgraphs first.
           
+          // Here I chose to copy paste the code, but invert the order.
+          // It's lazy, and likely some array sorting instead would make this code less cluttered.
+
           if (lineselected[["Strand"]] == "+") {
-          
-              transpose(samples[fn]).forEach(samp => { 
+              transpose(samples[fn]).forEach((samp, idx) => { 
                 // fwd
                 candidates.push({
                   "name": `${samp["Output"]} TEX+ FWD Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
                   "color": "#44CCFF"
                 });
@@ -164,6 +173,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- FWD Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
                   "color": "#F03A47"
                 });
@@ -171,6 +181,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX+ FWD Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
                   "color": "#44CCFF"
                 });
@@ -178,17 +189,19 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- FWD Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
                   "color": "#F03A47"
                 });
               })
               
-              transpose(samples[fn]).forEach(samp => { 
+              transpose(samples[fn]).forEach((samp, idx) => { 
                 // rev
                 candidates.push({
                   "name": `${samp["Output"]} TEX+ REV Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
                   "color": "#011627"
                 });
@@ -196,6 +209,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- REV Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
                   "color": "#5E0B15"
                 });
@@ -203,6 +217,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX+ REV Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
                   "color": "#011627"
                 });
@@ -210,6 +225,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- REV Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
                   "color": "#5E0B15"
                 });
@@ -219,13 +235,15 @@ mygrid = {
               
           } else {
           
-            // same thing but flipped.
-              transpose(samples[fn]).forEach(samp => { 
+            // THIS CODE IS THE SAME AS THE PREVIOUS ONE, BUT ORDER IS FLIPPED
+            // (Reverse strand first, then forward strand)
+              transpose(samples[fn]).forEach((samp, idx) => { 
                 // rev
                 candidates.push({
                   "name": `${samp["Output"]} TEX+ REV Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-rev.bedgraph`,
                   "color": "#011627"
                 });
@@ -233,6 +251,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- REV Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-rev.bedgraph`,
                   "color": "#5E0B15"
                 });
@@ -240,6 +259,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX+ REV Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-rev.bedgraph`,
                   "color": "#011627"
                 });
@@ -247,17 +267,20 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- REV Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `rev-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-rev.bedgraph`,
                   "color": "#5E0B15"
                 });
               })
-            
-              transpose(samples[fn]).forEach(samp => { 
+              
+              
+              transpose(samples[fn]).forEach((samp, idx) => { 
                 // fwd
                 candidates.push({
                   "name": `${samp["Output"]} TEX+ FWD Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-paired-fwd.bedgraph`,
                   "color": "#44CCFF"
                 });
@@ -265,6 +288,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- FWD Paired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-paired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-paired-fwd.bedgraph`,
                   "color": "#F03A47"
                 });
@@ -272,6 +296,7 @@ mygrid = {
                   "name": `${samp["Output"]} TEX+ FWD Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibP"]}-fwd.bedgraph`,
                   "color": "#44CCFF"
                 });
@@ -279,20 +304,24 @@ mygrid = {
                   "name": `${samp["Output"]} TEX- FWD Unpaired`,
                   "type": "wig",
                   "format": "bedGraph",
+                  "autoscaleGroup": `fwd-unpaired-${idx}`,
                   "url": `${igvserver}/data/frtc/${fn}/coverage/${samp["LibM"]}-fwd.bedgraph`,
                   "color": "#F03A47"
                 });
               })
               
+              
+              
+              
           }
           
-          // tests if file exists, if it does, append to "results".
-          async function urlExists(url) {
+        // tests if file exists, if it does, append to "results".
+        async function urlExists(url) {
             try {
               let res = await fetch(url, { method: 'HEAD' })
-              if (res.status === 405 || res.status === 501) {
-                res = await fetch(url, { method: 'GET', cache: 'no-store' })
-              }
+              //if (res.status === 405 || res.status === 501) {
+              //  res = await fetch(url, { method: 'GET', cache: 'no-store' })
+              //}
               return res.ok
             } catch (e) {
               return false
@@ -343,13 +372,11 @@ mygrid = {
 
 ```
 
-## Row {height=70%}
+## Row {height="70%"}
 
 ```{=html}
 <div id="igv-container" style="height: 100%; width: 100%; padding: 5px;"></div>
 ```
-
-
 ```{ojs}
 //| output: false
 
