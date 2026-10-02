@@ -55,6 +55,10 @@ toUniprot = function(params) {
 }
  
 
+// The bulk of this code is defining tracks for IGV Browser.
+// In short, we define an ag-grid, which when selecting a row of that grid, it fetches the TSS information in that row
+// And load the IGV Browser with that TSS Information
+
 mygrid = {
     document.querySelector("#myGrid").innerHTML = ""
     
@@ -315,31 +319,32 @@ mygrid = {
               
           }
           
-        // tests if file exists, if it does, append to "results".
         async function urlExists(url) {
             try {
               let res = await fetch(url, { method: 'HEAD' })
-              //if (res.status === 405 || res.status === 501) {
-              //  res = await fetch(url, { method: 'GET', cache: 'no-store' })
-              //}
               return res.ok
             } catch (e) {
               return false
             }
-          }
+        }
         
-          const results = await Promise.all(candidates.map(async t => {
+        // maps all candidates tracks to an async function (await promise)
+        // where if the file exists (HEAD returns 200), then preserves track
+        // otherwise replace the track by "null"
+        const results = await Promise.all(candidates.map(async t => {
             if (!t.url) return null
             const ok = await urlExists(t.url)
             if (ok) return t
-            // console.warn('URL missing:', t.url)
             return null
           }))
         
+          // removes all "null" from results
+          // This is the final value returned from "gettracks()"
           return results.filter(Boolean)
         }
         
-        // defining mytracks
+        // So, you get the filtered, non-null, existing tracks
+        // And append it to the options of a IGV Browser
         gettracks().then((v) => {
           const mytracks = v
           
@@ -355,11 +360,11 @@ mygrid = {
           };
           
           igv.removeAllBrowsers();
-        
           igv.createBrowser(container, options)
         })
         
       },
+      // Unused
       onCellValueChanged: (event) => {
         console.log(`New Cell Value: ${event.value}`);
       },
@@ -376,95 +381,4 @@ mygrid = {
 
 ```{=html}
 <div id="igv-container" style="height: 100%; width: 100%; padding: 5px;"></div>
-```
-```{ojs}
-//| output: false
-
-thisblockquoteisdisabled = true
-
-// updateigvposition = {
-  // if (selectedline && igvbrowser) {
-    
-    // console.log(selectedline[["Chromossome"]], selectedline[["Position"]])
-    
-    // const start = parseInt(selectedline[["Position"]]) - 600
-    // const end = parseInt(selectedline[["Position"]]) + 600
-    // const locus = `${selectedline[["Chromossome"]]}:${start}-${end}`;
-
-    
-    // await igvbrowser.search(locus)
-    
-    /*
-    await igvbrowser.search({
-      "chromosome": selectedline[["Chromossome"]],
-      "start": parseInt(selectedline[["Position"]]) - 40,
-      "end": parseInt(selectedline[["Position"]]) + 40
-    })
-    const excludon_atual = amostra_selecionada;
-
-    const amostra = excludon_atual.run;
-    const chr = excludon_atual.seqname;
-
-    const margem = 300;
-    const start_num = parseInt(excludon_atual.merged_start);
-    const end_num = parseInt(excludon_atual.merged_end);
-
-    const inicio = Math.max(1, start_num - margem);
-    const fim = end_num + margem;
-
-    const locus = `${chr}:${inicio}-${fim}`;
-
-    await meu_igv.search(locus);
-
-    let tracksParaRemover = meu_igv.trackViews.filter(tv => {
-        let nomeDaTrack = tv.track.name || "";
-        return nomeDaTrack.includes("Forward (+)") ||
-               nomeDaTrack.includes("Reverse (-)") ||
-               nomeDaTrack.includes("Excludon");
-    });
-
-    for (let tv of tracksParaRemover) {
-        meu_igv.removeTrack(tv.track);
-    }
-
-    await meu_igv.loadTrack({
-        name: "Forward (+)",
-        url: "${igvserver}/results/hvol/cov/" + amostra + "_plus.bedgraph",
-        type: "wig",
-        color: "rgb(102,102,102)",
-        autoscaleGroup: "1",
-        height: 70,
-        order: 1
-    });
-
-    await meu_igv.loadTrack({
-        name: "ExcludonFinder Results",
-        url: "${igvserver}/results/hvol/excludon-finder/viz/" + amostra + ".gff",
-        type: "annotation",
-        format: "gff3",
-        displayMode: "expanded",
-        color: "rgb(0,0,0)",
-        altColor: "rgb(0,102,51)",
-        fontSize: "10",
-        autoHeight: true,
-        maxHeight: 10000,
-        groupByStrand: "false",
-        order: 2
-    });
-
-    await meu_igv.loadTrack({
-        name: "Reverse (-)",
-        url: "${igvserver}/results/hvol/cov/" + amostra + "_minus.bedgraph",
-        type: "wig",
-        color: "rgb(0,102,51)",
-        autoscaleGroup: "1",
-        height: 70,
-        order: 3
-    });
-    
-  */
-//  }
-//}
-
-
 ```
