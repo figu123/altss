@@ -13,7 +13,7 @@ library(Rsubread)     # Used in getting read counts for each gene.
 # --------------------- #
 ##### CONFIGURATION #####
 
-start_wd <- "~/files/analises/full/"
+start_wd <- "~/files/analises/altss"
 setwd(start_wd)
 
 # how many threads is Rsubread allowed to use. it can run on 1.
@@ -517,6 +517,7 @@ for (i in 1:nrow(dados)) {
         readGFF(file.path(start_wd, genome_f, paste0(filename, ".gff")), 
                 tags=c("ID", "Parent", "Name"))
       ))
+      
       print("1.2. GFF_Data")
       print(head(gff_data))
       
