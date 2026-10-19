@@ -92,7 +92,8 @@ mygrid = {
         { field: "total_ortho", width: 140, headerName: 'n(ortho)'  },
         { field: "Orthogroup", width: 140, headerName: 'Orthogroup'  },
         { field: "memenumsites", width: 140, headerName: 'n(motifs)' },
-        { field: "SubClass", width: 90, headerName: 'Subclass'  }
+        { field: "SubClass", width: 90, headerName: 'Subclass'  },
+        { field: "UTRSequence", width: 90, headerName: 'UTRSequence'  }
       ],
       // Configurations applied to all columns
       defaultColDef: {
