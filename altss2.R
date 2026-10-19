@@ -668,7 +668,7 @@ for (i in 1:nrow(dados)) {
         mutate(SubClass = ifelse(row_number() == 1, "gTSS", "alTSS")) %>%
         # The distance is from the TSS relative to the gTSS. For example, an alTSS
         # with distance -50, indicates that this alTSS is 50bp upstream of the gTSS.
-        mutate(gTSSDistance = first(Position) - Position) %>%
+        mutate(gTSSDistance = dplyr::first(Position) - Position) %>%
         ungroup() %>%
         arrange(TSSid)
       
@@ -704,7 +704,7 @@ for (i in 1:nrow(dados)) {
         mutate(SubClass = ifelse(row_number() == 1, "gTSS", "alTSS")) %>%
         # The distance is from the TSS relative to the gTSS. For example, an alTSS
         # with distance -50, indicates that this alTSS is 50bp upstream of the gTSS.
-        mutate(gTSSDistance = first(Position) - Position) %>%
+        mutate(gTSSDistance = dplyr::first(Position) - Position) %>%
         ungroup() %>%
         arrange(TSSid)
       
@@ -712,10 +712,11 @@ for (i in 1:nrow(dados)) {
       write_tsv(ptss, paste0("./results/altss/", filename, "-pTSS.tsv"))
       
       ##### analysing signal intensity #####
-      print("4. Reading information of signal intensity")
       
-      print("4.1. Using RSubRead to get read counts for each gene")
-      gene_readcount(filename)
+      # print("4. Reading information of signal intensity")
+      
+      # print("4.1. Using RSubRead to get read counts for each gene")
+      # gene_readcount(filename)
       
       # print("4.2. Finding intensity for each TSS (This may take a while)")
       # Deprecated.
