@@ -3,11 +3,6 @@ library(rtracklayer)  # Reading genomic annotation files
 library(seqinr)       # Extracting upstream regions (promoter regions)
 library(Rsubread)     # Used in getting read counts for each gene.
 
-
-# Used for 5' UTR graphs
-# library(ggplot2)
-
-
 # first, run fetch-genomes.sh
 
 # --------------------- #
@@ -102,8 +97,8 @@ merge_tssar_results <- function(filename) {
   
   df <- tibble(data.frame(File = files, Path = pathes) |>
                  mutate(Id = sub("_([^_]+)$", "", sub("_([^_]+)$", "", File))))
-  print("Found the following files | chromossomes:")
-  head(df)
+  # print("Found the following files | chromossomes:")
+  # head(df)
   # TODO: this is messy. there's a lot of subs to manipulate the filename.
   
   # first, check for empty files
@@ -224,7 +219,7 @@ merge_altss <- function(df) {
   return(df)
 }
 
-extract_sequence_from_position <- function(PositionStart, PositionEnd, Chromossome, Strand, genomes) {
+extract_promoter_sequence <- function(PositionStart, PositionEnd, Chromossome, Strand, genomes) {
   # Useful for extract promoter regions of genes.
   # Requires the variables:
   #   upstream_count -- How many bases upstream to extract from the starting position of the gene?
@@ -258,6 +253,51 @@ extract_sequence_from_position <- function(PositionStart, PositionEnd, Chromosso
   # print(paste0("endpos", toString(end_pos), ",,,,", "fasta_seq_len", toString(length(fasta_seq))))
   if (is.na(end_pos) || is.na(start_pos)) {
     print(paste("Error: Trying to fetch position for", toString(PositionStart), ",", toString(PositionEnd), " for chr ", toString(Chromossome)," resulted in NAs, somehow."))
+    return(FALSE)
+  }
+  if (end_pos > length(fasta_seq)) {
+    print(paste("Warning: Fragment starting at",toString(start_pos),"is at the end of the genome, resulting in a sequence smaller than the one requested."))
+    end_pos = length(fasta_seq)
+  }
+  if (start_pos < 0) {
+    print(paste("Warning: Fragment starting at",toString(start_pos),"is at the beginning of the genome, resulting in a sequence smaller than the one requested."))
+    start_pos = 0
+  }
+  # Uses seqinr to extract the sequences
+  if (Strand == "+") {
+    frag <- paste0(getFrag(fasta_seq, begin=start_pos, end=end_pos),collapse="")
+  } else {
+    frag <- paste0(rev(comp(getFrag(fasta_seq, begin=start_pos, end=end_pos))),collapse="")
+  }
+  return(frag)
+}
+
+extract_utr_sequence <- function(TSSPosition, UTRLength, Chromossome, Strand, genomes) {
+  Chromossome <- sub("\\..*", "", Chromossome)
+  fasta_seq <- genomes[[Chromossome]]
+  if (is.null(fasta_seq)) {
+    print(paste0("Failed to access genomes[[",Chromossome,"]]"))
+    return(FALSE)
+  }
+  # Defines the start/end position of the sequence, based on if it's an antisense or sense
+  if (Strand == "+") {
+    # For a gene with start_position 65274
+    # getFrag(genomes[[1]], begin=65274, end=65276)
+    # [1] "a" "t" "g"
+    start_pos <- as.numeric(TSSPosition)
+    end_pos <- start_pos + as.numeric(UTRLength) + 2 # Gets AUG
+  } else {
+    # For a gene with end_position 30378
+    # rev(comp(getFrag(genomes[[1]], begin=30376, end=30378)))
+    # [1] "a" "t" "g"
+    # Without rev(comp), the result is [1] "c" "a" "t"
+    end_pos <- as.numeric(TSSPosition)
+    start_pos <- end_pos - as.numeric(UTRLength) - 2 # Gets AUG
+  }
+  # clamps to min/max value of the sequence # 
+  # print(paste0("endpos", toString(end_pos), ",,,,", "fasta_seq_len", toString(length(fasta_seq))))
+  if (is.na(end_pos) || is.na(start_pos)) {
+    print(paste("Error: Trying to fetch position for", toString(TSSPosition), " for chr ", toString(Chromossome)," resulted in NAs, somehow."))
     return(FALSE)
   }
   if (end_pos > length(fasta_seq)) {
@@ -521,14 +561,14 @@ for (i in 1:nrow(dados)) {
       print("1.2. GFF_Data")
       print(head(gff_data))
       
-      features <- read_tsv(file.path(start_wd, genome_f, paste0(filename, "-features.tsv")))
+      features <- read_tsv(file.path(start_wd, genome_f, paste0(filename, "-features.tsv")), show_col_types = FALSE)
       names(features)[1] <- "feature"
       
       print("1.3. Features")
       print(head(features))
       
       gaf_data <- read_tsv(file.path(start_wd, genome_f, paste0(filename, ".gaf")),
-                           comment = "!", col_names = FALSE)
+                           comment = "!", col_names = FALSE, show_col_types = FALSE)
       print("1.4. Gene Ontology")
       print(head(gaf_data))
       
@@ -551,7 +591,7 @@ for (i in 1:nrow(dados)) {
       merge_tssar_results(filename)
       
       print("3. Processing merged table pTSSs. ")
-      ptss <- read_tsv(file.path("./results/merged/", paste0(filename, ".tsv")))
+      ptss <- read_tsv(file.path("./results/merged/", paste0(filename, ".tsv")), show_col_types = FALSE)
       ptss <- ptss %>% filter(Class == "P")
       
       print("3.0. Fixing Chromossome Names")
@@ -579,24 +619,42 @@ for (i in 1:nrow(dados)) {
                              as.numeric(sub(";.*$", "", sub("nt upstream of gene .*", "", Location))), NA)
         )
       
-      ptss$Protein <- NA
-      ptss$Product <- NA
-      for (j in 1:nrow(features)) {
-        cds <- features %>% 
-          filter(feature == "CDS") %>% 
-          filter(str_detect(locus_tag, ptss[j,]$Gene))
-        
-        if (nrow(cds) > 0) {
-          ptss[j,]$Product = cds[1,]$name
-          ptss[j,]$Protein = cds[1,]$product_accession
-        }
-      }
+      gene_protein_map <- features %>% 
+        filter(feature == "CDS") %>%
+        select(locus_tag, name, product_accession) %>%
+        rename(locus_tag = "Gene", name = "Product", product_accession = "Protein") %>%
+        distinct()
       
-      print("3.3. Creating column with upstream/downstream sequence")
+      ptss$Protein <- NULL
+      ptss$Product <- NULL
+      ptss <- ptss %>% left_join(gene_protein_map, by = join_by("Gene" == "Gene"))
+      
+      # ptss$Protein <- NA
+      # ptss$Product <- NA
+      # for (j in 1:nrow(features)) {
+      #   cds <- features %>% 
+      #     filter(feature == "CDS") %>% 
+      #     filter(str_detect(locus_tag, ptss[j,]$Gene))
+      #   
+      #   if (nrow(cds) > 0) {
+      #     ptss[j,]$Product = cds[1,]$name
+      #     ptss[j,]$Protein = cds[1,]$product_accession
+      #   }
+      # }
+      
+      print("3.3. Creating column with upstream/downstream sequence and UTR Sequence")
+      ptss$Sequence <- NULL
+      ptss$UTRSequence <- NULL
       ptss <- ptss %>%
-        mutate(Sequence = mapply(extract_sequence_from_position, 
+        mutate(Sequence = mapply(extract_promoter_sequence, 
                                  Position, Position, Chromossome, Strand, 
-                                 MoreArgs = list(genomes = genomes)))
+                                 MoreArgs = list(genomes = genomes)),
+               UTRSequence = mapply(extract_utr_sequence, 
+                                    Position, UTRLength, Chromossome, Strand, 
+                                    MoreArgs = list(genomes = genomes)))
+      # 5' UTR Sequence also includes the start codon (ATG).
+      # This is just for convenience. A lot of articles doing secondary structures
+      # of UTR regions only include them all the way to ATG.
       
       print("3.4. Columns TSSCount, SubClass, gTSSDistance")
       # Assigns gTSS for one with lowest value in "d" (equivalent of p-value)
