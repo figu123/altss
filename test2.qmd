@@ -9,6 +9,12 @@ css: test.css
 //| output: false
 dados = await FileAttachment("./data/dados.tsv").tsv({ typed: true })
 
+// you can serve files from rstudio-server directly, but these ignore range headers.
+// igvjs mentions that this would be a performance issue, but only downloads the .fai file with range headers??
+// all other tracks are downloaded fully (requests 200).
+
+// so i don't see why not use rstudio-server instead of a python one.
+// igvserver = "http://localhost:8787/files/files/analises/altss"
 igvserver = "http://localhost:5497"
 igv = import("https://cdn.jsdelivr.net/npm/igv@3.0.2/dist/igv.esm.min.js").then(m => m.default)
 ```
