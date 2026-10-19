@@ -10,6 +10,36 @@ dados <- dados |> mutate(label = paste0(toupper(substr(Filenames, 1, 1)), ". ", 
 
 dir.create("./results/graphs", showWarnings = FALSE)
 
+##### Count of candidates #####
+
+# "Signal": When there's 2 TSS for the same gene.
+# Big: Preserves all orthogroups that have at least one "Signal". 
+#      Each orthogroup must have at least 2 genes from different organisms.
+# Normal: Discard all genes that don't have "Signal". 
+#      Each orthogroup must have at least 2 genes from different organisms.
+
+sum_genes_candidates_big <- read_tsv("./results/candidates-big.tsv") %>% 
+  as_tibble() %>%
+  group_by(filename) %>% 
+  filter(SubClass == "gTSS") %>% 
+  summarize(count_big = n())
+
+nrow({candbig %>% group_by(Orthogroup) %>% slice_head(n=1)})
+nrow({abcd %>% group_by(Orthogroup) %>% slice_head(n=1)})
+
+sum_genes_candidates <- read_tsv("./results/candidates.tsv") %>% 
+  as_tibble() %>%
+  group_by(filename) %>% 
+  filter(SubClass == "gTSS") %>% 
+  summarize(count = n())
+
+sum_genes_candidates <- sum_genes_candidates %>%
+  left_join(sum_genes_candidates_big) %>%
+  pivot_longer(cols = c("count", "count_big"), names_to = "table", values_to = "gene_count")
+
+ggplot(sum_genes_candidates, aes(filename, gene_count, fill = table)) +
+  geom_col(position = "dodge")
+
 ##### GeneReadCount Boxplotting the Coverage of Genes (RSubread) #####
 values_unpaired <- list()
 values_paired <- list()
@@ -250,6 +280,10 @@ ggsave(file.path(start_wd, "./results/graphs/mappedreads-pTSS.png"), plot = grap
 ##### orthosummary Heatmap for orthofinder results #####
 
 orthosummary_heatmap <- function(filein, fileout, title) {
+  # filein <- "./results/orthofinder-summary-genes-alTSS.tsv"
+  # fileout <- "./results/graphs/tmpignoreee.png"
+  # title <- "genes com alTSS/ortologos"
+  # 
   
   # df <- read_tsv("./results/orthofinder-summary-alTSSs.tsv")
   df <- read_tsv(filein)
@@ -258,7 +292,7 @@ orthosummary_heatmap <- function(filein, fileout, title) {
   df <- df %>%
     mutate(Orthogroup = Orthogroup/Protein) %>%
     mutate(across(starts_with("ortho_"), ~ .x/Protein))
-  
+
   library(ComplexHeatmap)
   library(circlize)
   
@@ -266,6 +300,7 @@ orthosummary_heatmap <- function(filein, fileout, title) {
   rownames(mat) <- paste0(dados$label, " (n=", df$Protein, ")") # dados$label
   colnames(mat) <- sub("^ortho_", "", colnames(mat))
   
+  # color function
   col_fun <- circlize::colorRamp2(
     c(min(mat, na.rm = TRUE), median(mat, na.rm = TRUE), max(mat, na.rm = TRUE)),
     c("white", "orange", "red")
@@ -296,6 +331,71 @@ orthosummary_heatmap("./results/orthofinder-summary-alTSSs.tsv", "./results/grap
 orthosummary_heatmap("./results/orthofinder-summary-genes-alTSS.tsv", "./results/graphs/orthosummary-genes-alTSS.png", "genes com alTSS/ortologos")
 orthosummary_heatmap("./results/orthofinder-summary-genes.tsv", "./results/graphs/orthosummary-genes.png", "genes com pTSS/ortologos")
 
+###### orthosummary for siicusp ######
+filein <- "./results/orthofinder-summary-genes-alTSS.tsv"
+fileout <- "./results/orthofinder-summary-genes-alTSS-siicusp.png"
+df <- read_tsv(filein)
+mat2 <- df %>%
+  mutate(Total = Orthogroup/Protein) %>%
+  mutate(across(starts_with("ortho_"), ~ .x/Protein)) %>%
+  select(-c(1:3))
+mat2 <- as.matrix(mat2)
+rownames(mat2) <- dados$label # paste0(dados$label, " (n=", df$Protein, ")") # dados$label
+colnames(mat2) <- sub("^ortho_", "", colnames(mat2))
+# matches filenames in colnames to label
+lookup <- setNames(dados$label, dados$Filenames)
+idx <- match(colnames(mat2), names(lookup))
+# ifelse helps keep total
+colnames(mat2) <- ifelse(
+  is.na(idx),
+  colnames(mat2),       
+  lookup[colnames(mat2)]
+)
+# right side annotation
+n_annot <- rowAnnotation(
+  `n` = anno_text(
+    paste0("n=", df$Protein),
+    just = "left",
+    location = unit(0, "npc"),
+    gp = gpar(fontsize = 14)
+  ),
+  width = unit(18, "mm"),
+  show_annotation_name = FALSE
+)
+col_fun <- circlize::colorRamp2(
+  c(min(mat2, na.rm = TRUE), median(mat2, na.rm = TRUE), max(mat2, na.rm = TRUE)),
+  c("white", "orange", "red")
+)
+ht=Heatmap(
+  mat2,
+  name = "Orthogroups",
+  col = col_fun,
+  na_col = "grey90",
+  cluster_rows = FALSE,
+  cluster_columns = FALSE,
+  column_title = "Fração entre genes (com proteínas) com múltiplos pTSSs mapeados a orthogrupos",
+  row_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
+  column_names_gp = grid::gpar(fontface = "italic", fontsize = 18),
+  row_names_side = "left",
+  heatmap_legend_param = list(
+    title_gp = grid::gpar(fontsize = 16, fontface = "bold"),
+    labels_gp = grid::gpar(fontsize = 14)
+  )
+)
+png(fileout, width = 2100, height = 1500, res = 300)
+draw(ht + n_annot)
+dev.off()
+
+
+
+
+
+
+
+
+
+
+
 ##### utrlengths 5' UTR Length (Global) #####
 
 df <- tibble(filename = as.character(), label = as.character())
@@ -307,15 +407,29 @@ for (i in 1:nrow(dados)) {
   df <- bind_rows(df, ptss)
 }
 
-graphglobalutr <- ggplot(df, aes(x = UTRLength, y = label)) +
-  geom_boxplot(fill = "#7ea8cb") +
+ggplot(df, aes(x = UTRLength, y = label)) +
+  geom_boxplot(fill = "#7ea8cb", outlier.size = 0.85) +
   scale_x_continuous(limits = c(0, 250)) +
   labs(
-    x = "UTR Length",
-    y = "Species"
+    x = "5' UTR (nt) para cada pTSS mapeado",
+    y = "Espécie"
   ) +
-  theme_bw()  +
+  theme_bw()+
   theme(axis.text.y = element_text(face = "italic", color = "black"))
+ggsave("./results/graphs/siicusp2.png", width = 6, height = 3.5, scale = 0.75, dpi = 300)
+
+# ggplot(df, aes(x = UTRLength)) +
+#   geom_histogram(fill = "#7ea8cb", bins = 25) +
+#   facet_wrap(~ label, ncol = 1, scales = "free_y") +
+#   scale_x_continuous(limits = c(-6, 250)) +
+#   labs(
+#     x = "UTR Length",
+#     y = "pTSS Count"
+#   ) +
+#   theme_bw() +
+#   theme(
+#     strip.text = element_text(face = "italic", color = "black")
+#   )
 
 # ggsave(file.path(start_wd, "./results/graphs/utrlengths.png"), plot = graphglobalutr, units = "px", width=940, height=600, scale=2.4)
 ggsave(file.path(start_wd, "./results/graphs/utrlengths.png"), plot = graphglobalutr, units = "px", width=940, height=600, scale=1.4)
@@ -487,17 +601,72 @@ ggplot(df_counts, aes(x = label, y = n, fill = TSSCount)) +
     ),
     name = "pTSS"
   ) +
-  labs(x = "Sample", y = "Mapped genes") +
+  labs(x = "Espécie", y = "Genes Mapeados") +
   theme_bw(base_size = 16) +
   theme(
-    axis.text.x  = element_text(face = "italic", angle = 90, vjust = 0.5, hjust = 1),
+    axis.text.x  = element_text(face = "italic", color = "black", angle = 90, vjust = 0.5, hjust = 1),
     legend.title = element_text(size = 14),
     legend.text  = element_text(size = 13)
   )
 
-
+ggsave("./results/graphs/siicusp1.png", width = 4, height = 4, scale = 1.15, dpi = 300)
 ##### relative expression altss/gtss ######
 
+
+##### table with presence of genes with multiple TSSs #####
+# similar to how beatriz did here https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1641342/full
+
+library(ggtree)
+
+df <- tibble(filename = as.character(), label = as.character())
+for (i in 1:nrow(dados)) {
+  fn <- dados[i,]$Filenames
+  ptss <- read_tsv(paste0("./results/altss/", fn, "-pTSS.tsv"))
+  ptss$filename <- fn
+  ptss$label <- dados[i,]$label
+  df <- bind_rows(df, ptss)
+}
+
+# i can try this in 3 ways
+# 1. check all orthologues for the data i have (don't filter for pTSS)
+# 2. check orthologues for all orthogroups with at least 1 case of multiple pTSS
+# 3. check orthologues for all orthogroups with at least 2 caes of multiple pTSS
+
+# this is really convoluted, not sure if i needed to create a new table from scratch
+# but at least it'll be safe
+
+# for starters, i need a table with all the genes that my sample has
+# (or well, all orthogroups)
+correspondence_orthogroups1 <- df %>% 
+  group_by(Orthogroup) %>% # filter(TSSCount > 1) %>%
+  slice_head(n = 1) %>%
+  pull(Orthogroup)
+
+valid_orthogroups <- list()
+
+for (espec in dados$Filenames) {
+  valid_espec <- unique(df %>% filter(filename == espec) %>% pull(Orthogroup))
+  valid_orthogroups[[espec]] <- valid_espec[!is.na(valid_espec)]
+}
+
+
+orthotable1 <- tibble(
+  Orthogroup = as.character(),
+  filename = as.character(),
+  exists = as.logical()
+)
+for (ortho in correspondence_orthogroups1) {
+  for (espec in dados$Filenames) {
+    orthotable1 <- orthotable1 %>% add_row(
+      Orthogroup = ortho,
+      filename = espec,
+      exists = ortho %in% valid_orthogroups[[espec]]
+    )
+  }
+}
+
+orthotable1_final <- orthotable1 %>% 
+  pivot_wider(names_from = "filename", values_from = "exists")
 
 
 
