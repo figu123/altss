@@ -622,7 +622,7 @@ for (i in 1:nrow(dados)) {
       gene_protein_map <- features %>% 
         filter(feature == "CDS") %>%
         select(locus_tag, name, product_accession) %>%
-        rename(locus_tag = "Gene", name = "Product", product_accession = "Protein") %>%
+        dplyr::rename("Gene" = locus_tag, "Product" = name, "Protein" = product_accession) %>%
         distinct()
       
       ptss$Protein <- NULL

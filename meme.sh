@@ -13,6 +13,7 @@ if [ -z "$1" ]; then
   echo "Please specify the number of threads. Usage: bash meme.sh <number_of_threads>"
   exit 1
 fi
+threads=$1
 
 # Sets directory location to where the script is found in.
 cd "$(dirname "$0")"
@@ -36,6 +37,6 @@ while read -r file; do
   # -revcomp should not be used, because we already give the reverse-complementary of reverse strands.
   # doing so would be... finding motifs in the reverse strand of the TSS, which is counterintuitive.
   meme "$file" -dna -oc "$memeoutput_folder/$newfoldername" -brief 100000 -time 18000 \
-    -mod zoops -nmotifs 10 -minw 5 -maxw 10 -minsites 40 -p "$1" \
+    -mod zoops -nmotifs 10 -minw 5 -maxw 10 -minsites 40 -p threads \
     -objfun classic -markov_order 0 < /dev/null
 done

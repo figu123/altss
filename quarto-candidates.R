@@ -159,7 +159,7 @@ write_tsv(filtered_candidates, "./results/candidates.tsv")
 
 # Exporting "list of all pTSSs"
 write_tsv(df %>% 
-            rename("Filenames" = "filename") %>% 
+            dplyr::rename("Filenames" = "filename") %>% 
             left_join(dados), 
           "./results/all-pTSSs.tsv")
 
@@ -169,7 +169,7 @@ write_tsv(df %>%
             filter(SubClass == "alTSS") %>% 
             slice_head(n = 1) %>% 
             filter(!is.na(Orthogroup)) %>% 
-            rename("Filenames" = "filename") %>% 
+            dplyr::rename("Filenames" = "filename") %>% 
             left_join(dados),
           "./results/all-orthogrouped-genes-with-multiple-pTSS.tsv")
 
